@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1083236123206",
+    "project_id": "trektrak-6c6f2",
+    "storage_bucket": "trektrak-6c6f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083236123206:android:9091a19e734364e3b1c047",
+        "android_client_info": {
+          "package_name": "com.application.trek_trak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083236123206-ebibji07ltq64gbgi7utmg6lflhq2743.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVwfixOoG1Y4FnWGQcmWBLD9EHV9Rrcgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083236123206-ebibji07ltq64gbgi7utmg6lflhq2743.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083236123206-6d12fg98f7lg42h1tltk93tdg4grdg5m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trektrak"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083236123206:android:f04d3c89481fcda8b1c047",
+        "android_client_info": {
+          "package_name": "com.example.trektrak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083236123206-ebibji07ltq64gbgi7utmg6lflhq2743.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVwfixOoG1Y4FnWGQcmWBLD9EHV9Rrcgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083236123206-ebibji07ltq64gbgi7utmg6lflhq2743.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083236123206-6d12fg98f7lg42h1tltk93tdg4grdg5m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trektrak"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
