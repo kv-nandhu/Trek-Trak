@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bloc/auth_bloc.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
           if (state is Authenticated) {
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushNamedAndRemoveUntil(
                   context, '/home', (route) => false);
             });

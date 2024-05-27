@@ -16,7 +16,6 @@ void dispose() {
 }
 
 bool obtext = true;
-
 class LoginFields {
   static Widget emailFields() {
     return Padding(
@@ -47,14 +46,14 @@ class LoginFields {
             hintText: 'Enter your password',
             suffixIcon: obtext
                 ? IconButton(
-                    icon: Icon(Icons.visibility_off),
+                    icon: const Icon(Icons.visibility_off),
                     onPressed: () {
                       BlocProvider.of<AuthBloc>(context)
                           .add(TextEvent(obscure: obtext));
                     },
                   )
                 : IconButton(
-                    icon: Icon(Icons.visibility),
+                    icon: const Icon(Icons.visibility),
                     onPressed: () {
                       BlocProvider.of<AuthBloc>(context)
                           .add(TextEvent(obscure: obtext));

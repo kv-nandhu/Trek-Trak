@@ -7,6 +7,7 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/terms_privacy.dart';
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
 import 'package:trek_trak/utils/divider.dart';
+import 'package:trek_trak/utils/validator.dart';
 
 class SignScreen extends StatefulWidget {
   const SignScreen({Key? key});
@@ -16,6 +17,7 @@ class SignScreen extends StatefulWidget {
 }
 
 class _SignScreenState extends State<SignScreen> {
+  final formKey = GlobalKey<FormState>();
   String? _selectedGender;
   @override
   Widget build(BuildContext context) {
@@ -35,73 +37,72 @@ class _SignScreenState extends State<SignScreen> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const FirstScreen()));
-                        },
-                        icon: const Icon(Icons.arrow_back_outlined),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Text(
-                          "Sign up with your email or phone number",
-                          style: TextStyle(
-                            fontSize: 25,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const FirstScreen()));
+                          },
+                          icon: const Icon(Icons.arrow_back_outlined),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Text(
+                            "Sign up with your email or phone number",
+                            style: TextStyle(
+                              fontSize: 25,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Fields.nameFields()),
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Fields.nameFields()),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Fields.emailFields(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Fields.phoneFields(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Fields.passwordFields(),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: CustomGenderDropdown(
-                      //     value: _selectedGender,
-                      //     onChanged: (newValue) {
-                      //       setState(() {
-                      //         _selectedGender = newValue;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Agree.terms(),
-                            Agree.privacy(),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Buttons.signUp(context),
-                            const SizedBox(height: 10),
-                            Dividers.line(),
-                            const SizedBox(height: 10),
-                            Buttons.signGoogle(context),
-                            const SizedBox(height: 10),
-                            Agree.account(),
-                          ],
+                          child: Fields.emailFields(),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Fields.phoneFields(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomGenderDropdown(
+                            value: _selectedGender,
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedGender = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Agree.terms(),
+                              Agree.privacy(),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Buttons.signUp(context, formKey,),
+                              const SizedBox(height: 10),
+                              Dividers.line(),
+                              const SizedBox(height: 10),
+                              Buttons.signGoogle(context),
+                              const SizedBox(height: 10),
+                              Agree.account(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

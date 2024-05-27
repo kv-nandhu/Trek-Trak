@@ -5,20 +5,23 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/utils/validator.dart';
 
 class Buttons {
-  static signUp(BuildContext context) {
+  static Widget signUp(BuildContext context, GlobalKey<FormState> formKey) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: InkWell(
         onTap: () {
-          UserModel user = UserModel(
-            name: nameController.text,
-            email: emailController.text,
-            phone: phoneController.text,
-            password: passwordController.text,
-          );
-          BlocProvider.of<AuthBloc>(context).add(SignupEvent(user: user));
+          if (formKey.currentState!.validate()) {
+            context.read<AuthBloc>().add(sentotpEvent(
+                  name: nameController.text,
+                  email: emailController.text,
+                  number: phoneController.text,
+                  gender: selectedGender.toString(),
+                  context: context,
+                ));
+          }
         },
         child: Container(
           height: 50,
@@ -27,16 +30,27 @@ class Buttons {
             borderRadius: BorderRadius.circular(8),
             color: CustomColor.greenColor(),
           ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Sign Up',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: CustomColor.whiteColor(),
-              ),
-            ),
+          child: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if(state is AuthLoading){
+                return Center(
+                  child: CircularProgressIndicator(color: Colors.white,),
+                );
+              }else {
+  return Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColor.whiteColor(),
+                  ),
+                ),
+              );
+              }
+            
+            },
           ),
         ),
       ),
@@ -64,13 +78,10 @@ class Buttons {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                    height: 25,
-                    child: Image.asset(
-                      "images/google.png",
-                    )),
-                const SizedBox(
-                  width: 6,
+                  height: 25,
+                  child: Image.asset("images/google.png"),
                 ),
+                const SizedBox(width: 6),
                 Text(
                   'Sign Up with Google',
                   style: TextStyle(

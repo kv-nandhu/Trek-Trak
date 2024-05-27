@@ -3,13 +3,17 @@ import 'package:trek_trak/presentation/authentication/login/login_widget/fields.
 import 'package:trek_trak/presentation/authentication/password/password_widget/button_widget2.dart';
 
 class PasswordScreen extends StatefulWidget {
-  const PasswordScreen({super.key});
+   PasswordScreen({ required String email, required String gender, required String number, required String name, Key? key,}) : super(key: key);
+  late String name, number, gender,email;
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,22 +59,25 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                    children: [
-                      Padding(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Password.passwordFields()),
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Password.passwordFields()),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Password.newPasswordFields(),
-                      ),
-                    ],
+                          child: Password.newPasswordFields(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 55,
                 ),
-                ButtonsRegister.register(context),
+                ButtonsRegister.register(context,formKey),
               ],
             ),
           ),

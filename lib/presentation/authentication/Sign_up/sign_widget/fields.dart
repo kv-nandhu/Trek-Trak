@@ -6,7 +6,7 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_t
 import 'package:trek_trak/utils/validator.dart';
 
 final TextEditingController emailController = TextEditingController();
-String? selectedGender;
+ String? selectedGender;
 final TextEditingController nameController = TextEditingController();
 final TextEditingController phoneController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
@@ -58,6 +58,7 @@ class Fields {
   static Widget phoneFields() {
     return IntlPhoneField(
       controller: phoneController,
+      validator: (value) => Validator().numberValidator(value.toString()),
       decoration: const InputDecoration(
         labelText: 'Phone Number',
         border: OutlineInputBorder(
@@ -90,16 +91,6 @@ class Fields {
       hintText: 'Enter your email',
       keyboardType: TextInputType.emailAddress,
       validator: (value) => Validator().emailValidator(value),
-    );
-  }
-
-  static Widget passwordFields() {
-    return CustomTextFormField(
-      controller: passwordController,
-      labelText: 'password',
-      hintText: 'Enter your password',
-      keyboardType: TextInputType.name,
-      validator: (value) => Validator().nameValidator(value),
     );
   }
 }
