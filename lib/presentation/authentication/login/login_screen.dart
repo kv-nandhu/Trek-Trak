@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_local_variable
+// ignore_for_file: use_key_in_widget_constructors, unused_local_variable, depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bloc/auth_bloc.dart';

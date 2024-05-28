@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
 import 'package:trek_trak/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/domain/user_model.dart';
+import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 

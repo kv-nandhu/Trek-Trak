@@ -1,11 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/bloc/auth_bloc.dart';
-import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/utils/validator.dart';
 
 class Buttons {
   static Widget signUp(BuildContext context, GlobalKey<FormState> formKey) {
@@ -32,24 +32,25 @@ class Buttons {
           ),
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if(state is AuthLoading){
-                return Center(
-                  child: CircularProgressIndicator(color: Colors.white,),
-                );
-              }else {
-  return Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.whiteColor(),
+              if (state is AuthLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
                   ),
-                ),
-              );
+                );
+              } else {
+                return Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColor.whiteColor(),
+                    ),
+                  ),
+                );
               }
-            
             },
           ),
         ),

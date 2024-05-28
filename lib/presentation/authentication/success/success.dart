@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatefulWidget {
@@ -8,34 +10,41 @@ class SuccessScreen extends StatefulWidget {
 }
 
 class _SuccessScreenState extends State<SuccessScreen> {
-  
   @override
   void initState() {
-   gohome();
+    gohome();
     super.initState();
   }
+
+  @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Center(
           child: Column(
-       mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container( 
-                height: 200,
-                width: 200,
+              SizedBox(
+                  height: 200,
+                  width: 200,
                   child: Image.asset("images/success.png")),
-                     Text("SUCCESS",style: TextStyle(fontSize: 30),),
-                  Text("Congratulations, your account \n has been successfully created",style: TextStyle(fontSize: 20),)
-           
+              const Text(
+                "SUCCESS",
+                style: TextStyle(fontSize: 30),
+              ),
+              const Text(
+                "Congratulations, your account \n has been successfully created",
+                style: TextStyle(fontSize: 20),
+              )
             ],
           ),
         ),
       ),
     );
   }
+
   Future<void> gohome() async {
-    await Future.delayed(Duration(seconds: 3));
-      Navigator.pushReplacementNamed(context, '/');
+    await Future.delayed(const Duration(seconds: 3));
+    Navigator.pushReplacementNamed(context, '/home');
   }
 }

@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/presentation/authentication/login/login_widget/fields.dart';
 import 'package:trek_trak/presentation/authentication/password/password_widget/button_widget2.dart';
+import 'package:trek_trak/presentation/authentication/password/password_widget/fields.dart';
 
+// ignore: must_be_immutable
 class PasswordScreen extends StatefulWidget {
-   PasswordScreen({ required String email, required String gender, required String number, required String name, Key? key,}) : super(key: key);
-  late String name, number, gender,email;
+  PasswordScreen({
+    required this.email,
+    required this.gender,
+    required this.number,
+    required this.name,
+    Key? key,
+  }) : super(key: key);
+  String name, number, gender, email;
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
-
   final formKey = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,27 +66,17 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Password.passwordFields()),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Password.newPasswordFields(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                coustomPassword(
+                    formKey: formKey,
+                    passwordController: passwordController,
+                    confirmpasswordController: confirmpasswordController),
                 const SizedBox(
                   height: 55,
                 ),
-                ButtonsRegister.register(context,formKey),
+                registerButton(
+                    formKey: formKey,
+                    passwordController: passwordController,
+                    widget: widget)
               ],
             ),
           ),

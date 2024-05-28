@@ -91,7 +91,10 @@ class _SignScreenState extends State<SignScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Buttons.signUp(context, formKey,),
+                              Buttons.signUp(
+                                context,
+                                formKey,
+                              ),
                               const SizedBox(height: 10),
                               Dividers.line(),
                               const SizedBox(height: 10),

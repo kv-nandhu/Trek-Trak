@@ -1,35 +1,36 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/bloc/auth_bloc.dart';
-import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
-import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
-import 'package:trek_trak/utils/color/color.dart';
+import 'package:trek_trak/presentation/authentication/password/password.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/utils/color/color.dart';
 
-final TextEditingController emailController = TextEditingController();
-String? selectedGender;
-final TextEditingController nameController = TextEditingController();
-final TextEditingController phoneController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
+class registerButton extends StatelessWidget {
+  const registerButton({
+    super.key,
+    required this.formKey,
+    required this.passwordController,
+    required this.widget,
+  });
 
-class ButtonsRegister {
-  static Widget register(BuildContext context, GlobalKey<FormState> formKey) {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController passwordController;
+  final PasswordScreen widget;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: InkWell(
         onTap: () {
           if (formKey.currentState!.validate()) {
             BlocProvider.of<AuthBloc>(context).add(
-              signwithemailandpasswordEvent(
-                password: passwordController.text,
-                name: nameController.text,
-                number: phoneController.text,
-                gender: selectedGender.toString(),
-                email: emailController.text,
-                context: context,
-              ),
-            );
+                signwithemailandpasswordEvent(
+                    password: passwordController.text,
+                    name: widget.name,
+                    number: widget.number,
+                    gender: widget.gender,
+                    email: widget.email,
+                    context: context));
           }
         },
         child: Container(
@@ -43,21 +44,20 @@ class ButtonsRegister {
             alignment: Alignment.center,
             child: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
-                if(state is AuthLoading) {
+                if (state is AuthLoading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                }else{
- return Text(
-                  'Register',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.whiteColor(),
-                  ),
-                );
+                } else {
+                  return Text(
+                    'Register',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColor.whiteColor(),
+                    ),
+                  );
                 }
-               
               },
             ),
           ),

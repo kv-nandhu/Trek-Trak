@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/utils/color/color.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
@@ -22,7 +23,7 @@ class ScreenSplash extends StatelessWidget {
           }
         },
         child: Scaffold(
-          backgroundColor: Color.fromARGB(255, 7, 211, 28),
+          backgroundColor:  CustomColor.greenColor(),
           body: Center(
             child: Container(
               width: 1200,

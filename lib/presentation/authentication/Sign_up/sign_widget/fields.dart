@@ -6,7 +6,7 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_t
 import 'package:trek_trak/utils/validator.dart';
 
 final TextEditingController emailController = TextEditingController();
- String? selectedGender;
+String? selectedGender;
 final TextEditingController nameController = TextEditingController();
 final TextEditingController phoneController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();

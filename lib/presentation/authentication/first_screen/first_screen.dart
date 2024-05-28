@@ -16,7 +16,7 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: CustomColor.whiteColor(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -95,11 +95,11 @@ class _FirstScreenState extends State<FirstScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const SizedBox(
+               SizedBox(
                 width: 120,
                 child: Divider(
                   thickness: 5,
-                  color: Colors.black,
+                  color: CustomColor.blackColor(),
                 ),
               ),
               const SizedBox(
