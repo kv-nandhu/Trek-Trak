@@ -1,6 +1,6 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
@@ -12,13 +12,13 @@ class ScreenSplash extends StatelessWidget {
     BlocProvider.of<AuthBloc>(context).add(CheckLoginStatusEvent());
     return BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is Authenticated) {
+          if (state is UnAuthenticated) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacementNamed(context, '/first');
             });
-          } else if (state is UnAuthenticated) {
+          } else if (state is Authenticated) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushReplacementNamed(context, '/mybottom');
             });
           }
         },

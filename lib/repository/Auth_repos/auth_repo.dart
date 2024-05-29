@@ -1,15 +1,14 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trek_trak/presentation/authentication/otp_screen/otp_screen.dart';
 import 'package:trek_trak/presentation/authentication/password/password.dart';
 import 'package:trek_trak/presentation/authentication/success/success.dart';
-import 'package:trek_trak/presentation/home/home.dart';
+import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
 Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -45,7 +44,7 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
           'createdAt': DateTime.now(),
           'password': 'signwithgoogle',
         });
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/mybottom');
       }
     }
   } catch (e) {
@@ -291,7 +290,7 @@ class FirebaseAuthentServices {
         ),
       );
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => MyBottom()));
     }).onError((error, stackTrace) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

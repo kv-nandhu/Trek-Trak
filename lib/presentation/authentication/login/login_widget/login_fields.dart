@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_textfield.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/validator.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, unused_local_variable, depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_button.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is Authenticated) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/home', (route) => false);
+                  context, '/mybottom', (route) => false);
             });
           }
           return Scaffold(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {

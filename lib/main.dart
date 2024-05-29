@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
 import 'package:trek_trak/routing/route.dart';
 void main() async {
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BottomNavigationBarBloc(),
         ),
       ],
       child:MaterialApp(

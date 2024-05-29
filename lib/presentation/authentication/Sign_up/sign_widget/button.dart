@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';

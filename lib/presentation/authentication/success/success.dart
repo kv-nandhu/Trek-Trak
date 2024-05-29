@@ -45,6 +45,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   Future<void> gohome() async {
     await Future.delayed(const Duration(seconds: 3));
-    Navigator.pushReplacementNamed(context, '/home');
+    Navigator.pushReplacementNamed(context, '/mybottom');
   }
 }

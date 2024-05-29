@@ -4,7 +4,7 @@ import 'package:trek_trak/presentation/authentication/login/login_widget/login_f
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
-import '../../../../Application/bloc/auth_bloc.dart';
+import '../../../../Application/Auth/auth_bloc.dart';
 
 class LoginButtons {
   static signIn(BuildContext context) {

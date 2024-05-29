@@ -8,7 +8,12 @@ import 'package:trek_trak/presentation/authentication/password/password_widget/b
 import 'package:trek_trak/presentation/authentication/profile/profile_screen.dart';
 import 'package:trek_trak/presentation/authentication/splash/splash.dart';
 import 'package:trek_trak/presentation/authentication/success/success.dart';
+import 'package:trek_trak/presentation/chat/chat.dart';
 import 'package:trek_trak/presentation/home/home.dart';
+import 'package:trek_trak/presentation/profile/profile.dart';
+import 'package:trek_trak/presentation/publish/profile.dart';
+import 'package:trek_trak/presentation/ride/ride.dart';
+import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
 final TextEditingController emailController = TextEditingController();
 final TextEditingController nameController = TextEditingController();
@@ -29,5 +34,11 @@ class Routers {
     '/Success' :(context) => const SuccessScreen(),
     '/login': (context) => const LoginScreen(),
     '/home' :(context) => const HomeScreen(),
+    '/publish' :(context) =>  PublishPage(),
+    '/history' :(context) =>  RidePage(),
+    '/chat' :(context) =>  ChatPage(),
+    '/profile' :(context) =>  ProfilePage(),
+    '/mybottom' :(context) =>  const MyBottom(),
+
   };
 }

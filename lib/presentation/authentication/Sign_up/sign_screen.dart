@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/bloc/auth_bloc.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/button.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/terms_privacy.dart';
@@ -29,7 +29,7 @@ class _SignScreenState extends State<SignScreen> {
           if (state is Authenticated) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/home', (route) => false);
+                  context, '/mybottom', (route) => false);
             });
           }
           return Scaffold(
