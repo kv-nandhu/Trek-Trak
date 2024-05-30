@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, depend_on_referenced_packages, unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
@@ -7,7 +7,6 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/terms_privacy.dart';
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
 import 'package:trek_trak/utils/divider.dart';
-import 'package:trek_trak/utils/validator.dart';
 
 class SignScreen extends StatefulWidget {
   const SignScreen({Key? key});

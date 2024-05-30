@@ -1,6 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
@@ -13,7 +14,7 @@ import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   try {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
@@ -28,10 +29,10 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
       );
 
       UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+          await auth.signInWithCredential(credential);
       User? user = userCredential.user;
 
-      print(user);
+    
 
       if (user != null && isUser) {
         await firestore.collection("users").doc(user.uid).set({
@@ -48,7 +49,9 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
       }
     }
   } catch (e) {
-    print("Exception is: $e");
+    if (kDebugMode) {
+      print("Exception is: $e");
+    }
   }
 }
 
@@ -58,7 +61,7 @@ String imageurl =
 
 class FirebaseAuthentServices {
   String? verificationId;
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future<User?> signUpWithEmailandPassword(
       {required String email, required String password}) async {

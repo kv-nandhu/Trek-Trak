@@ -1,10 +1,20 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
+import 'package:trek_trak/presentation/chat/chat.dart';
+import 'package:trek_trak/presentation/home/home.dart';
+import 'package:trek_trak/presentation/profile/profile.dart';
+import 'package:trek_trak/presentation/publish/profile.dart';
+import 'package:trek_trak/presentation/ride/ride.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
-  BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
+  BottomNavigationBarItem(
+    icon: Icon(Icons.home),
+    label: 'Home',
+  ),
   BottomNavigationBarItem(
       icon: Icon(Icons.add_circle_outline_sharp), label: 'Publish'),
   BottomNavigationBarItem(
@@ -15,12 +25,12 @@ List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
       icon: Icon(Icons.person_3_outlined), label: 'Profile'),
 ];
 
-const List<Widget> bottomNavScreen = <Widget>[
-  Text('Index 0: Home'),
-  Text('Index 1: Publish'),
-  Text('Index 2: Your Ride'),
-  Text('Index 3: Chat'),
-  Text('Index 4: Profile'),
+List<Widget> bottomNavScreen = <Widget>[
+  const HomeScreen(),
+  PublishPage(),
+  RidePage(),
+  ChatPage(),
+  const ProfilePage(),
 ];
 
 class MyBottom extends StatelessWidget {
@@ -41,9 +51,9 @@ class MyBottom extends StatelessWidget {
             selectedItemColor: CustomColor.greenColor(),
             unselectedItemColor: CustomColor.blackColor(),
             // type: BottomNavigationBarType.shifting,
-               backgroundColor: Colors.transparent,
-       
-          showUnselectedLabels: true,
+            backgroundColor: Colors.transparent,
+
+            showUnselectedLabels: true,
             onTap: (index) {
               BlocProvider.of<BottomNavigationBarBloc>(context)
                   .add(TabChange(tabIndex: index));

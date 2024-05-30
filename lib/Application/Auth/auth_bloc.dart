@@ -1,11 +1,11 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+//import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
-import 'package:trek_trak/Auth_repos/auth_repo.dart';
+//import 'package:trek_trak/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 part 'auth_event.dart';
@@ -102,7 +102,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<sentotpEvent>((event, emit) async {
       emit(AuthLoading());
       await Future.delayed(
-        Duration(seconds: 2),
+        const Duration(seconds: 2),
       );
       emit(AuthLoading());
       try {
@@ -111,14 +111,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthSnedSuccess());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));
-        print(e);
       }
     });
 
     on<verificationOtpEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
         await FirebaseAuthentServices().checkingOtp(
             event.otp,
             event.name,
@@ -130,7 +129,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthVerificationSuccessn());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));
-        print(e);
+   
       }
     });
 
@@ -147,14 +146,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthVerificationSuccessn());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));
-        print(e);
+    
       }
     });
 
     on<SignInevent>((event, emit) async {
       emit(AuthLoading());
       try {
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
         FirebaseAuthentServices()
             .signIn(event.email, event.password, event.context);
         emit(AuthVerificationSuccessn());

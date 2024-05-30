@@ -28,7 +28,7 @@ class _UserDataState extends State<UserData> {
                   ProfileFields.streetFields(),
                   ProfileFields.cityFields(),
                   ProfileFields.districtFields(),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                   UserButtons.userButton(context),
                 ],
               ),

@@ -6,6 +6,7 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Buttons {
   static Widget signUp(BuildContext context, GlobalKey<FormState> formKey) {
@@ -33,11 +34,12 @@ class Buttons {
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                );
+                return  Center(
+        child: LoadingAnimationWidget.horizontalRotatingDots(
+color: CustomColor.whiteColor(),
+     
+          size: 50,
+        ));
               } else {
                 return Align(
                   alignment: Alignment.center,

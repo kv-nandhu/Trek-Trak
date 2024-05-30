@@ -9,8 +9,8 @@ class PasswordScreen extends StatefulWidget {
     required this.gender,
     required this.number,
     required this.name,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   String name, number, gender, email;
 
   @override

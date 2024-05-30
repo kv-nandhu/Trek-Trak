@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -12,14 +14,14 @@ class OtpScreen extends StatefulWidget {
   final String name;
   final String number;
 
-  OtpScreen({
-    Key? key,
+  const OtpScreen({
+    super.key,
     required this.verificationId,
     required this.email,
     required this.gender,
     required this.name,
     required this.number,
-  }) : super(key: key);
+  });
 
   @override
   _OtpScreenState createState() => _OtpScreenState();

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals, unnecessary_this
+
 class UserModel {
   String? email;
   String? uid;
@@ -36,7 +38,7 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['Name'] = this.name;
     data['Email'] = this.email;
     data['uid'] = this.uid;

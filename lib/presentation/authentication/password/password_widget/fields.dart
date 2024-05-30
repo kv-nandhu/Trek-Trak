@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_textfield.dart';
 import 'package:trek_trak/utils/validator.dart';

@@ -73,7 +73,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   width: 250,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/loading');
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(

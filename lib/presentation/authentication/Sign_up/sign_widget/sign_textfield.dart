@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
@@ -22,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.validator,
     this.suffixIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

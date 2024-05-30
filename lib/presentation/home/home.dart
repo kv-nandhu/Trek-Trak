@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "home",
             style: TextStyle(fontSize: 20),
           ),
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/login', (route) => false);
                 },
-                child: Text("logout"))
+                child: const Text("logout"))
           ],
         ),
       ),

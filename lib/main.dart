@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,7 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   
-  runApp( MyApp());}
+  runApp( const MyApp());}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

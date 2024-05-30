@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/password/password.dart';
@@ -45,7 +47,7 @@ class registerButton extends StatelessWidget {
             child: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
                 if (state is AuthLoading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
