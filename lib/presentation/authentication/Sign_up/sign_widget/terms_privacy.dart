@@ -41,8 +41,15 @@ class Agree {
       ],
     );
   }
+}
 
-  static Widget account() {
+class loginAgain extends StatelessWidget {
+  const loginAgain({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -51,7 +58,9 @@ class Agree {
           style: TextStyle(color: CustomColor.blackColor()),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          },
           child: Text(
             'Sign in',
             style: TextStyle(

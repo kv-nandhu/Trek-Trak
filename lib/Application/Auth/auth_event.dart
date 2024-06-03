@@ -30,7 +30,6 @@ class TextEvent extends AuthEvent {
   final bool obscure;
   TextEvent({required this.obscure});
 }
-
 //! --------------->Logout event<------------------
 class LogoutEvent extends AuthEvent {}
 

@@ -5,6 +5,15 @@ class Validator {
       return 'Please enter your email';
     }
 
+    // Regular expression for validating email format
+    final RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+
     return null;
   }
 
@@ -42,32 +51,31 @@ class Validator {
   }
 
   String? passwordValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter a password';
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+
+    if (!RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$&*~]).{8,}$')
+        .hasMatch(value)) {
+      return 'Password must include uppercase, lowercase, number, and special character';
+    }
+
+    return null;
   }
 
-  if (value.length < 8) {
-    return 'Password must be at least 8 characters long';
+  String? confirmPasswordValidator(String? value, String? originalPassword) {
+    if (value == null || value.isEmpty) {
+      return 'Please confirm your password';
+    }
+
+    if (value != originalPassword) {
+      return 'Passwords do not match';
+    }
+
+    return null;
   }
-
-  if (!RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$&*~]).{8,}$').hasMatch(value)) {
-    return 'Password must include uppercase, lowercase, number, and special character';
-  }
-
-  return null;
-}
-
-
-String? confirmPasswordValidator(String? value, String? originalPassword) {
-  if (value == null || value.isEmpty) {
-    return 'Please confirm your password';
-  }
-
-  if (value != originalPassword) {
-    return 'Passwords do not match';
-  }
-
-  return null;
-}
-
 }

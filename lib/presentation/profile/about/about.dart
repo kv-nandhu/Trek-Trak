@@ -1,7 +1,12 @@
 import 'dart:io';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/profile/profile_bloc.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile_widget.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/vehicle_custom.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/verifying_custom.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:trek_trak/utils/divider.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -12,192 +17,60 @@ class AboutScreen extends StatefulWidget {
 
 class _AboutScreenState extends State<AboutScreen> {
   String? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if(state is UserProfileLoadState){
+
+            
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Nandhu \n Krishna",
-                          style: TextStyle(fontSize: 30),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.add_circle_outline_sharp),
-                                color: CustomColor.greenColor()),
-                            TextButton(
-                                onPressed: () {
-                                      Navigator.pushReplacementNamed(context, '/editProfile');
-                                },
-                                child: Text(
-                                  "Edit profile picture",
-                                  style: TextStyle(
-                                      color: CustomColor.greenColor()),
-                                )),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.add_circle_outline_sharp),
-                              color: CustomColor.greenColor(),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                       Navigator.pushReplacementNamed(context, '/personalDetail'); 
-                                },
-                                child: Text("Edit personal details",
-                                    style: TextStyle(
-                                        color: CustomColor.greenColor()))),
-                          ],
-                        )
-                      ],
+                    //!--------------profile adding , view profile, personal details-----------
+                    profile_details(selectedImage: _selectedImage),
+                    const divider_normal(),
+                    const Text(
+                      "Verify your profile",
+                      style: TextStyle(fontSize: 20),
                     ),
-                    CircleAvatar(
-                        radius: 60,
-                        backgroundImage: _selectedImage != null
-                            ? FileImage(File(_selectedImage!))
-                            : null,
-                        child:
-                            _selectedImage == null ? const Text('🙈') : null),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined),
-                      color: CustomColor.greyColor(),
+                    //!--------------id verifying-----------
+                    const id_verifying(),
+                    //!--------------email_verifying--------
+                    const email_verifying(),
+                    //!-------------- number_verifying------
+                    const number_verifying(),
+                    const divider_thickness_big(),
+                    const Text(
+                      "About you",
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  width: 400,
-                  child: Divider(
-                    thickness: 1,
-                    color: CustomColor.greyColor(),
-                  ),
-                ),
-                const Text(
-                  "Verify your profile",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add_circle_outline_sharp),
-                        color: CustomColor.greenColor()),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "verify my ID",
-                          style: TextStyle(color: CustomColor.greenColor()),
-                        )),
-                  ],
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.add_circle_outline_sharp),
-                      color: CustomColor.greenColor(),
+                    //!-------------- mini_bio--------------
+                    const mini_bio(),
+                    //!-------------- add_preferences-------
+                    const add_preferences(),
+
+                    const divider_normal(),
+                    const Text(
+                      "Vehicles",
+                      style: TextStyle(fontSize: 20),
                     ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text("Confirm email kvnandhu09@gmail.com",
-                            style: TextStyle(color: CustomColor.greenColor()))),
+                    //!-------------- vehicles_details-----
+                    const vehicles_details(),
                   ],
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.check_circle),
-                      color: CustomColor.greenColor(),
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text("+919778574297",
-                            style: TextStyle(color: CustomColor.greenColor()))),
-                  ],
-                ),
-                SizedBox(
-                  width: 450,
-                  child: Divider(
-                    thickness: 6,
-                    color: CustomColor.greyColor(),
-                  ),
-                ),
-                const Text(
-                  "About you",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add_circle_outline_sharp),
-                        color: CustomColor.greenColor()),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "add a mini bio",
-                          style: TextStyle(color: CustomColor.greenColor()),
-                        )),
-                  ],
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.add_circle_outline_sharp),
-                      color: CustomColor.greenColor(),
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text("add my preferences",
-                            style: TextStyle(color: CustomColor.greenColor()))),
-                  ],
-                ),
-                SizedBox(
-                  width: 400,
-                  child: Divider(
-                    thickness: 1,
-                    color: CustomColor.greyColor(),
-                  ),
-                ),
-                const Text(
-                  "Vehicles",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add_circle_outline_sharp),
-                        color: CustomColor.greenColor()),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Add vehicles",
-                          style: TextStyle(color: CustomColor.greenColor()),
-                        )),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }else{
+             return Center(child: Text('Unknown state'));
+          }
+          }
         ),
       ),
     );

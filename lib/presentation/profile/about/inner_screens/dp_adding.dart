@@ -22,11 +22,12 @@ class _ProfileAddingState extends State<ProfileAdding> {
               alignment: Alignment.topLeft,
               child: TextButton.icon(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/editprofile');
+                  Navigator.pushReplacementNamed(context, '/mybottom');
                 },
                 label: Text(
                   "Back",
-                  style: TextStyle(color: CustomColor.greenColor(), fontSize: 20),
+                  style:
+                      TextStyle(color: CustomColor.greenColor(), fontSize: 20),
                 ),
                 icon: Icon(
                   Icons.arrow_back_ios,
@@ -42,35 +43,43 @@ class _ProfileAddingState extends State<ProfileAdding> {
                       : null,
                   child: _selectedImage == null ? const Text('🙈') : null),
             ),
-            SizedBox(height: 200,),
-             Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.pushReplacementNamed(context, '/sign');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        // ignore: deprecated_member_use
-                        backgroundColor: CustomColor.greenColor(),
-                      ),
-                      child: Text(
-                        'Take a picture',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.whiteColor(),
-                        ),
-                      ),
+            SizedBox(
+              height: 200,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: SizedBox(
+                height: 50,
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Navigator.pushReplacementNamed(context, '/sign');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // ignore: deprecated_member_use
+                    backgroundColor: CustomColor.greenColor(),
+                  ),
+                  child: Text(
+                    'Take a picture',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColor.whiteColor(),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-               TextButton(onPressed: (){}, child: Text("Choose a picture",style: TextStyle(fontSize: 24,color: CustomColor.greenColor()),))
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Choose a picture",
+                  style:
+                      TextStyle(fontSize: 24, color: CustomColor.greenColor()),
+                ))
           ],
         ),
       ),

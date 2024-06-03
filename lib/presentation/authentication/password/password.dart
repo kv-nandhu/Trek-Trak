@@ -35,7 +35,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(Icons.arrow_back_outlined),
                   ),
                 ),

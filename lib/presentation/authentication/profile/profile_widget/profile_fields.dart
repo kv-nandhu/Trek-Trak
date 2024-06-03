@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_textfield.dart';
+import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';
 
 

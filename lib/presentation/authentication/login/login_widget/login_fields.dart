@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
-import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_textfield.dart';
+import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/validator.dart';
 
@@ -16,6 +16,7 @@ void dispose() {
 }
 
 bool obtext = true;
+
 class LoginFields {
   static Widget emailFields() {
     return Padding(
@@ -59,42 +60,29 @@ class LoginFields {
                           .add(TextEvent(obscure: obtext));
                     },
                   ),
-            keyboardType: TextInputType.name,
+            keyboardType: TextInputType.visiblePassword,
             validator: (value) => Validator().nameValidator(value),
           ),
         );
       },
     );
   }
+}
 
-  static Widget forgot() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          GestureDetector(
-            onTap: () {},
-            child: Text(
-              'Forgot password?',
-              style: TextStyle(
-                  color: CustomColor.redColor(),
-                  decoration: TextDecoration.underline),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+class signagain extends StatelessWidget {
+  const signagain({
+    super.key,
+  });
 
-  static Widget signUp() {
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Don't hanve an account? "),
         GestureDetector(
           onTap: () {
-            //  Navigator.pushReplacementNamed(context, '/login');
+            Navigator.pushReplacementNamed(context, '/signScreen');
           },
           child: Text(
             'sign up',
@@ -104,6 +92,35 @@ class LoginFields {
           ),
         ),
       ],
+    );
+  }
+}
+
+class forgot extends StatelessWidget {
+  const forgot({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/forgotScreen');
+            },
+            child: Text(
+              'Forgot password?',
+              style: TextStyle(
+                  color: CustomColor.redColor(),
+                  decoration: TextDecoration.underline),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

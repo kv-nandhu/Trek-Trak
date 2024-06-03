@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                       ),
-                      LoginFields.forgot(),
+                      const forgot(),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       const SizedBox(height: 40),
-                      LoginFields.signUp(),
+                      const signagain(),
                     ],
                   ),
                 ),

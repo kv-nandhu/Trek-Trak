@@ -32,8 +32,6 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
           await auth.signInWithCredential(credential);
       User? user = userCredential.user;
 
-    
-
       if (user != null && isUser) {
         await firestore.collection("users").doc(user.uid).set({
           "uid": user.uid,
@@ -54,7 +52,6 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
     }
   }
 }
-
 
 String imageurl =
     'https://littleooties.ca/wp-content/uploads/2022/07/AdobeStock_64672736_Preview.jpg';
@@ -213,17 +210,6 @@ class FirebaseAuthentServices {
     }
   }
 
-//  void forgetPassword(String email) async {
-//     try {
-//       await FirebaseAuth.instance
-//           .sendPasswordResetEmail(email: email)
-//           .onError((error, stackTrace) {
-//         utils().showToast(error.toString());
-//       });
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
   Future<void> registerUser({
     required BuildContext context,
     required String email,
@@ -258,8 +244,6 @@ class FirebaseAuthentServices {
           'profile': imageurl
         };
 
-        // Save user data to Firestore
-
         print('hellow check 3');
         await db
             .collection("users")
@@ -271,16 +255,11 @@ class FirebaseAuthentServices {
               builder: (context) => SuccessScreen(),
             ),
             (route) => false);
-
-        // Navigate to next screen
       } catch (e) {
-        // Handle storage errors
         print('Error uploading image: $e');
-        // You may want to show an error message to the user here
       }
     } else {
       print('Something went wrong during user creation');
-      // You may want to show an error message to the user here
     }
   }
 
@@ -303,4 +282,3 @@ class FirebaseAuthentServices {
     });
   }
 }
-

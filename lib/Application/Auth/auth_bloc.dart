@@ -58,37 +58,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-//*-------------->sign<-------------------------
-
-    // on<SignupEvent>((event, emit) async {
-    //   emit(AuthLoading());
-
-    //   try {
-    //     final UserCredential = await _auth.createUserWithEmailAndPassword(
-    //         email: event.user.email.toString(),
-    //         password: event.user.password.toString());
-
-    //     final user = UserCredential.user;
-
-    //     if (user != null) {
-    //       emit(Authenticated(user));
-    //       FirebaseFirestore.instance.collection("users").doc().set({
-    //         'Uid': user.uid,
-    //         "Name": user.displayName,
-    //         'email': user.email,
-    //         "profile": user.photoURL,
-    //         'Gender': 'No declared',
-    //         'phone': event.user.phone,
-    //         'createdAt': DateTime.now()
-    //       });
-    //     } else {
-    //       emit(UnAuthenticated());
-    //     }
-    //   } on FirebaseAuthException catch (e) {
-    //     emit(AuthenticatedError(message: e.message.toString()));
-    //   }
-    // });
-
 //*---------------->logout<--------------------------------
     on<LogoutEvent>((event, emit) async {
       try {
@@ -113,7 +82,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticatedError(message: e.toString()));
       }
     });
-
+//*---------------->verificationOtpEvent<--------------------------------
     on<verificationOtpEvent>((event, emit) async {
       emit(AuthLoading());
       try {
@@ -129,10 +98,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthVerificationSuccessn());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));
-   
       }
     });
-
+//*---------------->signwithemailandpasswordEvent<--------------------------------
     on<signwithemailandpasswordEvent>((event, emit) async {
       emit(AuthLoading());
       try {
@@ -146,10 +114,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthVerificationSuccessn());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));
-    
       }
     });
-
+//*---------------->SignInevent<--------------------------------
     on<SignInevent>((event, emit) async {
       emit(AuthLoading());
       try {

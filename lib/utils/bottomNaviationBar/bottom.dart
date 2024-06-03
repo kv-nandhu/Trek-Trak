@@ -46,14 +46,14 @@ class MyBottom extends StatelessWidget {
             child: bottomNavScreen.elementAt(state.tabIndex),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
             items: bottomNavItems,
             currentIndex: state.tabIndex,
             selectedItemColor: CustomColor.greenColor(),
             unselectedItemColor: CustomColor.blackColor(),
             // type: BottomNavigationBarType.shifting,
             backgroundColor: Colors.transparent,
-
-            showUnselectedLabels: true,
             onTap: (index) {
               BlocProvider.of<BottomNavigationBarBloc>(context)
                   .add(TabChange(tabIndex: index));

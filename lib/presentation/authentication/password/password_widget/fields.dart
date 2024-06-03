@@ -1,8 +1,12 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/sign_textfield.dart';
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
+import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
+import 'package:trek_trak/presentation/authentication/password/password_widget/fields.dart';
+import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class coustomPassword extends StatelessWidget {
   const coustomPassword({
@@ -31,8 +35,7 @@ class coustomPassword extends StatelessWidget {
                 labelText: 'password',
                 hintText: 'Enter your password',
                 keyboardType: TextInputType.visiblePassword,
-                validator: (value) =>
-                    Validator().passwordValidator(value),
+                validator: (value) => Validator().passwordValidator(value),
               ),
             ),
             Padding(
@@ -43,8 +46,7 @@ class coustomPassword extends StatelessWidget {
                 hintText: 'Confirm your password',
                 keyboardType: TextInputType.visiblePassword,
                 validator: (value) => Validator()
-                    .confirmPasswordValidator(
-                        value, passwordController.text),
+                    .confirmPasswordValidator(value, passwordController.text),
               ),
             ),
           ],

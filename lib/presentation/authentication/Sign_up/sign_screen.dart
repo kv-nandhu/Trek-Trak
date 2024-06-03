@@ -6,6 +6,7 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/button
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/terms_privacy.dart';
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
+import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 
 class SignScreen extends StatefulWidget {
@@ -99,7 +100,7 @@ class _SignScreenState extends State<SignScreen> {
                               const SizedBox(height: 10),
                               Buttons.signGoogle(context),
                               const SizedBox(height: 10),
-                              Agree.account(),
+                              loginAgain(),
                             ],
                           ),
                         ),

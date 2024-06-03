@@ -1,11 +1,11 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
@@ -182,10 +182,11 @@ class _OtpScreenState extends State<OtpScreen> {
                           builder: (context, state) {
                             if (state is AuthLoading) {
                               return Center(
-                                child: CircularProgressIndicator(
-                                  color: CustomColor.whiteColor(),
-                                ),
-                              );
+                                  child: LoadingAnimationWidget
+                                      .horizontalRotatingDots(
+                                color: CustomColor.whiteColor(),
+                                size: 50,
+                              ));
                             } else {
                               return Center(
                                 child: Text(

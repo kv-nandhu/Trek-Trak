@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 // class ChatPage extends StatelessWidget {
 //   const ChatPage({super.key});
 
@@ -16,12 +15,6 @@ import 'package:flutter/material.dart';
 //     );
 //   }
 // }
-
-
-
-
-
-
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -99,7 +92,8 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.notifications, color: const Color.fromARGB(255, 0, 0, 0)),
+                    icon: Icon(Icons.notifications,
+                        color: const Color.fromARGB(255, 0, 0, 0)),
                     onPressed: () {
                       // Action for bell icon
                     },

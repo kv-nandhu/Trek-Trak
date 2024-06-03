@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
 import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../Application/Auth/auth_bloc.dart';
 
 class LoginButtons {
@@ -23,16 +23,28 @@ class LoginButtons {
           borderRadius: BorderRadius.circular(8),
           color: CustomColor.greenColor(),
         ),
-        child: Align(
-          alignment: Alignment.center,
-          child: Text(
-            'Sign In',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: CustomColor.whiteColor(),
-            ),
-          ),
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              return Center(
+                  child: LoadingAnimationWidget.horizontalRotatingDots(
+                color: CustomColor.whiteColor(),
+                size: 50,
+              ));
+            } else {
+              return Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign In',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColor.whiteColor(),
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

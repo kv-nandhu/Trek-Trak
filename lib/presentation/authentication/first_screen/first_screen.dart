@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/image.dart';
 
-
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key? key});
 
@@ -22,7 +21,7 @@ class _FirstScreenState extends State<FirstScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 200),
                 child: CustomImageLoader.loadWelcomeImage(),
               ),
@@ -73,7 +72,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   width: 250,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/loading');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
@@ -95,7 +94,7 @@ class _FirstScreenState extends State<FirstScreen> {
               const SizedBox(
                 height: 20,
               ),
-               SizedBox(
+              SizedBox(
                 width: 120,
                 child: Divider(
                   thickness: 5,
@@ -112,5 +111,3 @@ class _FirstScreenState extends State<FirstScreen> {
     );
   }
 }
-
-

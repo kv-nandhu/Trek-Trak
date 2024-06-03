@@ -18,22 +18,20 @@ class _ProfilePageState extends State<ProfilePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: CustomColor.whiteColor(),
-          centerTitle: true,
-          bottom: const TabBar(tabs: [
-            Tab(child: Text('About you')),
-            Tab(child: Text('Account'))
-          ]),
-          
-        ),
-        body: const TabBarView(
-              children: [
-                 AboutScreen(),
-                AccountScreen(), 
-              ],)
-      
-      ),
+          appBar: AppBar(
+            backgroundColor: CustomColor.whiteColor(),
+            centerTitle: true,
+            bottom: const TabBar(tabs: [
+              Tab(child: Text('About you')),
+              Tab(child: Text('Account'))
+            ]),
+          ),
+          body: const TabBarView(
+            children: [
+              AboutScreen(),
+              AccountScreen(),
+            ],
+          )),
     );
   }
 }

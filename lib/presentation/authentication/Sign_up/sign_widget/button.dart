@@ -34,12 +34,11 @@ class Buttons {
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthLoading) {
-                return  Center(
-        child: LoadingAnimationWidget.horizontalRotatingDots(
-color: CustomColor.whiteColor(),
-     
-          size: 50,
-        ));
+                return Center(
+                    child: LoadingAnimationWidget.horizontalRotatingDots(
+                  color: CustomColor.whiteColor(),
+                  size: 50,
+                ));
               } else {
                 return Align(
                   alignment: Alignment.center,

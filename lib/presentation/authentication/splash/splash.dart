@@ -23,13 +23,13 @@ class ScreenSplash extends StatelessWidget {
           }
         },
         child: Scaffold(
-          backgroundColor:  CustomColor.greenColor(),
+          backgroundColor: CustomColor.greenColor(),
           body: Center(
             child: SizedBox(
               width: 1200,
               height: 1200,
               child: Image.asset(
-                'images/Trek.gif',
+                'images/splash.png',
                 fit: BoxFit
                     .cover, // You can change this to any other BoxFit value based on your needs
               ),
@@ -37,8 +37,4 @@ class ScreenSplash extends StatelessWidget {
           ),
         ));
   }
-  //   Future<void> gotohome(BuildContext context) async {
-  //   await Future.delayed(const Duration(seconds: 3));
-
-  // }
 }
