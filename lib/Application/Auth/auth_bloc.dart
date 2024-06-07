@@ -110,7 +110,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             name: event.name,
             number: event.number,
             password: event.password,
-            gender: event.gender);
+            gender: event.gender,
+            city: event.city,
+            street: event.street,
+            district: event.district,
+            dob: event.dob
+
+            );
         emit(AuthVerificationSuccessn());
       } catch (e) {
         emit(AuthenticatedError(message: e.toString()));

@@ -1,8 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:trek_trak/presentation/authentication/Sign_up/sign_screen.dart';
+import 'package:trek_trak/presentation/authentication/login/login_screen.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/image.dart';
+import 'package:page_transition/page_transition.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key? key});
@@ -45,7 +48,15 @@ class _FirstScreenState extends State<FirstScreen> {
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/sign');
+                      Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType
+                              .rightToLeft,
+                          child:
+                              SignScreen(), 
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       // ignore: deprecated_member_use
@@ -72,7 +83,15 @@ class _FirstScreenState extends State<FirstScreen> {
                   width: 250,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/login');
+                       Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType
+                              .leftToRight,
+                          child:
+                              const LoginScreen(), 
+                        ),
+                      );
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(

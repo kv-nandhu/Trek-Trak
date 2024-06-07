@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
+import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
 import 'package:trek_trak/presentation/authentication/password/password_widget/button_widget2.dart';
 import 'package:trek_trak/presentation/authentication/password/password_widget/fields.dart';
 
@@ -20,6 +22,7 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController confirmpasswordController =
       TextEditingController();
 
@@ -78,7 +81,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 registerButton(
                     formKey: formKey,
                     passwordController: passwordController,
-                    widget: widget)
+                    widget: widget, email: emailController.text, gender: selectedGender.toString(), name: nameController.text, phone: phoneController.text,)
               ],
             ),
           ),

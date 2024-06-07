@@ -4,29 +4,31 @@ class UserModel {
   String? email;
   String? uid;
   String? name;
-  String? phone;
+  String? number;
   String? password;
   String? gender;
   String? street;
   String? city;
   String? district;
   String? image;
+  String? dob;
 
   UserModel(
       {this.email,
       this.uid,
       this.name,
-      this.phone,
+       this.number,
       this.gender,
       this.street,
       this.city,
       this.district,
       this.image,
+      this.dob,
       this.password});
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       gender: json['Gender'],
-      phone: json['phone'],
+      number: json['number'],
       name: json['Name'],
       email: json['Email'],
       uid: json['uid'],
@@ -34,6 +36,7 @@ class UserModel {
       street: json['street'],
       city: json['city'],
       district: json['district'],
+      dob: json['dob'],
     );
   }
 
@@ -44,10 +47,11 @@ class UserModel {
     data['uid'] = this.uid;
     data['profile'] = this.image;
     data['Gender'] = this.gender;
-    data['phone'] = this.phone;
+    data['number'] = this.number;
     data['street'] = this.street;
     data['city'] = this.city;
     data['district'] = this.district;
+    data['dob'] = this.dob;
     return data;
   }
 }

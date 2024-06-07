@@ -37,14 +37,26 @@ class _ProfileAddingState extends State<ProfileAdding> {
             ),
             Center(
               child: CircleAvatar(
-                  radius: 110,
-                  backgroundImage: _selectedImage != null
-                      ? FileImage(File(_selectedImage!))
-                      : null,
-                  child: _selectedImage == null ? const Text('🙈') : null),
+                radius: 110.0, // Adjust radius as needed
+                backgroundImage: _selectedImage != null
+                    ? FileImage(File(_selectedImage!))
+                    : null,
+                child: _selectedImage == null
+                    ? ClipOval(
+                        child: AspectRatio(
+                          aspectRatio:
+                              1.0, // Adjust for square images or use original aspect ratio
+                          child: Image.asset(
+                            'images/profile.jpg',
+                            fit: BoxFit.cover, // Ensure image fills the circle
+                          ),
+                        ),
+                      )
+                    : null,
+              ),
             ),
-            SizedBox(
-              height: 200,
+            const SizedBox(
+              height: 300,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),

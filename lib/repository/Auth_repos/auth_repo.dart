@@ -39,7 +39,7 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
           "email": user.email,
           "profile": user.photoURL,
           'Gender': 'No declared',
-          'phone': '+91000000000',
+          'phone': user.phoneNumber,
           'createdAt': DateTime.now(),
           'password': 'signwithgoogle',
         });
@@ -200,8 +200,13 @@ class FirebaseAuthentServices {
             "Email": user.email,
             "profile": user.photoURL,
             'Gender': 'No declared',
-            'phone': '+91000000000',
+            'phone': user.phoneNumber,
             'password': 'signwithgoogle',
+            
+          'street' : 'not declare',
+          'city' : "city",
+          'district' : "district",
+          'dob': "dob"
           });
         }
       }
@@ -217,6 +222,11 @@ class FirebaseAuthentServices {
     required String number,
     required String password,
     required String gender,
+    required String street,
+    required String city,
+    required String district,
+    required String dob
+    // required String street,
   }) async {
     print('hellow check 1');
     print(name);
@@ -241,7 +251,11 @@ class FirebaseAuthentServices {
           'uid': FirebaseAuth.instance.currentUser!.uid,
           'Gender': gender,
           'password': password,
-          'profile': imageurl
+          'profile': imageurl,
+          'street' : street,
+          'city' : city,
+          'district' : district,
+          'dob': dob
         };
 
         print('hellow check 3');

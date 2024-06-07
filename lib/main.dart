@@ -5,7 +5,9 @@ import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
+import 'package:trek_trak/Application/profile/profile_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
+import 'package:trek_trak/repository/profile_repo/profile_repo.dart';
 import 'package:trek_trak/routing/route.dart';
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => BottomNavigationBarBloc(),
         ),
+        BlocProvider(
+          create: (context) => ProfileBloc(UserProfileRepo())..add(GetUserEvent())),
+        
       ],
       child:MaterialApp(
       debugShowCheckedModeBanner: false,

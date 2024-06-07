@@ -1,6 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages, library_prefixes
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:trek_trak/Application/profile/profile_bloc.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_screen.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart'
     as signUpFields;
@@ -43,7 +43,10 @@ class Routers {
           name: nameController.text,
           number: phoneController.text,
         ),
-    '/UserData': (context) => const UserData(),
+    '/UserData': (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserData(email: args['email'], gender: args['gender'], name: args['name'], password: args['password'],);
+    },
     '/Success': (context) => const SuccessScreen(),
     '/signScreen': (context) => const SignScreen(),
     '/login': (context) => const LoginScreen(),
@@ -53,9 +56,21 @@ class Routers {
     '/chat': (context) => const ChatPage(),
     '/profile': (context) => const ProfilePage(),
     '/mybottom': (context) => const MyBottom(),
-    '/editProfile': (context) => const EditProfile(),
+    '/editProfile': (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return EditProfile(
+        selectedImage: args['selectedImage'],
+        userModel: args['userModel'],
+      );
+    },
     '/ProfileAdd': (context) => const ProfileAdding(),
-    '/personalDetail': (context) => const PersonalDetail(),
+    '/personalDetail': (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return PersonalDetail(
+        selectedImage: args['selectedImage'],
+        userModel: args['userModel'],
+      );
+    },
     '/addPreference': (context) => const AddPreference(),
     '/chattinessScreen': (context) => const ChattinessScreen(),
     '/petsScreen': (context) => const PetsScreen(),
@@ -64,6 +79,5 @@ class Routers {
     '/aboutScreen': (context) => const AboutScreen(),
     '/addBioScreen': (context) => const AddBioScreen(),
     '/forgotScreen': (context) => const ForgotScreen(),
-    //  '/loading': (context) => const CustomLoadingIndicator(indicator: Indicator.ballSpinFadeLoader),
   };
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 class number_verifying extends StatelessWidget {
+  final UserProfileLoadState state;
   const number_verifying({
     super.key,
+    required this.state
   });
 
   @override
   Widget build(BuildContext context) {
+     final user = state.user;
     return Row(
       children: [
         IconButton(
@@ -17,7 +21,7 @@ class number_verifying extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {},
-            child: Text("+919778574297",
+            child: Text(state.user.number!,
                 style: TextStyle(color: CustomColor.greenColor()))),
       ],
     );
@@ -25,12 +29,15 @@ class number_verifying extends StatelessWidget {
 }
 
 class email_verifying extends StatelessWidget {
+  final UserProfileLoadState state;
   const email_verifying({
     super.key,
+    required this.state
   });
 
   @override
   Widget build(BuildContext context) {
+    final user = state.user;
     return Row(
       children: [
         IconButton(
@@ -40,7 +47,7 @@ class email_verifying extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {},
-            child: Text("Confirm email kvnandhu09@gmail.com",
+            child: Text("Confirm ${state.user.email}",
                 style: TextStyle(color: CustomColor.greenColor()))),
       ],
     );

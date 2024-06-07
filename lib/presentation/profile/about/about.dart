@@ -1,32 +1,41 @@
-import 'dart:io';
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/profile/profile_bloc.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile_widget.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/vehicle_custom.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/verifying_custom.dart';
-import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 
 class AboutScreen extends StatefulWidget {
-  const AboutScreen({super.key});
+
+
+  const AboutScreen({super.key, });
 
   @override
   State<AboutScreen> createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-  String? _selectedImage;
+  String? selectedImage;
+    late final UserProfileLoadState state;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<ProfileBloc>().add(GetUserEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
-        body: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if(state is UserProfileLoadState){
-
-            
+        body: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+          if (state is ProfileLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is UserProfileLoadState) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -34,7 +43,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //!--------------profile adding , view profile, personal details-----------
-                    profile_details(selectedImage: _selectedImage),
+                    ProfileDetails(selectedImage: selectedImage,userModel: state.user),
                     const divider_normal(),
                     const Text(
                       "Verify your profile",
@@ -43,9 +52,9 @@ class _AboutScreenState extends State<AboutScreen> {
                     //!--------------id verifying-----------
                     const id_verifying(),
                     //!--------------email_verifying--------
-                    const email_verifying(),
+                     email_verifying(state: state),
                     //!-------------- number_verifying------
-                    const number_verifying(),
+                     number_verifying(state: state),
                     const divider_thickness_big(),
                     const Text(
                       "About you",
@@ -67,11 +76,10 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
               ),
             );
-          }else{
-             return Center(child: Text('Unknown state'));
+          } else {
+            return const Center(child: Text('Unknown state'));
           }
-          }
-        ),
+        }),
       ),
     );
   }

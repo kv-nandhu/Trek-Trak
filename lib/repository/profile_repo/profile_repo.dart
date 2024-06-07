@@ -13,8 +13,16 @@ class UserProfileRepo {
           .collection('users')
           .where('uid', isEqualTo: user!.uid)
           .get();
+          
           if(data.docs.isNotEmpty) {
-            return UserModel.fromJson(data.docs.first.data());
+       UserModel userModel = UserModel.fromJson(data.docs.first.data());
+     
+        print('Name: ${userModel.name}');
+        print('Email: ${userModel.email}');
+        print('Gender: ${userModel.gender}');
+        print('Number: ${userModel.number}');
+        return userModel;
+            
           }else{
             return null;
           }
