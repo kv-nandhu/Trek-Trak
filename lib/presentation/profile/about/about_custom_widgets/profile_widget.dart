@@ -9,12 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileDetails extends StatefulWidget {
   final UserModel userModel;
-  final String? selectedImage;
+  final String? pickedImage;
 
   const ProfileDetails({
     super.key,
     required this.userModel,
-    required this.selectedImage,
+    required this.pickedImage,
   });
 
   @override
@@ -33,18 +33,22 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   void initState() {
     super.initState();
     _getCurrentUser();
-    _localSelectedImage = widget.selectedImage;
+    _localSelectedImage = widget.pickedImage;
   }
 
   void _getCurrentUser() async {
     try {
       final String fullName = widget.userModel.name ?? "";
       List<String> nameParts = fullName.split(' ');
+
       setState(() {
-        _firstName = nameParts.length > 1
-            ? nameParts.sublist(0, nameParts.length - 1).join(' ')
-            : fullName;
-        _lastName = nameParts.isNotEmpty ? nameParts.last : "";
+        if (nameParts.length > 1) {
+          _firstName = nameParts.sublist(0, nameParts.length - 1).join(' ');
+          _lastName = nameParts.last;
+        } else {
+          _firstName = fullName;
+          _lastName = "";
+        }
       });
     } catch (error) {
       print("Error getting user data: $error"); // Handle potential errors
@@ -53,6 +57,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   @override
   Widget build(BuildContext context) {
+    print("--------------------------------------------");
+    print(_firstName);
+    print("--------------------------------------------");
+    print(_lastName);
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is UserProfileLoadState) {
@@ -123,7 +131,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               CircleAvatar(
                 radius: 60,
                 backgroundImage: _localSelectedImage != null
-                    ? FileImage(File(_localSelectedImage!))
+                    ? FileImage(File(state.user.image!))
                     : NetworkImage(imageurl),
                 child: _localSelectedImage == null ? null : null,
               ),

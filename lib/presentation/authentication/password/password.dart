@@ -81,7 +81,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 registerButton(
                     formKey: formKey,
                     passwordController: passwordController,
-                    widget: widget, email: emailController.text, gender: selectedGender.toString(), name: nameController.text, phone: phoneController.text,)
+                    widget: widget, email: widget.email, gender: widget.gender, name: widget.name, number: widget.number,)
               ],
             ),
           ),

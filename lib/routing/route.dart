@@ -44,8 +44,16 @@ class Routers {
           number: phoneController.text,
         ),
     '/UserData': (context) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      return UserData(email: args['email'], gender: args['gender'], name: args['name'], password: args['password'],);
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserData(
+        email: args['email'],
+        gender: args['gender'],
+        name: args['name'],
+        password: args['password'],
+        number: args['number'], 
+        userModel: args['usermodel'],
+      );
     },
     '/Success': (context) => const SuccessScreen(),
     '/signScreen': (context) => const SignScreen(),
@@ -57,7 +65,8 @@ class Routers {
     '/profile': (context) => const ProfilePage(),
     '/mybottom': (context) => const MyBottom(),
     '/editProfile': (context) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return EditProfile(
         selectedImage: args['selectedImage'],
         userModel: args['userModel'],
@@ -65,7 +74,8 @@ class Routers {
     },
     '/ProfileAdd': (context) => const ProfileAdding(),
     '/personalDetail': (context) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return PersonalDetail(
         selectedImage: args['selectedImage'],
         userModel: args['userModel'],

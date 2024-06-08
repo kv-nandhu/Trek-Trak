@@ -18,7 +18,7 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-  String? selectedImage;
+  String? pickedImage;
     late final UserProfileLoadState state;
 @override
   void initState() {
@@ -43,7 +43,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //!--------------profile adding , view profile, personal details-----------
-                    ProfileDetails(selectedImage: selectedImage,userModel: state.user),
+                    ProfileDetails(pickedImage: pickedImage,userModel: state.user),
                     const divider_normal(),
                     const Text(
                       "Verify your profile",

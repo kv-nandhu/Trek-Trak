@@ -114,7 +114,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             city: event.city,
             street: event.street,
             district: event.district,
-            dob: event.dob
+            dob: event.dob,
+            image: event.image
 
             );
         emit(AuthVerificationSuccessn());

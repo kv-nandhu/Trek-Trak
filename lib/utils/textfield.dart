@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.validator,
-    this.suffixIcon,
+    this.suffixIcon, String? errorText,
   });
 
   @override

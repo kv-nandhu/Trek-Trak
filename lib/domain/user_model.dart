@@ -24,7 +24,7 @@ class UserModel {
       this.district,
       this.image,
       this.dob,
-      this.password});
+      this.password,});
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       gender: json['Gender'],
@@ -36,7 +36,7 @@ class UserModel {
       street: json['street'],
       city: json['city'],
       district: json['district'],
-      dob: json['dob'],
+      dob: json['dob'], 
     );
   }
 

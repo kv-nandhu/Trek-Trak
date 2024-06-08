@@ -83,6 +83,7 @@ class signwithemailandpasswordEvent extends AuthEvent {
   final String street;
   final String district;
   final String dob;
+  final String image;
 
   final BuildContext context;
 
@@ -96,6 +97,7 @@ class signwithemailandpasswordEvent extends AuthEvent {
       required this.street,
       required this.district,
       required this.dob,
+      required this.image,
       required this.context});
 }
 

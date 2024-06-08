@@ -3,26 +3,25 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/password/password.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/presentation/authentication/profile/profile_screen.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/domain/user_model.dart';
 
 class registerButton extends StatelessWidget {
-String name,email,gender,phone;
-   registerButton({
+  final String name, email, gender, number;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController passwordController;
+  
+  registerButton({
     super.key,
     required this.formKey,
     required this.passwordController,
-    required this.widget,
     required this.email,
     required this.gender,
     required this.name,
-    required this.phone
+    required this.number, required PasswordScreen widget,
   });
- 
-  final GlobalKey<FormState> formKey;
-  final TextEditingController passwordController;
-  final PasswordScreen widget;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +29,28 @@ String name,email,gender,phone;
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: InkWell(
         onTap: () {
-
           if (formKey.currentState!.validate()) {
-            // BlocProvider.of<AuthBloc>(context).add(
-            //     signwithemailandpasswordEvent(
-            //         password: passwordController.text,
-            //         name: widget.name,
-            //         number: widget.number,
-            //         gender: widget.gender,
-            //         email: widget.email,
-            //         context: context));
-            Navigator.push(context, MaterialPageRoute(builder: (context) => UserData(password: passwordController.text, email: '', gender: '', name: '',),));
+            final dummyUserModel = UserModel(
+              email: email,
+              name: name,
+              number: number,
+              gender: gender,
+              // Add other required fields as needed
+            );
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserData(
+                  password: passwordController.text,
+                  email: email,
+                  gender: gender,
+                  name: name,
+                  number: number,
+                  userModel: dummyUserModel,
+                ),
+              ),
+            );
           }
         },
         child: Container(

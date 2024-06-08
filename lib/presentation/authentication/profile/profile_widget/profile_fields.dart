@@ -1,143 +1,276 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: unused_element, use_super_parameters, depend_on_referenced_packages
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:trek_trak/Application/Auth/auth_bloc.dart';
+import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
+import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:trek_trak/domain/user_model.dart';
 
 final TextEditingController _emailController = TextEditingController();
-String? _selectedImage;
 final TextEditingController _nameController = TextEditingController();
+final TextEditingController _phoneNumberController = TextEditingController();
 final TextEditingController _streetController = TextEditingController();
 final TextEditingController _cityController = TextEditingController();
 final TextEditingController _districtController = TextEditingController();
 final TextEditingController dateController = TextEditingController();
 
-class ProfileFields {
-  static Widget nameFields() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomTextFormField(
-        controller: _nameController,
-        labelText: 'Name',
-        hintText: 'Enter your name',
-        keyboardType: TextInputType.name,
-        validator: (value) => Validator().nameValidator(value),
-      ),
-    );
+class FieldsAndButton extends StatelessWidget {
+  final String? pickedImage;
+  final GlobalKey<FormState> formKey;
+  final String email, name, password, gender, number;
+  final UserModel userModel;
+
+  FieldsAndButton({
+    Key? key,
+    required this.pickedImage,
+    required this.formKey,
+    required this.email,
+    required this.gender,
+    required this.name,
+    required this.password,
+    required this.number,
+    required this.userModel,
+  }) : super(key: key);
+
+  bool _validateProfileDetails() {
+    final email = _emailController.text;
+    final name = _nameController.text;
+    final phoneNumber = _phoneNumberController.text;
+
+    return email == userModel.email &&
+           name == userModel.name &&
+           phoneNumber == userModel.number;
   }
 
-  static Widget emailFields() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomTextFormField(
-        controller: _emailController,
-        labelText: 'Email',
-        hintText: 'Enter your email',
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) => Validator().emailValidator(value),
-      ),
-    );
-  }
-
-  static Widget streetFields() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomTextFormField(
-        controller: _streetController,
-        labelText: 'Street',
-        hintText: 'Enter your Street',
-        keyboardType: TextInputType.streetAddress,
-        validator: (value) => Validator().streetValidator(value),
-      ),
-    );
-  }
-
-  static Widget cityFields() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomTextFormField(
-        controller: _cityController,
-        labelText: 'City',
-        hintText: 'Enter your City',
-        keyboardType: TextInputType.text,
-        validator: (value) => Validator().cityValidator(value),
-      ),
-    );
-  }
-
-  static Widget districtFields() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomTextFormField(
-        controller: _districtController,
-        labelText: 'District',
-        hintText: 'Enter your District',
-        keyboardType: TextInputType.text,
-        validator: (value) => Validator().districtValidator(value),
-      ),
-    );
-  }
-
-  static Widget imageFields() {
-    return InkWell(
-      onTap: () {
-
-      },
-      child: CircleAvatar(
-          radius: 90,
-          backgroundImage:
-              _selectedImage != null ? FileImage(File(_selectedImage!)) : null,
-          child: _selectedImage == null ? const Icon(Icons.add_a_photo_outlined) : null),
-    );
-  }
-
-  static Widget dobField(BuildContext context) {
-  return GestureDetector(
-    onTap: () async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now(),
-      );
-      if (picked != null) {
-        // Handle picked date here
-        print('Selected date: $picked');
-        // Update the text field with the selected date
-        dateController.text = '${picked.year}-${picked.month}-${picked.day}';
-      }
-    },
-    child: AbsorbPointer(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 400,
-          height: 55,
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey), // Add border to create square shape
-          ),
-          child: TextFormField(
-            controller: dateController,
-            decoration: InputDecoration(
-              // labelText: 'Date of Birth',
-              hintText: 'Select your date of birth',
-              border: InputBorder.none, // Remove border of the TextFormField
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Validation Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            validator: (value) {
-              // Add validation logic if needed
-              return null; // Return null if validation passes
-            },
-            readOnly: true, // Make the TextFormField read-only
-            onTap: () {}, // Disable editing by tapping on the TextFormField
+          ],
+        );
+      },
+    );
+  }
+
+  void _onSubmit(BuildContext context) {
+    print(name);
+    print(email);
+    print(_districtController);
+    print(_cityController);
+    print(_streetController);
+    print(number);
+    print(dateController);
+    print(gender);
+    print(pickedImage);
+    print(password);
+    if (_validateProfileDetails()) {
+      // Proceed with the next step
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditProfile(
+            selectedImage: pickedImage,
+            userModel: userModel,
           ),
         ),
-      ),
-    ),
-  );
-}
+      );
+    } else {
+      // Show error dialog
+      _showErrorDialog(context, 'Profile details do not match.');
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Profile image selection
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              BlocProvider.of<ProfileBuildBloc>(context).add(ChangeImageEvent());
+              BlocProvider.of<ProfileBuildBloc>(context).add(ProfileImagePickerEvent());
+            },
+            child: CircleAvatar(
+              radius: 90,
+              backgroundImage: pickedImage != null ? FileImage(File(pickedImage!)) : null,
+              child: pickedImage == null ? const Icon(Icons.add_a_photo_outlined) : null,
+            ),
+          ),
+        ),
+        // Name input field
+       Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: CustomTextFormField(
+    controller: _nameController..text = name,
+    labelText: 'Name',
+    hintText: 'Enter your name',
+    keyboardType: TextInputType.name,
+    validator: (value) => Validator().nameValidator(value),
+    errorText: _nameController.text.isEmpty ? 'Name is required' : null,
+  ),
+),
+        // Date of Birth input field
+        GestureDetector(
+          onTap: () async {
+            final DateTime? picked = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+            );
+            if (picked != null) {
+              dateController.text = '${picked.year}-${picked.month}-${picked.day}';
+            }
+          },
+          child: AbsorbPointer(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 400,
+                height: 55,
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: TextFormField(
+                  controller: dateController,
+                  decoration: InputDecoration(
+                    hintText: 'Select your date of birth',
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => null,
+                  readOnly: true,
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Email input field
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _emailController..text = email,
+            labelText: 'Email',
+            hintText: 'Enter your email',
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) => Validator().emailValidator(value),
+                errorText: _emailController.text.isEmpty ? 'email is required' : null,
+          ),
+        ),
+        // Phone Number input field
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _phoneNumberController..text = number,
+            labelText: 'Phone Number',
+            hintText: 'Enter your phone number',
+            keyboardType: TextInputType.phone,
+            // validator: (value) => Validator().numberValidator(value),
+                errorText: _phoneNumberController.text.isEmpty ? 'Number is required' : null,
+          ),
+        ),
+        // Street input field
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _streetController,
+            labelText: 'Street',
+            hintText: 'Enter your street',
+            keyboardType: TextInputType.streetAddress,
+            validator: (value) => Validator().streetValidator(value),
+                errorText: _streetController.text.isEmpty ? 'city is required' : null,
+
+          ),
+        ),
+        // City input field
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _cityController,
+            labelText: 'City',
+            hintText: 'Enter your city',
+            keyboardType: TextInputType.text,
+            validator: (value) => Validator().cityValidator(value),
+                errorText: _cityController.text.isEmpty ? 'street is required' : null,
+
+          ),
+        ),
+        // District input field
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _districtController,
+            labelText: 'District',
+            hintText: 'Enter your district',
+            keyboardType: TextInputType.text,
+            validator: (value) => Validator().districtValidator(value),
+                errorText: _districtController.text.isEmpty ? 'district is required' : null,
+
+          ),
+        ),
+        const SizedBox(height: 20),
+        // Save button
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: InkWell(
+            onTap: () {
+             if (formKey.currentState!.validate()) {
+                BlocProvider.of<AuthBloc>(context).add(
+                    signwithemailandpasswordEvent(
+                        password: password!,
+                        name: name!,
+                        number: number!,
+                        gender: gender!,
+                        email: email!,
+                        context: context,
+                        city: _cityController.text,
+                        street: _streetController.text,
+                        district: _districtController.text,
+                        image: pickedImage!,
+                        dob: dateController.text));
+              }
+            },
+            child: Container(
+              height: 50,
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: CustomColor.greenColor(),
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColor.whiteColor(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

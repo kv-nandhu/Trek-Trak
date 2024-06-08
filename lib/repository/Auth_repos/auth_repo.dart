@@ -53,9 +53,6 @@ Future<void> signInWithGoogle(BuildContext context, bool isUser) async {
   }
 }
 
-String imageurl =
-    'https://littleooties.ca/wp-content/uploads/2022/07/AdobeStock_64672736_Preview.jpg';
-
 class FirebaseAuthentServices {
   String? verificationId;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -202,11 +199,10 @@ class FirebaseAuthentServices {
             'Gender': 'No declared',
             'phone': user.phoneNumber,
             'password': 'signwithgoogle',
-            
-          'street' : 'not declare',
-          'city' : "city",
-          'district' : "district",
-          'dob': "dob"
+            'street': 'not declare',
+            'city': "city",
+            'district': "district",
+            'dob': "dob"
           });
         }
       }
@@ -215,26 +211,25 @@ class FirebaseAuthentServices {
     }
   }
 
-  Future<void> registerUser({
-    required BuildContext context,
-    required String email,
-    required String name,
-    required String number,
-    required String password,
-    required String gender,
-    required String street,
-    required String city,
-    required String district,
-    required String dob
-    // required String street,
-  }) async {
+  Future<void> registerUser(
+      {required BuildContext context,
+      required String email,
+      required String name,
+      required String number,
+      required String password,
+      required String gender,
+      required String street,
+      required String city,
+      required String district,
+      required String dob,
+      required String image}) async {
     print('hellow check 1');
     print(name);
     print(email);
     print(number);
     print(gender);
     print(password);
-    print(imageurl);
+    print(image);
     final db = FirebaseFirestore.instance;
     User? user = await signUpWithEmailandPassword(
       email: email,
@@ -251,11 +246,12 @@ class FirebaseAuthentServices {
           'uid': FirebaseAuth.instance.currentUser!.uid,
           'Gender': gender,
           'password': password,
-          'profile': imageurl,
-          'street' : street,
-          'city' : city,
-          'district' : district,
-          'dob': dob
+          // 'profile': image,
+          'street': street,
+          'city': city,
+          'district': district,
+          'dob': dob,
+          'image': image
         };
 
         print('hellow check 3');
