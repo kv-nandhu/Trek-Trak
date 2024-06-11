@@ -1,17 +1,19 @@
 import 'dart:io';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 class ProfileAdding extends StatefulWidget {
-  const ProfileAdding({super.key});
+  final UserModel userModel;
+  const ProfileAdding({super.key, required this.userModel});
 
   @override
   State<ProfileAdding> createState() => _ProfileAddingState();
 }
 
 class _ProfileAddingState extends State<ProfileAdding> {
-  String? _selectedImage;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,23 +38,25 @@ class _ProfileAddingState extends State<ProfileAdding> {
               ),
             ),
             Center(
-              child: CircleAvatar(
-                radius: 110.0, // Adjust radius as needed
-                backgroundImage: _selectedImage != null
-                    ? FileImage(File(_selectedImage!))
-                    : null,
-                child: _selectedImage == null
-                    ? ClipOval(
-                        child: AspectRatio(
-                          aspectRatio:
-                              1.0, // Adjust for square images or use original aspect ratio
-                          child: Image.asset(
-                            'images/profile.jpg',
-                            fit: BoxFit.cover, // Ensure image fills the circle
-                          ),
-                        ),
-                      )
-                    : null,
+              child: Stack(
+                children: [
+                  BlocBuilder<ProfileBuildBloc, ProfileBuildState>(
+                    builder: (context, state) {
+                      if (state is ProfileImageSuccess) {
+                        if (state.image != null) {
+                          return CircleAvatar(
+                            maxRadius: 100,
+                            backgroundImage: FileImage(File(state.image!.path)),
+                          );
+                        }
+                      }
+                      return CircleAvatar(
+                        maxRadius: 100,
+                        backgroundImage: NetworkImage(widget.userModel.image!),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -65,7 +69,10 @@ class _ProfileAddingState extends State<ProfileAdding> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.pushReplacementNamed(context, '/sign');
+                    context
+                        .read<ProfileBuildBloc>()
+                        .add(ProfileImagegalleryPickerEvent());
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     // ignore: deprecated_member_use
@@ -86,7 +93,12 @@ class _ProfileAddingState extends State<ProfileAdding> {
               height: 10,
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context
+                      .read<ProfileBuildBloc>()
+                      .add(ProfileImagePickerEvent());
+                  Navigator.pop(context);
+                },
                 child: Text(
                   "Choose a picture",
                   style:

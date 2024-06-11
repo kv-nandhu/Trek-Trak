@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/dp_adding.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/edit_personal/personal_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
 import 'package:trek_trak/utils/color/color.dart';
@@ -22,18 +24,15 @@ class ProfileDetails extends StatefulWidget {
 }
 
 class _ProfileDetailsState extends State<ProfileDetails> {
-  String? _localSelectedImage;
+  String? localSelectedImage;
   String? _firstName;
   String? _lastName;
-
-  String imageurl =
-      'https://littleooties.ca/wp-content/uploads/2022/07/AdobeStock_64672736_Preview.jpg';
 
   @override
   void initState() {
     super.initState();
     _getCurrentUser();
-    _localSelectedImage = widget.pickedImage;
+    localSelectedImage = widget.pickedImage;
   }
 
   void _getCurrentUser() async {
@@ -57,10 +56,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print("--------------------------------------------");
-    print(_firstName);
-    print("--------------------------------------------");
-    print(_lastName);
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is UserProfileLoadState) {
@@ -71,11 +66,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _firstName?.isNotEmpty == true ? _firstName! : "Enter the name",
+                    _firstName?.isNotEmpty == true
+                        ? _firstName!
+                        : "Enter the name",
                     style: const TextStyle(fontSize: 30),
                   ),
                   Text(
-                    _lastName?.isNotEmpty == true ? _lastName! : "Enter the name",
+                    _lastName?.isNotEmpty == true
+                        ? _lastName!
+                        : "Enter the name",
                     style: const TextStyle(fontSize: 30),
                   ),
                   Row(
@@ -87,7 +86,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/ProfileAdd');
+                         Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileAdding(
+                      
+                        userModel: widget.userModel,
+                      ),
+                    ),
+                  );
                         },
                         child: Text(
                           "Edit profile picture",
@@ -111,7 +118,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => PersonalDetail(
-                                selectedImage: _localSelectedImage,
+                                selectedImage: localSelectedImage,
                                 userModel: widget.userModel,
                               ),
                             ),
@@ -128,20 +135,30 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   ),
                 ],
               ),
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: _localSelectedImage != null
-                    ? FileImage(File(state.user.image!))
-                    : NetworkImage(imageurl),
-                child: _localSelectedImage == null ? null : null,
-              ),
+              InkWell(
+                onTap: () {
+                  BlocProvider.of<ProfileBuildBloc>(context)
+                      .add(ChangeImageEvent());
+                  // BlocProvider.of<ProfileBuildBloc>(context)
+                  //     .add(ProfileImagePickerEvent());
+                },
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundImage: state.user.image! != null
+                      ? NetworkImage(state.user.image!)
+                      : null,
+                  child:state.user.image! == null
+                      ? Icon(Icons.person, size: 60) // Placeholder icon
+                      : null,
+                ),
+              ),          
               IconButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditProfile(
-                        selectedImage: _localSelectedImage,
+                      
                         userModel: widget.userModel,
                       ),
                     ),

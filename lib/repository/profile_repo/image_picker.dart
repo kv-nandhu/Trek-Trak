@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as _firebaseStorage;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 
 class ImageService {
@@ -18,17 +18,16 @@ class ImageService {
     List<XFile> file = await picker.pickMultiImage();
     return file;
   }
-    Future<String?> uploadImageToFirebase(XFile file,String uid) async {
+    Future<String?> uploadImageToFirebase(XFile file) async {
     try {
-      final File files = File(file.path);
-       _firebaseStorage.Reference ref= _firebaseStorage.FirebaseStorage.instance.ref('${DateTime.now().millisecondsSinceEpoch.toString()}');
-_firebaseStorage.UploadTask  uploadTask=ref.putFile(files);
-await uploadTask;
-String imageUrl=await ref.getDownloadURL();
-        FirebaseFirestore.instance.collection('users').doc(uid).update({
-            'pic': imageUrl,
-           
-          });
+final File files = File(file.path);
+        firebase_storage.Reference ref = firebase_storage
+            .FirebaseStorage.instance
+            .ref('${DateTime.now().millisecondsSinceEpoch.toString()}');
+        firebase_storage.UploadTask uploadTask = ref.putFile(files);
+        await uploadTask;
+        String imageUrl = await ref.getDownloadURL();
+    
       return imageUrl;
     } catch (e) {
       print('Error uploading image to Firebase Storage: $e');

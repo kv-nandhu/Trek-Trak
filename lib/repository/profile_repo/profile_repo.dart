@@ -21,6 +21,10 @@ class UserProfileRepo {
         print('Email: ${userModel.email}');
         print('Gender: ${userModel.gender}');
         print('Number: ${userModel.number}');
+        print('dob: ${userModel.dob}');
+        print('image: ${userModel.image}');
+        print(userModel);
+
         return userModel;
             
           }else{

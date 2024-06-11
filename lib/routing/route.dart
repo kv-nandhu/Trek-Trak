@@ -68,11 +68,17 @@ class Routers {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return EditProfile(
-        selectedImage: args['selectedImage'],
         userModel: args['userModel'],
       );
     },
-    '/ProfileAdd': (context) => const ProfileAdding(),
+    '/ProfileAdd': (context) { final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return ProfileAdding(
+        userModel: args['userModel'],
+      );},
+      
+
+
     '/personalDetail': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;

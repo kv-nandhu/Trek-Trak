@@ -32,7 +32,7 @@ class UserModel {
       name: json['Name'],
       email: json['Email'],
       uid: json['uid'],
-      image: json['profile'],
+      image: json['image'],
       street: json['street'],
       city: json['city'],
       district: json['district'],
@@ -45,7 +45,7 @@ class UserModel {
     data['Name'] = this.name;
     data['Email'] = this.email;
     data['uid'] = this.uid;
-    data['profile'] = this.image;
+    data['image'] = this.image;
     data['Gender'] = this.gender;
     data['number'] = this.number;
     data['street'] = this.street;

@@ -86,7 +86,7 @@ class FieldsAndButton extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => EditProfile(
-            selectedImage: pickedImage,
+           
             userModel: userModel,
           ),
         ),
@@ -111,7 +111,7 @@ class FieldsAndButton extends StatelessWidget {
             },
             child: CircleAvatar(
               radius: 90,
-              backgroundImage: pickedImage != null ? FileImage(File(pickedImage!)) : null,
+              backgroundImage: pickedImage != null ? NetworkImage(pickedImage!) : null,
               child: pickedImage == null ? const Icon(Icons.add_a_photo_outlined) : null,
             ),
           ),

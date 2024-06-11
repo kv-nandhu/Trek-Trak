@@ -32,5 +32,6 @@ class ProfileSaveToCredential extends ProfileBuildEvent {
 }
 
 class ProfileImagePickerEvent extends ProfileBuildEvent{}
+class ProfileImagegalleryPickerEvent extends ProfileBuildEvent{}
 
 class ImageNotNull extends ProfileBuildEvent{}

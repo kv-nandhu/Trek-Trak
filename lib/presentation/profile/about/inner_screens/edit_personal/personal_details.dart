@@ -131,7 +131,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                     TextButton(
                       onPressed: () {},
                       child: Text(
-                        "06/05/2002", // This should be dynamically fetched
+                        state.user.dob!, // This should be dynamically fetched
                         style: TextStyle(
                           color: CustomColor.greenColor(),
                           fontSize: 19,
