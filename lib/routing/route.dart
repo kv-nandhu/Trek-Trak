@@ -28,6 +28,7 @@ import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editi
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/brand.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/color.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/licence_detils.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_model.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
 import 'package:trek_trak/presentation/publish/add_city.dart';
@@ -112,6 +113,10 @@ class Routers {
     '/PlateNumber': (context) => const PlateNumber(),
     '/brandVehicle': (context) => const BrandVehicle(),
     '/colorListScreen': (context) =>  ColorListScreen(),
+    '/vehicleDetailScreen': (context) {
+       final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return VehicleDetailScreen( userModel: args['userModel'],);},
     '/modelsSelecting': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;

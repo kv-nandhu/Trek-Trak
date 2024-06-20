@@ -6,6 +6,7 @@ import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile_widget.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/vehicle_custom.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/verifying_custom.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_details.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 
@@ -71,7 +72,6 @@ class _AboutScreenState extends State<AboutScreen> {
                     //!-------------- mini_bio--------------
                     mini_bio(bio: state.user.miniBio ?? 'No data'),
                     //!-------------- add_preferences-------
-                  
 
                     state.user.chat == 'chattiness'
                         ? SizedBox()
@@ -141,6 +141,59 @@ class _AboutScreenState extends State<AboutScreen> {
                       style: TextStyle(fontSize: 20),
                     ),
                     //!-------------- vehicles_details-----
+                    state.user.vcolor == 'vehicle color'
+                        ? SizedBox()
+                        : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${state.user.vbrand!} ${state.user.vmodel!}',
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      state.user.vcolor!,
+                                      style: TextStyle(
+                                          color: CustomColor.greyColor(),
+                                          fontSize: 15),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: state.user.image! != null
+                                          ? NetworkImage(state.user.image!)
+                                          : null,
+                                      child: state.user.image! == null
+                                          ? Icon(Icons.person,
+                                              size: 60) // Placeholder icon
+                                          : null,
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                        Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => VehicleDetailScreen(
+                                            userModel: state.user,
+                                          ),
+                                        ),
+                                      );
+                                        },
+                                        icon: Icon(Icons.arrow_forward_ios_sharp))
+                                  ],
+                                ),
+                              ],
+                            ),
+                        ),
                     const vehicles_details(),
                   ],
                 ),
