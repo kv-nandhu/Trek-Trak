@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/profile/profile_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class number_verifying extends StatelessWidget {
   final UserProfileLoadState state;
-  const number_verifying({
-    super.key,
-    required this.state
-  });
+  const number_verifying({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-     final user = state.user;
+    final user = state.user;
     return Row(
       children: [
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.check_circle),
+          icon: const Icon(Icons.check_circle),
           color: CustomColor.greenColor(),
         ),
         TextButton(
@@ -30,10 +28,7 @@ class number_verifying extends StatelessWidget {
 
 class email_verifying extends StatelessWidget {
   final UserProfileLoadState state;
-  const email_verifying({
-    super.key,
-    required this.state
-  });
+  const email_verifying({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +37,7 @@ class email_verifying extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.add_circle_outline_sharp),
+          icon: const Icon(Icons.add_circle_outline_sharp),
           color: CustomColor.greenColor(),
         ),
         TextButton(
@@ -65,7 +60,7 @@ class id_verifying extends StatelessWidget {
       children: [
         IconButton(
             onPressed: () {},
-            icon: Icon(Icons.add_circle_outline_sharp),
+            icon: const Icon(Icons.add_circle_outline_sharp),
             color: CustomColor.greenColor()),
         TextButton(
             onPressed: () {},
@@ -77,13 +72,15 @@ class id_verifying extends StatelessWidget {
     );
   }
 }
-class add_preferences extends StatelessWidget {
-  const add_preferences({
-    super.key,
-  });
 
+class add_preferences extends StatelessWidget {
+   add_preferences({
+    super.key,required this.chatiness,
+  });
+String? chatiness;
   @override
   Widget build(BuildContext context) {
+     bool isAddedchar = (chatiness == '') ? true : false;
     return Row(
       children: [
         IconButton(
@@ -97,7 +94,8 @@ class add_preferences extends StatelessWidget {
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/addPreference');
             },
-            child: Text("add my preferences",
+            child: Text(
+              "add my preferences",
                 style: TextStyle(color: CustomColor.greenColor()))),
       ],
     );
@@ -105,26 +103,30 @@ class add_preferences extends StatelessWidget {
 }
 
 class mini_bio extends StatelessWidget {
-  const mini_bio({
-    super.key,
-  });
+  mini_bio({super.key, required this.bio});
+  String? bio;
 
   @override
   Widget build(BuildContext context) {
+    bool isAdded = (bio == '') ? true : false;
     return Row(
       children: [
         IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add_circle_outline_sharp),
-            color: CustomColor.greenColor()),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/addBioScreen');
+          },
+          icon: isAdded ==true? const Icon(Icons.add_circle_outline_sharp): const Icon(Icons.add),
+          color: CustomColor.greenColor(),
+        ),
         TextButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/addBioScreen');
-            },
-            child: Text(
-              "add a mini bio",
-              style: TextStyle(color: CustomColor.greenColor()),
-            )),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/addBioScreen');
+          },
+          child: Text(
+            isAdded ? 'add mini bio': bio! ,
+            style: TextStyle(color: CustomColor.greenColor()),
+          ),
+        ),
       ],
     );
   }

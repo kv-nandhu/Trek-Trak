@@ -12,6 +12,16 @@ class UserModel {
   String? district;
   String? image;
   String? dob;
+  String? miniBio;
+  String? chat;
+  String? song;
+  String? smoke;
+  String? pet;
+  String? vNumber;
+  String? vmodel;
+  String? vbrand;
+  String? vcolor;
+  String? vtype;
 
   UserModel(
       {this.email,
@@ -24,7 +34,18 @@ class UserModel {
       this.district,
       this.image,
       this.dob,
-      this.password,});
+      this.password,
+      this.miniBio,
+      this.chat,
+      this.song,
+      this.smoke,
+      this.pet,
+      this.vNumber,
+      this.vmodel,
+      this.vbrand,
+      this.vcolor,
+      this.vtype,
+      });
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       gender: json['Gender'],
@@ -37,6 +58,16 @@ class UserModel {
       city: json['city'],
       district: json['district'],
       dob: json['dob'], 
+      miniBio: json['miniBio'],
+      chat: json['chat'],
+      song: json['song'],
+      smoke: json['smoke'],
+      pet: json['pet'],
+      vNumber: json['vnumber'],
+      vmodel: json['vmodel'],
+      vbrand: json['vbrand'],
+      vcolor: json['vcolor'],
+      vtype: json['vtype'],
     );
   }
 
@@ -52,6 +83,17 @@ class UserModel {
     data['city'] = this.city;
     data['district'] = this.district;
     data['dob'] = this.dob;
+    data['miniBio'] = this.miniBio;
+    data['chat'] = this.chat;
+    data['song'] = this.song;
+    data['smoke'] = this.smoke;
+    data['pet'] = this.pet;
+    data['vnumber'] = this.vNumber;
+    data['vmodel'] = this.vmodel;
+    data['vbrand'] = this.vbrand;
+    data['vcolor'] = this.vcolor;
+    data['vtype'] = this.vtype;
+
     return data;
   }
 }

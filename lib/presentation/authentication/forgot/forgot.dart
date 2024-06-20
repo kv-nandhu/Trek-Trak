@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/repository/Auth_repos/forgot_repo.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';

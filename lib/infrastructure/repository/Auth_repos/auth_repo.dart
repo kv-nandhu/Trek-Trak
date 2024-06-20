@@ -222,7 +222,19 @@ class FirebaseAuthentServices {
       required String city,
       required String district,
       required String dob,
-      required String image}) async {
+      required String image,
+      String ?miniBio,
+      String ? chat,
+      String ? song,
+      String ? smoke,
+      String ? pet,
+      String ? vnumber,
+      String ? vmodel,
+      String ? vbrand,
+      String ? vcolor,
+      String ? vtype,
+
+      }) async {
     print('hellow check 1');
     print(name);
     print(email);
@@ -230,6 +242,7 @@ class FirebaseAuthentServices {
     print(gender);
     print(password);
     print(image);
+    print(vnumber);
     final db = FirebaseFirestore.instance;
     User? user = await signUpWithEmailandPassword(
       email: email,
@@ -246,12 +259,21 @@ class FirebaseAuthentServices {
           'uid': FirebaseAuth.instance.currentUser!.uid,
           'Gender': gender,
           'password': password,
-          // 'profile': image,
           'street': street,
           'city': city,
           'district': district,
           'dob': dob,
-          'image': image
+          'image': image,
+          'miniBio' : miniBio!,
+          'chat' : chat!,
+          'song' : song!,
+          'smoke' : smoke!,
+          'pet' : pet!,
+          'vnumber' :vnumber!,
+          'vmodel':vmodel!,
+          'vbrand':vbrand!,
+          'vcolor' : vcolor!,
+          'vtype' : vtype!,
         };
 
         print('hellow check 3');
@@ -274,21 +296,38 @@ class FirebaseAuthentServices {
   }
 
   void signIn(String email, String password, BuildContext context) async {
-    await signInWithEmailandPassword(email: email, password: password)
-        .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Login Succesfully'),
-        ),
-      );
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyBottom()));
-    }).onError((error, stackTrace) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Login have error :$error'),
-        ),
-      );
-    });
+  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Login Successfully'),
+      ),
+    );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MyBottom()), // Replace with your destination widget
+    );
+  } on FirebaseAuthException catch (e) {
+    String errorMessage;
+    if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+      errorMessage = 'Email and password are incorrect';
+    } else {
+      errorMessage = 'Login error: ${e.message}';
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred: $e'),
+      ),
+    );
   }
+}
 }

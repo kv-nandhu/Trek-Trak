@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PetsScreen extends StatefulWidget {
   const PetsScreen({super.key});
@@ -9,12 +11,11 @@ class PetsScreen extends StatefulWidget {
 }
 
 class _PetsScreenState extends State<PetsScreen> {
-  int? selectedAddressIndex;
-  int? index;
-  bool isChecked = false;
+String _slecetedPet = '';
 
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -60,12 +61,12 @@ class _PetsScreenState extends State<PetsScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value: 'Pets welcome. woof!', // Assign unique values to each radio button
+                    groupValue: _slecetedPet,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _slecetedPet = value!;
                       });
                     },
                     activeColor: Colors
@@ -94,12 +95,12 @@ class _PetsScreenState extends State<PetsScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value:  'I\'ll travell with pets depending on \n the animal.', // Assign unique values to each radio button
+                    groupValue: _slecetedPet,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _slecetedPet = value!;
                       });
                     },
                     activeColor: Colors
@@ -128,12 +129,12 @@ class _PetsScreenState extends State<PetsScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value:  'i\'d prefer not to travel with pets.', // Assign unique values to each radio button
+                    groupValue: _slecetedPet,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _slecetedPet = value!;
                       });
                     },
                     activeColor: Colors
@@ -155,7 +156,9 @@ class _PetsScreenState extends State<PetsScreen> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    profileBloc.add(PetEvent(pet: _slecetedPet));
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),

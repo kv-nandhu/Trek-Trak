@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
-import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../Application/Auth/auth_bloc.dart';

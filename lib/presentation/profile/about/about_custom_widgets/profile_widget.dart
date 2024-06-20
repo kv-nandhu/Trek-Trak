@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/dp_adding.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/edit_personal/personal_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
 import 'package:trek_trak/utils/color/color.dart';
-import 'package:trek_trak/Application/profile/profile_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileDetails extends StatefulWidget {

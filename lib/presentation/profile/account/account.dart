@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
-import 'package:trek_trak/repository/Auth_repos/forgot_repo.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,10 +118,11 @@ class _AccountScreenState extends State<AccountScreen> {
               Dividers.lineOne(),
               TextButton(
                   onPressed: () {
-                     final authBoc = BlocProvider.of<AuthBloc>(context);
-                  authBoc.add(LogoutEvent());
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/login', (route) => false);
+                  //    final authBoc = BlocProvider.of<AuthBloc>(context);
+                  // authBoc.add(LogoutEvent());
+                  // Navigator.pushNamedAndRemoveUntil(
+                  //     context, '/login', (route) => false);
+                    _showLogoutDialog(context);
                   },
                   child: Text(
                     "Log out",
@@ -139,5 +140,33 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
     ));
+  }
+   void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Log out'),
+          content: Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Log out'),
+              onPressed: () {
+                final authBloc = BlocProvider.of<AuthBloc>(context);
+                authBloc.add(LogoutEvent());
+                Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

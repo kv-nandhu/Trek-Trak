@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 

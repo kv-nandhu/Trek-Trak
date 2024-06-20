@@ -1,19 +1,20 @@
 // ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_firestore/firebase_cloud_firestore.dart';
 //import 'package:trek_trak/Auth_repos/auth_repo.dart';
 import 'package:trek_trak/domain/user_model.dart';
-import 'package:trek_trak/repository/Auth_repos/auth_repo.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/auth_repo.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  AuthBloc() : super(AuthInitial()) {
+  AuthBloc({o}) : super(AuthInitial()) {
     on<CheckLoginStatusEvent>((event, emit) async {
       User? user;
       try {
@@ -45,7 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(UnAuthenticated());
         }
       } on FirebaseAuthException catch (e) {
-        emit(AuthenticatedError(message: e.message.toString()));
+        emit(AuthenticatedError(message: 'Password or email is not correct'));
       }
     });
 
@@ -115,7 +116,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             street: event.street,
             district: event.district,
             dob: event.dob,
-            image: event.image
+            image: event.image,
+            miniBio: event.miniBio,
+            chat: event.chat,
+            song: event.song,
+            smoke: event.smoke,
+            pet: event.pet,
+            vnumber: event.vnumber,
+            vmodel: event.vmodel,
+            vbrand: event.vbrand,
+            vcolor: event.vcolor,
+            vtype: event.vtype,
+
 
             );
         emit(AuthVerificationSuccessn());
@@ -131,9 +143,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         FirebaseAuthentServices()
             .signIn(event.email, event.password, event.context);
         emit(AuthVerificationSuccessn());
-      } catch (e) {
-        emit(AuthenticatedError(message: e.toString()));
+      } on  FirebaseException catch (e) {
+        emit(AuthenticatedError(message: 'custom  error'));
       }
     });
+
+    on<LoggingInitialEvent>((event,emit){
+      emit(AuthInitial());
+    });
   }
+
+  
 }

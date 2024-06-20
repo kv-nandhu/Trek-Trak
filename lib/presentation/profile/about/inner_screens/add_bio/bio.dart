@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
-class AddBioScreen extends StatefulWidget {
-  const AddBioScreen({super.key});
-
-  @override
-  State<AddBioScreen> createState() => _AddBioScreenState();
-}
-
-class _AddBioScreenState extends State<AddBioScreen> {
-  int? selectedAddressIndex;
-  final TextEditingController addressController = TextEditingController();
-
-  @override
-  void dispose() {
-    addressController.dispose();
-    super.dispose();
-  }
+class AddBioScreen extends StatelessWidget {
+  const AddBioScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+  
+
+    String exampleText = 'Enter your About';
+    final TextEditingController minibioController = TextEditingController();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -27,60 +20,59 @@ class _AddBioScreenState extends State<AddBioScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: TextButton.icon(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/mybottom');
-                  },
-                  label: Text(
-                    "Back",
-                    style: TextStyle(
-                        color: CustomColor.greenColor(), fontSize: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/mybottom');
+                    },
+                    label: Text(
+                      "Back",
+                      style: TextStyle(
+                        color: CustomColor.greenColor(),
+                        fontSize: 20,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: CustomColor.greenColor(),
+                    ),
+                    
                   ),
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: CustomColor.greenColor(),
+                  IconButton(
+                    icon: const Icon(Icons.save),
+                    onPressed: () {
+                      String bio = minibioController.text;
+                     context.read<ProfileBloc>().add(AddBioEvent(miniBio: bio));
+                    },
                   ),
-                ),
+                ],
               ),
-              SizedBox(
-                height: 10,
+              const SizedBox(
+                height: 20,
               ),
-              Text(
+              const Text(
                 'What would you like \n other members to know \n about you?',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                controller: addressController,
-                maxLines: 10, // Set maximum lines to 10
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(8.0), // Set corner radius
-                    borderSide: BorderSide(
-                      color: Colors.grey, // Set the border color
-                      width: 1.0, // Set the border width (thin)
-                    ),
+              const SizedBox(height: 40.0),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200], // Grey background color
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: TextFormField(
+                  controller: minibioController,
+                  maxLines: 6,
+                  onChanged: (value) {
+                    exampleText = value.isEmpty ? 'Enter your About' : '';
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none, // Remove default border
+                    hintText: exampleText,
+                    contentPadding: const EdgeInsets.all(10.0),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(8.0), // Set corner radius
-                    borderSide: BorderSide(
-                      color: Colors.grey, // Set the border color
-                      width: 1.0, // Set the border width (thin)
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(8.0), // Set corner radius
-                    borderSide: BorderSide(
-                      color: Colors.blue, // Set the border color when focused
-                      width: 1.0, // Set the border width (thin)
-                    ),
-                  ),
-                  labelText: 'Enter your address',
                 ),
               ),
             ],

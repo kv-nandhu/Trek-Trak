@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SmokingScreen extends StatefulWidget {
   const SmokingScreen({super.key});
@@ -9,12 +11,11 @@ class SmokingScreen extends StatefulWidget {
 }
 
 class _SmokingScreenState extends State<SmokingScreen> {
-  int? selectedAddressIndex;
-  int? index;
-  bool isChecked = false;
+ String _selectedSmoke = '';
 
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -60,12 +61,12 @@ class _SmokingScreenState extends State<SmokingScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value: 'I\'m fine with smoking.', // Assign unique values to each radio button
+                    groupValue: _selectedSmoke,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _selectedSmoke = value!;
                       });
                     },
                     activeColor: Colors
@@ -94,12 +95,12 @@ class _SmokingScreenState extends State<SmokingScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value: 'Cigarette breaks outside the car are ok.', // Assign unique values to each radio button
+                    groupValue: _selectedSmoke,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _selectedSmoke = value!;
                       });
                     },
                     activeColor: Colors
@@ -128,12 +129,12 @@ class _SmokingScreenState extends State<SmokingScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
+                  Radio<String>(
+                    value:   'No smoking, please.', // Assign unique values to each radio button
+                    groupValue: _selectedSmoke,
+                    onChanged: (String? value) {
                       setState(() {
-                        selectedAddressIndex = value;
+                        _selectedSmoke = value!;
                       });
                     },
                     activeColor: Colors
@@ -155,7 +156,9 @@ class _SmokingScreenState extends State<SmokingScreen> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    profileBloc.add(SmokingEvent(smoke: _selectedSmoke));
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:trek_trak/Application/profile/profile_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

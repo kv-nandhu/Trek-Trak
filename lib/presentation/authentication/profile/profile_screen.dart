@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
-import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
 import 'package:trek_trak/presentation/authentication/profile/profile_widget/profile_button.dart';
 import 'package:trek_trak/presentation/authentication/profile/profile_widget/profile_fields.dart';
-import 'package:trek_trak/repository/profile_repo/image_picker.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/image_picker.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';

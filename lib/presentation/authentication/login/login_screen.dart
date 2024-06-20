@@ -35,7 +35,25 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pushNamedAndRemoveUntil(
                   context, '/mybottom', (route) => false);
             });
-          }
+          }else if (state is AuthenticatedError) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                    content: Text(state.message.toString()),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            BlocProvider.of<AuthBloc>(context)
+                                .add((LoggingInitialEvent()));
+                          },
+                          child: Text('ok'))
+                    ]);
+              });
+        });
+      }
           return Scaffold(
             body: SafeArea(
               child: SingleChildScrollView(

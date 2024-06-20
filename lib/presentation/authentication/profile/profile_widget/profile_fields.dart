@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
-import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
@@ -45,8 +45,8 @@ class FieldsAndButton extends StatelessWidget {
     final phoneNumber = _phoneNumberController.text;
 
     return email == userModel.email &&
-           name == userModel.name &&
-           phoneNumber == userModel.number;
+        name == userModel.name &&
+        phoneNumber == userModel.number;
   }
 
   void _showErrorDialog(BuildContext context, String message) {
@@ -86,7 +86,6 @@ class FieldsAndButton extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => EditProfile(
-           
             userModel: userModel,
           ),
         ),
@@ -106,28 +105,33 @@ class FieldsAndButton extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              BlocProvider.of<ProfileBuildBloc>(context).add(ChangeImageEvent());
-              BlocProvider.of<ProfileBuildBloc>(context).add(ProfileImagePickerEvent());
+              BlocProvider.of<ProfileBuildBloc>(context)
+                  .add(ChangeImageEvent());
+              BlocProvider.of<ProfileBuildBloc>(context)
+                  .add(ProfileImagePickerEvent());
             },
             child: CircleAvatar(
               radius: 90,
-              backgroundImage: pickedImage != null ? NetworkImage(pickedImage!) : null,
-              child: pickedImage == null ? const Icon(Icons.add_a_photo_outlined) : null,
+              backgroundImage:
+                  pickedImage != null ? NetworkImage(pickedImage!) : null,
+              child: pickedImage == null
+                  ? const Icon(Icons.add_a_photo_outlined)
+                  : null,
             ),
           ),
         ),
         // Name input field
-       Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: CustomTextFormField(
-    controller: _nameController..text = name,
-    labelText: 'Name',
-    hintText: 'Enter your name',
-    keyboardType: TextInputType.name,
-    validator: (value) => Validator().nameValidator(value),
-    errorText: _nameController.text.isEmpty ? 'Name is required' : null,
-  ),
-),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomTextFormField(
+            controller: _nameController..text = name,
+            labelText: 'Name',
+            hintText: 'Enter your name',
+            keyboardType: TextInputType.name,
+            validator: (value) => Validator().nameValidator(value),
+            errorText: _nameController.text.isEmpty ? 'Name is required' : null,
+          ),
+        ),
         // Date of Birth input field
         GestureDetector(
           onTap: () async {
@@ -138,7 +142,8 @@ class FieldsAndButton extends StatelessWidget {
               lastDate: DateTime.now(),
             );
             if (picked != null) {
-              dateController.text = '${picked.year}-${picked.month}-${picked.day}';
+              dateController.text =
+                  '${picked.year}-${picked.month}-${picked.day}';
             }
           },
           child: AbsorbPointer(
@@ -173,7 +178,8 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your email',
             keyboardType: TextInputType.emailAddress,
             validator: (value) => Validator().emailValidator(value),
-                errorText: _emailController.text.isEmpty ? 'email is required' : null,
+            errorText:
+                _emailController.text.isEmpty ? 'email is required' : null,
           ),
         ),
         // Phone Number input field
@@ -185,7 +191,9 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your phone number',
             keyboardType: TextInputType.phone,
             // validator: (value) => Validator().numberValidator(value),
-                errorText: _phoneNumberController.text.isEmpty ? 'Number is required' : null,
+            errorText: _phoneNumberController.text.isEmpty
+                ? 'Number is required'
+                : null,
           ),
         ),
         // Street input field
@@ -197,8 +205,8 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your street',
             keyboardType: TextInputType.streetAddress,
             validator: (value) => Validator().streetValidator(value),
-                errorText: _streetController.text.isEmpty ? 'city is required' : null,
-
+            errorText:
+                _streetController.text.isEmpty ? 'city is required' : null,
           ),
         ),
         // City input field
@@ -210,8 +218,8 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your city',
             keyboardType: TextInputType.text,
             validator: (value) => Validator().cityValidator(value),
-                errorText: _cityController.text.isEmpty ? 'street is required' : null,
-
+            errorText:
+                _cityController.text.isEmpty ? 'street is required' : null,
           ),
         ),
         // District input field
@@ -223,8 +231,9 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your district',
             keyboardType: TextInputType.text,
             validator: (value) => Validator().districtValidator(value),
-                errorText: _districtController.text.isEmpty ? 'district is required' : null,
-
+            errorText: _districtController.text.isEmpty
+                ? 'district is required'
+                : null,
           ),
         ),
         const SizedBox(height: 20),
@@ -233,7 +242,7 @@ class FieldsAndButton extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: InkWell(
             onTap: () {
-             if (formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 BlocProvider.of<AuthBloc>(context).add(
                     signwithemailandpasswordEvent(
                         password: password!,
@@ -246,7 +255,17 @@ class FieldsAndButton extends StatelessWidget {
                         street: _streetController.text,
                         district: _districtController.text,
                         image: pickedImage!,
-                        dob: dateController.text));
+                        dob: dateController.text,
+                        miniBio: 'miniBios',
+                        chat: 'chattiness',
+                        song: 'songs',
+                        smoke: 'smokes',
+                        pet: 'pets',
+                        vnumber: 'vehicle number',
+                        vmodel: 'vehicle model',
+                        vbrand: 'vehicle brand',
+                        vcolor: 'vehicle color',
+                        vtype: 'vehicle type'));
               }
             },
             child: Container(

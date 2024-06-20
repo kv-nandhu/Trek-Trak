@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChattinessScreen extends StatefulWidget {
   const ChattinessScreen({super.key});
@@ -9,12 +11,11 @@ class ChattinessScreen extends StatefulWidget {
 }
 
 class _ChattinessScreenState extends State<ChattinessScreen> {
-  int? selectedAddressIndex;
-  int? index;
-  bool isChecked = false;
+String _selectedChatness = '';
 
   @override
   Widget build(BuildContext context) {
+  final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -50,112 +51,106 @@ class _ChattinessScreenState extends State<ChattinessScreen> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.message,
                   ),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'This is the first message.',
+                      'I love to chat',
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+                   Radio<String>(
+                  value: 'I love to chat',
+                  groupValue: _selectedChatness,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedChatness = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
-                    fillColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return Colors
-                            .blue; // Set the color for the selected state
+                    activeColor: Colors.blue,
+                    fillColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.selected)) {
+                        return Colors.blue;
                       }
-                      return CustomColor
-                          .greenColor(); // Set the color for the unselected state
+                      return CustomColor.greenColor();
                     }),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.message,
                   ),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'This is the second message.',
+                      'I,m chatty when I feel comfortable',
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+                  Radio<String>(
+                  value: 'I,m chatty when I feel comfortable',
+                  groupValue: _selectedChatness,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedChatness = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
-                    fillColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return CustomColor
-                            .greenColor(); // Set the color for the selected state
+                    activeColor: Colors.blue,
+                    fillColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.selected)) {
+                        return CustomColor.greenColor();
                       }
-                      return Colors
-                          .grey; // Set the color for the unselected state
+                      return CustomColor.greyColor();
                     }),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.message,
                   ),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'This is the third message.',
+                      'I,m the quiet type',
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+                  Radio<String>(
+                  value: 'I,m the quiet type',
+                  groupValue: _selectedChatness,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedChatness = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
-                    fillColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return CustomColor
-                            .greenColor(); // Set the color for the selected state
+                    activeColor: Colors.blue,
+                    fillColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.selected)) {
+                        return CustomColor.greenColor();
                       }
-                      return Colors
-                          .grey; // Set the color for the unselected state
+                      return Colors.grey;
                     }),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 300,
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                      profileBloc.add(ChatnessEvent(chat: _selectedChatness));
+                      // Navigator.pop(context);
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
@@ -171,6 +166,7 @@ class _ChattinessScreenState extends State<ChattinessScreen> {
                       ),
                     ),
                   ),
+                  
                 ),
               ),
             ],
@@ -180,3 +176,4 @@ class _ChattinessScreenState extends State<ChattinessScreen> {
     );
   }
 }
+ 

@@ -6,7 +6,7 @@ import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_
 import 'package:trek_trak/presentation/chat/chat.dart';
 import 'package:trek_trak/presentation/home/home.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
-import 'package:trek_trak/presentation/publish/profile.dart';
+import 'package:trek_trak/presentation/publish/location_picker.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
@@ -27,9 +27,9 @@ List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
 
 List<Widget> bottomNavScreen = <Widget>[
   const HomeScreen(),
-  PublishPage(),
-  RidePage(),
-  ChatPage(),
+  LocationPickerPage(),
+  const RidePage(),
+  const ChatPage(),
   const ProfilePage(),
 ];
 

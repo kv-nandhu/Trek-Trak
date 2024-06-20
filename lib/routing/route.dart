@@ -1,8 +1,10 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:trek_trak/Application/profile/profile_bloc.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_screen.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart'
+    // ignore: library_prefixes
     as signUpFields;
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
 import 'package:trek_trak/presentation/authentication/forgot/forgot.dart';
@@ -23,8 +25,21 @@ import 'package:trek_trak/presentation/profile/about/inner_screens/add_bio/bio.d
 import 'package:trek_trak/presentation/profile/about/inner_screens/dp_adding.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/edit_personal/personal_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/brand.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/color.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/licence_detils.dart';
+import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_model.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
-import 'package:trek_trak/presentation/publish/profile.dart';
+import 'package:trek_trak/presentation/publish/add_city.dart';
+import 'package:trek_trak/presentation/publish/city_adding_map.dart';
+import 'package:trek_trak/presentation/publish/calander.dart';
+import 'package:trek_trak/presentation/publish/date_selecting.dart';
+import 'package:trek_trak/presentation/publish/drop_off.dart';
+import 'package:trek_trak/presentation/publish/location_picker.dart';
+import 'package:trek_trak/presentation/publish/passenger_count.dart';
+import 'package:trek_trak/presentation/publish/pick_up.dart';
+import 'package:trek_trak/presentation/publish/publish_confirm.dart';
+import 'package:trek_trak/presentation/publish/success_publish.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
 import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
@@ -51,7 +66,7 @@ class Routers {
         gender: args['gender'],
         name: args['name'],
         password: args['password'],
-        number: args['number'], 
+        number: args['number'],
         userModel: args['usermodel'],
       );
     },
@@ -59,7 +74,7 @@ class Routers {
     '/signScreen': (context) => const SignScreen(),
     '/login': (context) => const LoginScreen(),
     '/home': (context) => const HomeScreen(),
-    '/publish': (context) => const PublishPage(),
+  
     '/history': (context) => const RidePage(),
     '/chat': (context) => const ChatPage(),
     '/profile': (context) => const ProfilePage(),
@@ -71,14 +86,13 @@ class Routers {
         userModel: args['userModel'],
       );
     },
-    '/ProfileAdd': (context) { final args =
+    '/ProfileAdd': (context) {
+      final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return ProfileAdding(
         userModel: args['userModel'],
-      );},
-      
-
-
+      );
+    },
     '/personalDetail': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -95,5 +109,26 @@ class Routers {
     '/aboutScreen': (context) => const AboutScreen(),
     '/addBioScreen': (context) => const AddBioScreen(),
     '/forgotScreen': (context) => const ForgotScreen(),
+    '/PlateNumber': (context) => const PlateNumber(),
+    '/brandVehicle': (context) => const BrandVehicle(),
+    '/colorListScreen': (context) =>  ColorListScreen(),
+    '/modelsSelecting': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return ModelsSelecting(
+        selectedBrand: args['selectedBrand'],
+      );
+    },
+      '/publish': (context) => PickLocation(),
+    '/dropLocation': (context) => const DropLocation(),
+    '/addCity': (context) => const AddCity(),
+    '/cityAddMap': (context) => const CityAddMap(),
+    '/calendarPage': (context) => const CalendarPage(),
+    '/timePickerPage': (context) => const TimePickerPage(),
+    '/passengerCount': (context) => const PassengerCount(),
+    '/publisConfirm': (context) => const PublisConfirm(),
+    '/successPublish': (context) => const SuccessPublish(),
+    '/locationPickerPage': (context) => const LocationPickerPage(),
+    
   };
 }

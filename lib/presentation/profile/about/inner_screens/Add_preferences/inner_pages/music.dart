@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MusicScreen extends StatefulWidget {
   const MusicScreen({super.key});
@@ -9,12 +11,11 @@ class MusicScreen extends StatefulWidget {
 }
 
 class _MusicScreenState extends State<MusicScreen> {
-  int? selectedAddressIndex;
-  int? index;
-  bool isChecked = false;
+String _selectedSong = '';
 
   @override
   Widget build(BuildContext context) {
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -60,24 +61,21 @@ class _MusicScreenState extends State<MusicScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+              Radio<String>(
+                  value: 'It\'s all about the playlist.',
+                  groupValue: _selectedSong,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedSong = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
+                    activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return Colors
-                            .blue; // Set the color for the selected state
+                        return CustomColor.greenColor();
                       }
-                      return CustomColor
-                          .greenColor(); // Set the color for the unselected state
+                      return CustomColor.greyColor();
                     }),
                   )
                 ],
@@ -94,24 +92,21 @@ class _MusicScreenState extends State<MusicScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+                  Radio<String>(
+                  value: 'I\'ll jam depending on the mood.',
+                  groupValue: _selectedSong,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedSong = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
+                    activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return CustomColor
-                            .greenColor(); // Set the color for the selected state
+                        return CustomColor.greenColor();
                       }
-                      return Colors
-                          .grey; // Set the color for the unselected state
+                      return CustomColor.greyColor();
                     }),
                   )
                 ],
@@ -128,24 +123,21 @@ class _MusicScreenState extends State<MusicScreen> {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                  Radio<int>(
-                    value: 2, // Assign unique values to each radio button
-                    groupValue: selectedAddressIndex,
-                    onChanged: (int? value) {
-                      setState(() {
-                        selectedAddressIndex = value;
-                      });
+                   Radio<String>(
+                  value: 'Silence is golden.',
+                  groupValue: _selectedSong,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedSong = value!;
+                    });
                     },
-                    activeColor: Colors
-                        .blue, // Set the color when the radio button is selected
+                    activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return CustomColor
-                            .greenColor(); // Set the color for the selected state
+                        return CustomColor.greenColor();
                       }
-                      return Colors
-                          .grey; // Set the color for the unselected state
+                      return CustomColor.greyColor();
                     }),
                   )
                 ],
@@ -155,7 +147,9 @@ class _MusicScreenState extends State<MusicScreen> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                     profileBloc.add(SongEvent(song: _selectedSong));
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),

@@ -36,3 +36,9 @@ class TextState extends AuthState {
 class AuthSnedSuccess extends AuthState {}
 
 class AuthVerificationSuccessn extends AuthState {}
+
+class AuthError extends AuthState {
+  String? message;
+
+  AuthError({required this.message});
+}

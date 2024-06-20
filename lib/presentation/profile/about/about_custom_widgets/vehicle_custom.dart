@@ -11,11 +11,15 @@ class vehicles_details extends StatelessWidget {
     return Row(
       children: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+   Navigator.pushReplacementNamed(context, '/PlateNumber');
+            },
             icon: const Icon(Icons.add_circle_outline_sharp),
             color: CustomColor.greenColor()),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+                 Navigator.pushReplacementNamed(context, '/PlateNumber');
+            },
             child: Text(
               "Add vehicles",
               style: TextStyle(color: CustomColor.greenColor()),

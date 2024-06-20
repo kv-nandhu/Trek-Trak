@@ -30,6 +30,7 @@ class TextEvent extends AuthEvent {
   final bool obscure;
   TextEvent({required this.obscure});
 }
+
 //! --------------->Logout event<------------------
 class LogoutEvent extends AuthEvent {}
 
@@ -84,21 +85,42 @@ class signwithemailandpasswordEvent extends AuthEvent {
   final String district;
   final String dob;
   final String image;
+  final String miniBio;
+  final String chat;
+  final String song;
+  final String smoke;
+  final String pet;
+  final String vnumber;
+  final String vmodel;
+  final String vbrand;
+  final String vcolor;
+  final String vtype;
 
   final BuildContext context;
 
-  signwithemailandpasswordEvent(
-      {required this.password,
-      required this.name,
-      required this.number,
-      required this.gender,
-      required this.email,
-      required this.city,
-      required this.street,
-      required this.district,
-      required this.dob,
-      required this.image,
-      required this.context});
+  signwithemailandpasswordEvent({
+    required this.password,
+    required this.name,
+    required this.number,
+    required this.gender,
+    required this.email,
+    required this.city,
+    required this.street,
+    required this.district,
+    required this.dob,
+    required this.image,
+    required this.miniBio,
+    required this.chat,
+    required this.song,
+    required this.smoke,
+    required this.pet,
+    required this.context,
+    required this.vnumber,
+    required this.vmodel,
+    required this.vbrand,
+    required this.vcolor,
+    required this.vtype,
+  });
 }
 
 class SignInevent extends AuthEvent {
@@ -108,3 +130,5 @@ class SignInevent extends AuthEvent {
   SignInevent(
       {required this.email, required this.password, required this.context});
 }
+
+class LoggingInitialEvent extends AuthEvent {}

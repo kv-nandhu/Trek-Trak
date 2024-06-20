@@ -32,3 +32,17 @@ class UploadimageFailure extends ProfileState {
     required this.error,
   });
 }
+
+
+class BioUpdateState extends ProfileState{}
+class ChatUpdateState extends ProfileState{}
+class SongUpdateState extends ProfileState{}
+class SmokeUpdateState extends ProfileState{}
+class PetUpdateState extends ProfileState{}
+class VehicleNUmbeState extends ProfileState{}
+class VehicleModelState extends ProfileState{}
+class VehicleBrandState extends ProfileState{}
+class VehicleColorState extends ProfileState{}
+class VehicleTypeState extends ProfileState{}
+
+class ProfileErrorState extends ProfileState{}

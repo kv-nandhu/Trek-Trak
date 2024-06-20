@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:meta/meta.dart';
-import 'package:trek_trak/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/repository/profile_repo/image_picker.dart';
+import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/image_picker.dart';
 import 'package:image_picker/image_picker.dart'; 
 
 part 'profile_build_event.dart';

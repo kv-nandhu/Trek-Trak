@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/profile/profile_bloc.dart';
-import 'package:trek_trak/Application/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
@@ -167,7 +167,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                "I talk depending on my mood",
+                                user.miniBio!,
                                 style: TextStyle(
                                   color: CustomColor.greytextColor(),
                                 ),
