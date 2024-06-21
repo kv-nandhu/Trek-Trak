@@ -70,6 +70,8 @@ dev_dependencies:
   calendar_date_picker2: ^1.0.3
   table_calendar: ^3.1.2
   shimmer: ^3.0.0
+  document_scanner: ^0.2.1
+
   # google_maps_flutter: ^2.2.8
 
 # For information on the generic Dart part of this file, see the

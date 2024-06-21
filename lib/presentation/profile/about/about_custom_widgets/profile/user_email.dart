@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
+import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
-class AddBioScreen extends StatelessWidget {
-  const AddBioScreen({Key? key}) : super(key: key);
+class UserEmailEditing extends StatelessWidget {
+  final UserModel userModel;
+  final TextEditingController emailController;
+
+  UserEmailEditing({Key? key, required this.userModel})
+      : emailController = TextEditingController(text: userModel.email),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String exampleText = 'Enter your About';
-    final TextEditingController minibioController = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -37,57 +40,58 @@ class AddBioScreen extends StatelessWidget {
                       color: CustomColor.greenColor(),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.save),
-                    onPressed: () {
-                      String bio = minibioController.text;
-                      context.read<ProfileBloc>().add(AddBioEvent(miniBio: bio));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Bio saved successfully!'),
-                        ),
-                      );
-                      waitAndNavigateBack(context);
-                    },
-                  ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Text(
-                'What would you like \n other members to know \n about you?',
+                'Whats\'s your email?',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 40.0),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200], // Grey background color
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: TextFormField(
-                  controller: minibioController,
-                  maxLines: 6,
-                  onChanged: (value) {
-                    exampleText = value.isEmpty ? 'Enter your About' : '';
-                  },
+                  controller: emailController,
+                  maxLines: 1,
+                  onChanged: (value) {},
                   decoration: InputDecoration(
-                    border: InputBorder.none, // Remove default border
-                    hintText: exampleText,
+                    border: InputBorder.none,
                     contentPadding: const EdgeInsets.all(10.0),
                   ),
                 ),
               ),
+              const Spacer(),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    String email = emailController.text;
+                    context.read<ProfileBloc>().add(UserEmailEvent(email: email));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 24),
+                    decoration: BoxDecoration(
+                      color: CustomColor.greenColor(),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: CustomColor.whiteColor(),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void waitAndNavigateBack(BuildContext context) {
-    Future.delayed(const Duration(seconds: 4), () {
-          Navigator.pushReplacementNamed(context, '/mybottom');
-    });
   }
 }

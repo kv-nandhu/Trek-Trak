@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_dob.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_email.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_name.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_number.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonalDetail extends StatefulWidget {
-    final UserModel userModel;
+  final UserModel userModel;
   final String? selectedImage;
-  const PersonalDetail({Key? key,required this.userModel,
-    required this.selectedImage,}) : super(key: key);
+  const PersonalDetail({
+    Key? key,
+    required this.userModel,
+    required this.selectedImage,
+  }) : super(key: key);
 
   @override
   State<PersonalDetail> createState() => _PersonalDetailState();
@@ -26,14 +33,16 @@ class _PersonalDetailState extends State<PersonalDetail> {
     // context.read<ProfileBloc>().add(GetUserEvent());
   }
 
- void _getCurrentUser() async {
-    try{ 
+  void _getCurrentUser() async {
+    try {
       if (widget.userModel != null) {
-        final String fullName = widget.userModel.name ?? ""; 
+        final String fullName = widget.userModel.name ?? "";
         print(fullName);
         List<String> nameParts = fullName.split(' ');
         setState(() {
-          _firstName = nameParts.length > 1 ? nameParts.sublist(0, nameParts.length - 1).join(' ') : fullName;
+          _firstName = nameParts.length > 1
+              ? nameParts.sublist(0, nameParts.length - 1).join(' ')
+              : fullName;
           _lastName = nameParts.isNotEmpty ? nameParts.last : "";
         });
       }
@@ -43,7 +52,6 @@ class _PersonalDetailState extends State<PersonalDetail> {
       print("Error getting user data: $error"); // Handle potential errors
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +63,8 @@ class _PersonalDetailState extends State<PersonalDetail> {
           child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
               if (state is UserProfileLoadState) {
-                List fs=state.user.name.toString().split(' ');
-                
+                List fs = state.user.name.toString().split(' ');
+
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,12 +103,21 @@ class _PersonalDetailState extends State<PersonalDetail> {
                     const SizedBox(height: 15),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("First name"),
+                      child: Text("User name"),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserNameEditing(
+                              userModel: state.user,
+                            ),
+                          ),
+                        );
+                      },
                       child: Text(
-                        _firstName?.isNotEmpty == true ? _firstName! : "Enter the name",
+                        widget.userModel.name!,
                         style: TextStyle(
                           color: CustomColor.greenColor(),
                           fontSize: 19,
@@ -111,25 +128,20 @@ class _PersonalDetailState extends State<PersonalDetail> {
                     const SizedBox(height: 15),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("Last name"),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        _lastName?.isNotEmpty == true ? _lastName! : "Enter the name",
-                        style: TextStyle(
-                          color: CustomColor.greenColor(),
-                          fontSize: 19,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
                       child: Text("Date of birth"),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                            Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserDobEditing(
+                              userModel: state.user,
+                            ),
+                            
+                          ),
+                        );
+                      },
                       child: Text(
                         state.user.dob!, // This should be dynamically fetched
                         style: TextStyle(
@@ -144,9 +156,44 @@ class _PersonalDetailState extends State<PersonalDetail> {
                       child: Text("Mobile phone"),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserNumberEditing(
+                              userModel: state.user,
+                            ),
+                            
+                          ),
+                        );
+                      },
                       child: Text(
                         state.user.number!,
+                        style: TextStyle(
+                          color: CustomColor.greenColor(),
+                          fontSize: 19,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Email Address"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserEmailEditing(
+                              userModel: state.user,
+                            ),
+                            
+                          ),
+                        );
+                      },
+                      child: Text(
+                        state.user.email!,
                         style: TextStyle(
                           color: CustomColor.greenColor(),
                           fontSize: 19,

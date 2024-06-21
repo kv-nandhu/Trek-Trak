@@ -58,4 +58,20 @@ class VehilceTypeEvent extends ProfileEvent{
   String vtype;
   VehilceTypeEvent({required this.vtype});
 }
+class UserNameEvent extends ProfileEvent{
+  String name;
+  UserNameEvent({required this.name});
+}
+class UserDobEvent extends ProfileEvent{
+  String dob;
+  UserDobEvent({required this.dob});
+}
+class UserNumberEvent extends ProfileEvent{
+  String number;
+  UserNumberEvent({required this.number});
+}
+class UserEmailEvent extends ProfileEvent{
+  String email;
+  UserEmailEvent({required this.email});
+}
 

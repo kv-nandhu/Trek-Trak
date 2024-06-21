@@ -3,7 +3,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
-import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile_widget.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/profile_widget.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/vehicle_custom.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/verifying_custom.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_details.dart';
@@ -59,18 +59,18 @@ class _AboutScreenState extends State<AboutScreen> {
                       style: TextStyle(fontSize: 20),
                     ),
                     //!--------------id verifying-----------
-                    const id_verifying(),
+                    const IdVerifying(),
                     //!--------------email_verifying--------
-                    email_verifying(state: state),
+                    EmailVerifying(state: state),
                     //!-------------- number_verifying------
-                    number_verifying(state: state),
+                    NumberVerifying(state: state),
                     const divider_thickness_big(),
                     const Text(
                       "About you",
                       style: TextStyle(fontSize: 20),
                     ),
                     //!-------------- mini_bio--------------
-                    mini_bio(bio: state.user.miniBio ?? 'No data'),
+                    MiniBio(bio: state.user.miniBio ?? 'No data'),
                     //!-------------- add_preferences-------
 
                     state.user.chat == 'chattiness'
@@ -134,7 +134,7 @@ class _AboutScreenState extends State<AboutScreen> {
                             ),
                           ),
 
-                    add_preferences(chatiness: state.user.chat),
+                    AddPreferences(chatiness: state.user.chat),
                     const divider_normal(),
                     const Text(
                       "Vehicles",

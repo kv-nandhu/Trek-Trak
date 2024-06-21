@@ -44,5 +44,9 @@ class VehicleModelState extends ProfileState{}
 class VehicleBrandState extends ProfileState{}
 class VehicleColorState extends ProfileState{}
 class VehicleTypeState extends ProfileState{}
+class UsernameState extends ProfileState{}
+class UserDobState extends ProfileState{}
+class UserNumberState extends ProfileState{}
+class UserEmailState extends ProfileState{}
 
 class ProfileErrorState extends ProfileState{}

@@ -177,6 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  document_scanner:
+    dependency: "direct dev"
+    description:
+      name: document_scanner
+      sha256: "6e0663f86cf7182a98d9a98f2dd8de82eeb3685dfa19282e5d3e1802f6b8b6e5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   equatable:
     dependency: "direct dev"
     description:

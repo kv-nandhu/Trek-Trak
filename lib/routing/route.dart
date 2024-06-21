@@ -16,6 +16,10 @@ import 'package:trek_trak/presentation/authentication/success/success.dart';
 import 'package:trek_trak/presentation/chat/chat.dart';
 import 'package:trek_trak/presentation/home/home.dart';
 import 'package:trek_trak/presentation/profile/about/about.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_dob.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_email.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_name.dart';
+import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_number.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/Add_preferences/inner_pages/chati.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/Add_preferences/inner_pages/music.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/Add_preferences/inner_pages/pets.dart';
@@ -75,7 +79,7 @@ class Routers {
     '/signScreen': (context) => const SignScreen(),
     '/login': (context) => const LoginScreen(),
     '/home': (context) => const HomeScreen(),
-  
+
     '/history': (context) => const RidePage(),
     '/chat': (context) => const ChatPage(),
     '/profile': (context) => const ProfilePage(),
@@ -112,11 +116,14 @@ class Routers {
     '/forgotScreen': (context) => const ForgotScreen(),
     '/PlateNumber': (context) => const PlateNumber(),
     '/brandVehicle': (context) => const BrandVehicle(),
-    '/colorListScreen': (context) =>  ColorListScreen(),
+    '/colorListScreen': (context) => ColorListScreen(),
     '/vehicleDetailScreen': (context) {
-       final args =
+      final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      return VehicleDetailScreen( userModel: args['userModel'],);},
+      return VehicleDetailScreen(
+        userModel: args['userModel'],
+      );
+    },
     '/modelsSelecting': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -124,7 +131,7 @@ class Routers {
         selectedBrand: args['selectedBrand'],
       );
     },
-      '/publish': (context) => PickLocation(),
+    '/publish': (context) => PickLocation(),
     '/dropLocation': (context) => const DropLocation(),
     '/addCity': (context) => const AddCity(),
     '/cityAddMap': (context) => const CityAddMap(),
@@ -134,6 +141,35 @@ class Routers {
     '/publisConfirm': (context) => const PublisConfirm(),
     '/successPublish': (context) => const SuccessPublish(),
     '/locationPickerPage': (context) => const LocationPickerPage(),
-    
+    // '/scanner': (context) =>  Scanner()
+
+    '/userNameEditing': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserNameEditing(
+        userModel: args['userModel'],
+      );
+    },
+    '/userDobEditing': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserDobEditing(
+        userModel: args['userModel'],
+      );
+    },
+    '/userNumberEditing': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserNumberEditing(
+        userModel: args['userModel'],
+      );
+    },
+    '/userEmailEditing': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UserEmailEditing(
+        userModel: args['userModel'],
+      );
+    },
   };
 }

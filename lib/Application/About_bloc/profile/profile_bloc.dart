@@ -5,6 +5,7 @@ import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/mini_bio_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/preference_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/profile_repo.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/profile_update.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/vehicle_repo.dart';
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -23,6 +24,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<VehilceBrandEvent>(_addVehicleBrand);
     on<VehicleColorEvent>(_addVehicleColor);
     on<VehilceTypeEvent>(_addVehicleType);
+    on<UserNameEvent>(_updateUserNAme);
+    on<UserDobEvent>(_updateUserDob);
+    on<UserNumberEvent>(_updateUserNumber);
+    on<UserEmailEvent>(_updateUserEmail);
   
   }
 
@@ -149,7 +154,46 @@ FutureOr<void> _addVehicleType(VehilceTypeEvent event, Emitter<ProfileState> emi
     print(e);
   }
 }
+//--------------profile update -----------------------
+
+FutureOr<void> _updateUserNAme(UserNameEvent event, Emitter<ProfileState> emit) async {
+  try{
+    await ProfileUpdate().updateUserName(event.name);
+    var user = await UserProfileRepo().getUser();
+    print(event.name);
+  }catch (e) {
+    print(e);
+  }
 }
+FutureOr<void> _updateUserDob(UserDobEvent event, Emitter<ProfileState> emit) async {
+  try{
+    await ProfileUpdate().updateUserDob(event.dob);
+    var user = await UserProfileRepo().getUser();
+    print(event.dob);
+  }catch (e) {
+    print(e);
+  }
+}
+FutureOr<void> _updateUserNumber(UserNumberEvent event, Emitter<ProfileState> emit) async {
+  try{
+    await ProfileUpdate().updateUserNumber(event.number);
+    var user = await UserProfileRepo().getUser();
+    print(event.number);
+  }catch (e) {
+    print(e);
+  }
+}
+FutureOr<void> _updateUserEmail(UserEmailEvent event, Emitter<ProfileState> emit) async {
+  try{
+    await ProfileUpdate().updateUserEmail(event.email);
+    var user = await UserProfileRepo().getUser();
+    print(event.email);
+  }catch (e) {
+    print(e);
+  }
+}
+}
+
 
 
 
