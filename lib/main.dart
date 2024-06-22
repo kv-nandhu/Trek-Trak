@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/google_maps/google_map_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
+import 'package:trek_trak/infrastructure/google_map/search_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/mini_bio_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/profile_repo.dart';
 import 'package:trek_trak/routing/route.dart';
@@ -45,9 +47,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ProfileBuildBloc(),
         ),
-        // BlocProvider(
-        //   create: (context) => BioBlocBloc(FirestoreService()),
-        // ),
+        BlocProvider(
+          create: (context) => GoogleMapBloc(SearchRepo()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

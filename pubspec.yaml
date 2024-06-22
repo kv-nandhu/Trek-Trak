@@ -71,6 +71,9 @@ dev_dependencies:
   table_calendar: ^3.1.2
   shimmer: ^3.0.0
   document_scanner: ^0.2.1
+  google_maps_flutter: ^2.5.3
+  flutter_geocoder: ^0.2.2-nullsafety
+  geolocator: ^12.0.0
 
   # google_maps_flutter: ^2.2.8
 
