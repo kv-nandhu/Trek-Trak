@@ -19,8 +19,9 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
         }
         if(event is addMarkerEvent){
           print(event.marker);
-           emit(GoogleMapState(markerlist: event.marker));
+           emit(GoogleMarkedState(markerlist: event.marker));
         }
     });
   }
+
 }

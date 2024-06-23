@@ -265,7 +265,15 @@ class FieldsAndButton extends StatelessWidget {
                         vmodel: 'vehicle model',
                         vbrand: 'vehicle brand',
                         vcolor: 'vehicle color',
-                        vtype: 'vehicle type'));
+                        vtype: 'vehicle type',
+                        pickuplocation: 'pickup',
+                        dropitlocation: 'drop location',
+                        middlecity: 'midle city',
+                        time: 'time',
+                        date: 'date',
+                        passengercount: 'passenger count',
+
+                        ));
               }
             },
             child: Container(

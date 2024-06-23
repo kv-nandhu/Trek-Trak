@@ -127,6 +127,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             vbrand: event.vbrand,
             vcolor: event.vcolor,
             vtype: event.vtype,
+            pickuplocation: event.pickuplocation,
+            dropitlocation: event.dropitlocation,
+            middlecity: event.middlecity,
+            time: event.time,
+            date: event.vtype,
+            passengercount: event.passengercount,
 
 
             );

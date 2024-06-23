@@ -22,6 +22,12 @@ class UserModel {
   String? vbrand;
   String? vcolor;
   String? vtype;
+  String? pickuplocation;
+  String? dropitlocation;
+  String? middlecity;
+  String? time;
+  String? date;
+  String? passengercount;
 
   UserModel(
       {this.email,
@@ -45,6 +51,13 @@ class UserModel {
       this.vbrand,
       this.vcolor,
       this.vtype,
+      this.pickuplocation,
+      this.dropitlocation,
+    this.middlecity,
+    this.time,
+    this.date,
+    this.passengercount,
+
       });
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -68,6 +81,13 @@ class UserModel {
       vbrand: json['vbrand'],
       vcolor: json['vcolor'],
       vtype: json['vtype'],
+      pickuplocation: json['pickup'],
+      dropitlocation: json['dropit'],
+      middlecity: json['middlecity'],
+      time: json['pickup_time'],
+      date: json['pickupdate'],
+      passengercount: json['passenger_count']
+
     );
   }
 
@@ -93,6 +113,13 @@ class UserModel {
     data['vbrand'] = this.vbrand;
     data['vcolor'] = this.vcolor;
     data['vtype'] = this.vtype;
+    data['pickup'] = this.pickuplocation;
+    data['dropit'] = this.dropitlocation;
+    data['middlecity'] = this.middlecity;
+    data['pickup_time'] = this.time;
+    data['pickupdate'] = this.date;
+    data['passenger_count'] = this.passengercount;
+    
 
     return data;
   }

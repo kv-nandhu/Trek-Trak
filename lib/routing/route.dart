@@ -132,7 +132,7 @@ class Routers {
       );
     },
     '/publish': (context) => PickLocation(),
-    '/dropLocation': (context) => const DropLocation(),
+    '/dropLocation': (context) =>  DropLocation(),
     '/addCity': (context) => const AddCity(),
     '/cityAddMap': (context) => const CityAddMap(),
     '/calendarPage': (context) => const CalendarPage(),

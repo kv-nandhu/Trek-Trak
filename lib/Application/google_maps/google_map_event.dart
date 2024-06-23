@@ -19,8 +19,8 @@ class afterGetEvent extends GoogleMapEvent{
 }
 class addMarkerEvent extends GoogleMapEvent{
    Marker marker;
-
-  addMarkerEvent({required this.marker});
+  double latie,longe;
+  addMarkerEvent({required this.marker,required this.latie,required this.longe});
   
   @override
   List<Object> get props => [marker];

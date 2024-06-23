@@ -233,6 +233,12 @@ class FirebaseAuthentServices {
       String ? vbrand,
       String ? vcolor,
       String ? vtype,
+      String ? pickuplocation,
+      String ? dropitlocation,
+      String ? middlecity,
+      String ? time,
+      String ? date,
+      String ? passengercount,
 
       }) async {
     print('hellow check 1');
@@ -274,6 +280,12 @@ class FirebaseAuthentServices {
           'vbrand':vbrand!,
           'vcolor' : vcolor!,
           'vtype' : vtype!,
+          'pickup' : pickuplocation!,
+          'dropit' : dropitlocation!,
+          'middlecity' : middlecity!,
+          'pickup_time' : time!,
+          'pickupdate' : date!,
+          'passenger_count' : passengercount!,
         };
 
         print('hellow check 3');

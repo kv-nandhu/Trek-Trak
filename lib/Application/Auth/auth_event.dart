@@ -95,6 +95,12 @@ class signwithemailandpasswordEvent extends AuthEvent {
   final String vbrand;
   final String vcolor;
   final String vtype;
+  final String pickuplocation;
+  final String dropitlocation;
+  final String middlecity;
+  final String time;
+  final String date;
+  final String passengercount;
 
   final BuildContext context;
 
@@ -120,6 +126,12 @@ class signwithemailandpasswordEvent extends AuthEvent {
     required this.vbrand,
     required this.vcolor,
     required this.vtype,
+    required this.pickuplocation,
+    required this.dropitlocation,
+    required this.middlecity,
+    required this.time,
+    required this.date,
+    required this.passengercount,
   });
 }
 
