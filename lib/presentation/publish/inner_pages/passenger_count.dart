@@ -5,11 +5,10 @@ class PassengerCount extends StatefulWidget {
   const PassengerCount({super.key});
 
   @override
-  State<PassengerCount> createState() => _PublishPageState();
+  State<PassengerCount> createState() => _PassengerCountState();
 }
 
-class _PublishPageState extends State<PassengerCount> {
-  final TextEditingController searchController = TextEditingController();
+class _PassengerCountState extends State<PassengerCount> {
   int passengerCount = 1;
   bool checkBoxValue = false;
 
@@ -55,7 +54,7 @@ class _PublishPageState extends State<PassengerCount> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                      const SizedBox(width: 1),
+                    const SizedBox(width: 1),
                     Container(
                       height: 55,
                       width: 55,
@@ -92,7 +91,7 @@ class _PublishPageState extends State<PassengerCount> {
                         ),
                       ),
                     ),
-                     const SizedBox(width: 1),
+                    const SizedBox(width: 1),
                   ],
                 ),
               ),
@@ -131,7 +130,7 @@ class _PublishPageState extends State<PassengerCount> {
                         checkBoxValue = newValue!;
                       });
                     },
-                    activeColor: CustomColor.greenColor(), // Color when checked
+                    activeColor: CustomColor.greenColor(),
                     checkColor: CustomColor.whiteColor(),
                   ),
                 ],
@@ -141,16 +140,13 @@ class _PublishPageState extends State<PassengerCount> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigate to the next screen
-            Navigator.pushNamed(context, '/locationPickerPage');
+            Navigator.pop(context, {'passengerCount': passengerCount, });
           },
-          backgroundColor: CustomColor.greenColor(), // Set the background color
-          foregroundColor: CustomColor.whiteColor(), // Set the icon color
+          backgroundColor: CustomColor.greenColor(),
+          foregroundColor: CustomColor.whiteColor(),
           child: const Icon(Icons.check),
         ),
       ),
     );
   }
 }
-
-

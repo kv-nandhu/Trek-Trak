@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/Application/google_maps/google_map_bloc.dart';
+import 'package:trek_trak/Application/publish_add/publish_add_bloc.dart';
+import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
-import 'package:trek_trak/infrastructure/google_map/search_repo.dart';
+import 'package:trek_trak/infrastructure/repository/publish/publish_add.dart';
+import 'package:trek_trak/infrastructure/repository/publish/publish_repo.dart';
+import 'package:trek_trak/infrastructure/repository/publish/search_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/mini_bio_repo.dart';
-import 'package:trek_trak/infrastructure/repository/profile_repo/profile_repo.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/data_get.dart';
 import 'package:trek_trak/routing/route.dart';
 // Import your FirestoreService
 
@@ -50,6 +55,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => GoogleMapBloc(SearchRepo()),
         ),
+        // BlocProvider(
+          // create: (context) => RidePublishBloc(UserProfileRepo(), RidePublishService())),
+   
+        BlocProvider(
+          create: (context) => PublishAddBloc(RidePublishAddingService())),
+        BlocProvider(
+          create: (context) => DataGettingBloc()),
+   
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

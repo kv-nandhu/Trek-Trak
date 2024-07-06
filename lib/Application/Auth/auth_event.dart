@@ -75,7 +75,7 @@ class verificationOtpEvent extends AuthEvent {
 }
 
 class signwithemailandpasswordEvent extends AuthEvent {
-  final String name;
+   final String name;
   final String gender;
   final String email;
   final String number;
@@ -101,6 +101,7 @@ class signwithemailandpasswordEvent extends AuthEvent {
   final String time;
   final String date;
   final String passengercount;
+
 
   final BuildContext context;
 

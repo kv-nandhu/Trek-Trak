@@ -74,11 +74,11 @@ class _SmokingScreenState extends State<SmokingScreen> {
                     fillColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return Colors
-                            .blue; // Set the color for the selected state
+                        return  CustomColor
+                          .greenColor();// Set the color for the selected state
                       }
                       return CustomColor
-                          .greenColor(); // Set the color for the unselected state
+                          .greyColor(); // Set the color for the unselected state
                     }),
                   )
                 ],
@@ -158,6 +158,15 @@ class _SmokingScreenState extends State<SmokingScreen> {
                 child: GestureDetector(
                   onTap: () {
                     profileBloc.add(SmokingEvent(smoke: _selectedSmoke));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Successfully selected'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

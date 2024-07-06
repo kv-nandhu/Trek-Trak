@@ -84,7 +84,7 @@ class IdVerifying extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Scanner()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Scanner()));
           },
           child: Text(
             "Verify my ID",
@@ -97,12 +97,12 @@ class IdVerifying extends StatelessWidget {
 }
 
 class AddPreferences extends StatelessWidget {
-  final String? chatiness;
-  const AddPreferences({super.key, required this.chatiness});
+  final String? chatiness, songs, smokes,pets;
+  const AddPreferences({super.key, required this.chatiness, required this.pets,required this.smokes,required this.songs});
 
   @override
   Widget build(BuildContext context) {
-    bool isAdded = chatiness != null && chatiness!.isNotEmpty;
+    bool isAdded = chatiness != "chattiness" && smokes != "smokes" && pets !="pets" && songs != "songs" ;
 
     return Row(
       children: [
@@ -135,7 +135,7 @@ class MiniBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isAdded = bio != null && bio!.isNotEmpty;
+    bool isAdded =  bio !="miniBios";
 
     return Row(
       children: [

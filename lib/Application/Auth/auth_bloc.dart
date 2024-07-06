@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:bloc/bloc.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -127,14 +126,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             vbrand: event.vbrand,
             vcolor: event.vcolor,
             vtype: event.vtype,
-            pickuplocation: event.pickuplocation,
-            dropitlocation: event.dropitlocation,
-            middlecity: event.middlecity,
-            time: event.time,
-            date: event.vtype,
-            passengercount: event.passengercount,
-
-
             );
         emit(AuthVerificationSuccessn());
       } catch (e) {

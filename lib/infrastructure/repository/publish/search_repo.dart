@@ -5,7 +5,7 @@ import 'package:http/http.dart'as http;
 class SearchRepo{
     Future<List<dynamic>?> getSuggetion(String input) async {
       String _sessionToken = '';
-    String kPLACES_API_KEY = 'AIzaSyDQ2c_pOSOFYSjxGMwkFvCVWKjYOM9siow';
+    String kPLACES_API_KEY = 'AIzaSyAnDu2fGv139hSDiPfHCXWbsZos2b7mlyY';
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =

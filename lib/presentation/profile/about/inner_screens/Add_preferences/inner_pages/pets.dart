@@ -74,11 +74,10 @@ String _slecetedPet = '';
                     fillColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return Colors
-                            .blue; // Set the color for the selected state
+                        return CustomColor.greenColor(); // Set the color for the selected state
                       }
                       return CustomColor
-                          .greenColor(); // Set the color for the unselected state
+                          .greyColor(); // Set the color for the unselected state
                     }),
                   )
                 ],
@@ -158,6 +157,15 @@ String _slecetedPet = '';
                 child: GestureDetector(
                   onTap: () {
                     profileBloc.add(PetEvent(pet: _slecetedPet));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Successfully selected'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

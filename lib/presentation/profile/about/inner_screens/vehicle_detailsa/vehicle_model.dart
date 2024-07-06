@@ -10,8 +10,8 @@ class ModelsSelecting extends StatefulWidget {
 
   const ModelsSelecting({
     super.key,
-    required this.selectedBrand,  
-    // required this.selectedVehicleType, 
+    required this.selectedBrand,
+    // required this.selectedVehicleType,
   });
 
   @override
@@ -124,7 +124,8 @@ class _ModelsSelectingState extends State<ModelsSelecting> {
                             IconButton(
                               icon: const Icon(Icons.arrow_forward_ios),
                               onPressed: () {
-                                context.read<ProfileBloc>().add(VehicleModelEvent(vmodel: models[index]));
+                                context.read<ProfileBloc>().add(
+                                    VehicleModelEvent(vmodel: models[index]));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

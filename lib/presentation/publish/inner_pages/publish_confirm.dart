@@ -24,7 +24,7 @@ class _PublishPageState extends State<PublisConfirm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Align(
+              Align(
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
@@ -44,9 +44,8 @@ class _PublishPageState extends State<PublisConfirm> {
                   ),
                 ),
               ),
-              Image.asset('images/publish.png', width: double.infinity,
-                height: 200,
-                fit: BoxFit.cover),
+              Image.asset('images/publish.png',
+                  width: double.infinity, height: 200, fit: BoxFit.cover),
               // Image at the top
               // Image.network(
               //   'https://via.placeholder.com/300', // Replace with your image URL or asset
@@ -67,52 +66,52 @@ class _PublishPageState extends State<PublisConfirm> {
               // Row with text on the left and icon on the right
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
+                children: [
                   InkWell(
-                       onTap: () {
-                              Navigator.pushReplacementNamed(context, '/mybottom');
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/mybottom');
                     },
                     child: Text(
                       'yes, Sure!',
-                      style: TextStyle(fontSize: 18,color: CustomColor.greenColor()),
+                      style: TextStyle(
+                          fontSize: 18, color: CustomColor.greenColor()),
                     ),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded, size: 18,color: CustomColor.greyColor()) 
-                   ,)
-               
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.arrow_forward_ios_rounded,
+                        size: 18, color: CustomColor.greyColor()),
+                  )
                 ],
               ),
-                 const divider_normal(),
-                 Row(
+              const divider_normal(),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
+                children: [
                   InkWell(
                     onTap: () {
-                              Navigator.pushReplacementNamed(context, '/successPublish');
+                      Navigator.pushReplacementNamed(
+                          context, '/successPublish');
                     },
-                  
                     child: Text(
-                        'No, thanks!',
-                        style: TextStyle(fontSize: 18,color: CustomColor.greyColor()),
-                      ),
-                 
+                      'No, thanks!',
+                      style: TextStyle(
+                          fontSize: 18, color: CustomColor.greyColor()),
+                    ),
                   ),
-                 IconButton(onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/successPublish');
-                 }, icon: Icon(Icons.arrow_forward_ios_rounded, size: 18,color: CustomColor.greyColor()) )
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/successPublish');
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_rounded,
+                          size: 18, color: CustomColor.greyColor()))
                 ],
               ),
             ],
           ),
         ),
-      ),);
- 
+      ),
+    );
   }
 }
-
-
-
-
-
-
-

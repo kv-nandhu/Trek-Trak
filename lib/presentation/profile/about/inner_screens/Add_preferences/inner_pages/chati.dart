@@ -11,11 +11,11 @@ class ChattinessScreen extends StatefulWidget {
 }
 
 class _ChattinessScreenState extends State<ChattinessScreen> {
-String _selectedChatness = '';
+  String _selectedChatness = '';
 
   @override
   Widget build(BuildContext context) {
-  final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -27,7 +27,7 @@ String _selectedChatness = '';
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/addPreference');
+                    Navigator.pop(context);
                   },
                   label: Text(
                     "Back",
@@ -61,22 +61,23 @@ String _selectedChatness = '';
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-                   Radio<String>(
-                  value: 'I love to chat',
-                  groupValue: _selectedChatness,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedChatness = value!;
-                    });
+                  Radio<String>(
+                    value: 'I love to chat',
+                    groupValue: _selectedChatness,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedChatness = value!;
+                      });
                     },
                     activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
-                        (Set<WidgetState> states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.blue;
-                      }
-                      return CustomColor.greenColor();
-                    }),
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.selected)) {
+                          return CustomColor.greenColor();
+                        }
+                        return CustomColor.greyColor();
+                      },
+                    ),
                   )
                 ],
               ),
@@ -88,26 +89,27 @@ String _selectedChatness = '';
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'I,m chatty when I feel comfortable',
+                      'I\'m chatty when I feel comfortable',
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
                   Radio<String>(
-                  value: 'I,m chatty when I feel comfortable',
-                  groupValue: _selectedChatness,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedChatness = value!;
-                    });
+                    value: 'I\'m chatty when I feel comfortable',
+                    groupValue: _selectedChatness,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedChatness = value!;
+                      });
                     },
                     activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
-                        (Set<WidgetState> states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return CustomColor.greenColor();
-                      }
-                      return CustomColor.greyColor();
-                    }),
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.selected)) {
+                          return CustomColor.greenColor();
+                        }
+                        return CustomColor.greyColor();
+                      },
+                    ),
                   )
                 ],
               ),
@@ -119,26 +121,27 @@ String _selectedChatness = '';
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'I,m the quiet type',
+                      'I\'m the quiet type',
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
                   Radio<String>(
-                  value: 'I,m the quiet type',
-                  groupValue: _selectedChatness,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedChatness = value!;
-                    });
+                    value: 'I\'m the quiet type',
+                    groupValue: _selectedChatness,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedChatness = value!;
+                      });
                     },
                     activeColor: Colors.blue,
                     fillColor: WidgetStateProperty.resolveWith<Color>(
-                        (Set<WidgetState> states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return CustomColor.greenColor();
-                      }
-                      return Colors.grey;
-                    }),
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.selected)) {
+                          return CustomColor.greenColor();
+                        }
+                        return Colors.grey;
+                      },
+                    ),
                   )
                 ],
               ),
@@ -148,8 +151,16 @@ String _selectedChatness = '';
               Center(
                 child: GestureDetector(
                   onTap: () {
-                      profileBloc.add(ChatnessEvent(chat: _selectedChatness));
-                      // Navigator.pop(context);
+                    profileBloc.add(ChatnessEvent(chat: _selectedChatness));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Successfully selected'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -166,7 +177,6 @@ String _selectedChatness = '';
                       ),
                     ),
                   ),
-                  
                 ),
               ),
             ],
@@ -176,4 +186,3 @@ String _selectedChatness = '';
     );
   }
 }
- 

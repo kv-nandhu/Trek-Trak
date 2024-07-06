@@ -35,16 +35,20 @@ import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detai
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_model.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
-import 'package:trek_trak/presentation/publish/add_city.dart';
-import 'package:trek_trak/presentation/publish/city_adding_map.dart';
-import 'package:trek_trak/presentation/publish/calander.dart';
-import 'package:trek_trak/presentation/publish/date_selecting.dart';
-import 'package:trek_trak/presentation/publish/drop_off.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/add_city.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/city_adding_map.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
+import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/expense_calculating.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/multiple_demo.dart';
+import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/drop_off.dart';
 import 'package:trek_trak/presentation/publish/location_picker.dart';
-import 'package:trek_trak/presentation/publish/passenger_count.dart';
-import 'package:trek_trak/presentation/publish/pick_up.dart';
-import 'package:trek_trak/presentation/publish/publish_confirm.dart';
-import 'package:trek_trak/presentation/publish/success_publish.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/pick_up.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/publish_confirm.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/success_publish.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
 import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
@@ -78,10 +82,10 @@ class Routers {
     '/Success': (context) => const SuccessScreen(),
     '/signScreen': (context) => const SignScreen(),
     '/login': (context) => const LoginScreen(),
-    '/home': (context) => const HomeScreen(),
+    // '/home': (context) => const HomeScreen(),
 
     '/history': (context) => const RidePage(),
-    '/chat': (context) => const ChatPage(),
+    '/chat': (context) => ChatListPage(),
     '/profile': (context) => const ProfilePage(),
     '/mybottom': (context) => const MyBottom(),
     '/editProfile': (context) {
@@ -131,16 +135,27 @@ class Routers {
         selectedBrand: args['selectedBrand'],
       );
     },
-    '/publish': (context) => PickLocation(),
-    '/dropLocation': (context) =>  DropLocation(),
+    // '/publish': (context) => PickLocation(),
+    '/publish': (context) => KeralaLocationsDemo(),
+    // '/dropLocation': (context) =>  DropLocation(),
+    '/dropLocation': (context) => DropkeralaLocation(),
     '/addCity': (context) => const AddCity(),
-    '/cityAddMap': (context) => const CityAddMap(),
+    // '/cityAddMap': (context) => const CityAddMap(),
+    '/cityAddMap': (context) => MultiLocation(),
     '/calendarPage': (context) => const CalendarPage(),
     '/timePickerPage': (context) => const TimePickerPage(),
     '/passengerCount': (context) => const PassengerCount(),
     '/publisConfirm': (context) => const PublisConfirm(),
     '/successPublish': (context) => const SuccessPublish(),
     '/locationPickerPage': (context) => const LocationPickerPage(),
+
+    '/calculateMileageScreen': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return CalculateMileageScreen(
+       p_lati:p_lati,p_lang:p_lang, d_lang:d_lang,d_lati:d_lati,
+      );
+    },
     // '/scanner': (context) =>  Scanner()
 
     '/userNameEditing': (context) {

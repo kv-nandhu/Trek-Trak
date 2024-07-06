@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:trek_trak/domain/user_model.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/image_updateing.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/mini_bio_repo.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/preference_repo.dart';
-import 'package:trek_trak/infrastructure/repository/profile_repo/profile_repo.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/data_get.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/profile_update.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/vehicle_repo.dart';
 part 'profile_event.dart';
@@ -28,6 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UserDobEvent>(_updateUserDob);
     on<UserNumberEvent>(_updateUserNumber);
     on<UserEmailEvent>(_updateUserEmail);
+    on<UserImageEvent>(_updateUserProfileImage);
   
   }
 
@@ -188,6 +190,16 @@ FutureOr<void> _updateUserEmail(UserEmailEvent event, Emitter<ProfileState> emit
     await ProfileUpdate().updateUserEmail(event.email);
     var user = await UserProfileRepo().getUser();
     print(event.email);
+  }catch (e) {
+    print(e);
+  }
+}
+
+FutureOr<void> _updateUserProfileImage(UserImageEvent event, Emitter<ProfileState> emit) async {
+  try{
+    await ProfileImage().updateUserProfieImage(event.image);
+    var user = await UserProfileRepo().getUser();
+    print(event.image);
   }catch (e) {
     print(e);
   }

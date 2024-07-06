@@ -48,5 +48,6 @@ class UsernameState extends ProfileState{}
 class UserDobState extends ProfileState{}
 class UserNumberState extends ProfileState{}
 class UserEmailState extends ProfileState{}
+class UserImageState extends ProfileState{}
 
 class ProfileErrorState extends ProfileState{}

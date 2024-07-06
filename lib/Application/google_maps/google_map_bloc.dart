@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:trek_trak/infrastructure/google_map/search_repo.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:trek_trak/infrastructure/repository/publish/search_repo.dart';
 part 'google_map_event.dart';
 part 'google_map_state.dart';
 

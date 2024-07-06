@@ -149,6 +149,15 @@ String _selectedSong = '';
                 child: GestureDetector(
                   onTap: () {
                      profileBloc.add(SongEvent(song: _selectedSong));
+                     ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Successfully selected'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

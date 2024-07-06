@@ -51,15 +51,19 @@ class _PublishPageState extends State<AddCity> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-               onTap: () {
-Navigator.pushNamed(context, '/cityAddMap');
-               },
-                  child: Text("Add city",style: TextStyle(fontSize: 15,color: CustomColor.greenColor()),)),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/cityAddMap');
+                    },
+                    child: Text(
+                      "Add city",
+                      style: TextStyle(
+                          fontSize: 15, color: CustomColor.greenColor()),
+                    )),
               )
             ],
           ),
         ),
-         floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Navigate to the next screen
             Navigator.pushNamed(context, '/locationPickerPage');

@@ -53,7 +53,7 @@ class _AddPreferenceState extends State<AddPreference> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    Navigator.pushNamed(
                         context, '/chattinessScreen');
                   },
                   child: Text(
@@ -72,7 +72,7 @@ class _AddPreferenceState extends State<AddPreference> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/musicScreen');
+                    Navigator.pushNamed(context, '/musicScreen');
                   },
                   child: Text(
                     "I'll jam depending on the modd",
@@ -88,7 +88,7 @@ class _AddPreferenceState extends State<AddPreference> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/smokingScreen');
+                    Navigator.pushNamed(context, '/smokingScreen');
                   },
                   child: Text(
                     "Cigarette breaks outside the car are ok",
@@ -104,7 +104,7 @@ class _AddPreferenceState extends State<AddPreference> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/petsScreen');
+                    Navigator.pushNamed(context, '/petsScreen');
                   },
                   child: Text(
                     "I'll travel with pets depending on the animal",

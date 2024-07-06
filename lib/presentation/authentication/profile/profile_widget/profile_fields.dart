@@ -1,12 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: unused_element, use_super_parameters, depend_on_referenced_packages
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
@@ -70,18 +67,7 @@ class FieldsAndButton extends StatelessWidget {
   }
 
   void _onSubmit(BuildContext context) {
-    print(name);
-    print(email);
-    print(_districtController);
-    print(_cityController);
-    print(_streetController);
-    print(number);
-    print(dateController);
-    print(gender);
-    print(pickedImage);
-    print(password);
     if (_validateProfileDetails()) {
-      // Proceed with the next step
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -91,7 +77,6 @@ class FieldsAndButton extends StatelessWidget {
         ),
       );
     } else {
-      // Show error dialog
       _showErrorDialog(context, 'Profile details do not match.');
     }
   }
@@ -105,15 +90,12 @@ class FieldsAndButton extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              BlocProvider.of<ProfileBuildBloc>(context)
-                  .add(ChangeImageEvent());
-              BlocProvider.of<ProfileBuildBloc>(context)
-                  .add(ProfileImagePickerEvent());
+              BlocProvider.of<ProfileBuildBloc>(context).add(ChangeImageEvent());
+              BlocProvider.of<ProfileBuildBloc>(context).add(ProfileImagePickerEvent());
             },
             child: CircleAvatar(
               radius: 90,
-              backgroundImage:
-                  pickedImage != null ? NetworkImage(pickedImage!) : null,
+              backgroundImage: pickedImage != null ? NetworkImage(pickedImage!) : null,
               child: pickedImage == null
                   ? const Icon(Icons.add_a_photo_outlined)
                   : null,
@@ -142,8 +124,7 @@ class FieldsAndButton extends StatelessWidget {
               lastDate: DateTime.now(),
             );
             if (picked != null) {
-              dateController.text =
-                  '${picked.year}-${picked.month}-${picked.day}';
+              dateController.text = '${picked.year}-${picked.month}-${picked.day}';
             }
           },
           child: AbsorbPointer(
@@ -178,8 +159,7 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your email',
             keyboardType: TextInputType.emailAddress,
             validator: (value) => Validator().emailValidator(value),
-            errorText:
-                _emailController.text.isEmpty ? 'email is required' : null,
+            errorText: _emailController.text.isEmpty ? 'email is required' : null,
           ),
         ),
         // Phone Number input field
@@ -190,10 +170,7 @@ class FieldsAndButton extends StatelessWidget {
             labelText: 'Phone Number',
             hintText: 'Enter your phone number',
             keyboardType: TextInputType.phone,
-            // validator: (value) => Validator().numberValidator(value),
-            errorText: _phoneNumberController.text.isEmpty
-                ? 'Number is required'
-                : null,
+            errorText: _phoneNumberController.text.isEmpty ? 'Number is required' : null,
           ),
         ),
         // Street input field
@@ -205,8 +182,7 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your street',
             keyboardType: TextInputType.streetAddress,
             validator: (value) => Validator().streetValidator(value),
-            errorText:
-                _streetController.text.isEmpty ? 'city is required' : null,
+            errorText: _streetController.text.isEmpty ? 'city is required' : null,
           ),
         ),
         // City input field
@@ -218,8 +194,7 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your city',
             keyboardType: TextInputType.text,
             validator: (value) => Validator().cityValidator(value),
-            errorText:
-                _cityController.text.isEmpty ? 'street is required' : null,
+            errorText: _cityController.text.isEmpty ? 'street is required' : null,
           ),
         ),
         // District input field
@@ -231,9 +206,7 @@ class FieldsAndButton extends StatelessWidget {
             hintText: 'Enter your district',
             keyboardType: TextInputType.text,
             validator: (value) => Validator().districtValidator(value),
-            errorText: _districtController.text.isEmpty
-                ? 'district is required'
-                : null,
+            errorText: _districtController.text.isEmpty ? 'district is required' : null,
           ),
         ),
         const SizedBox(height: 20),
@@ -243,37 +216,54 @@ class FieldsAndButton extends StatelessWidget {
           child: InkWell(
             onTap: () {
               if (formKey.currentState!.validate()) {
+                // // Dispatch events to both Blocs
+                // BlocProvider.of<RidePublishBloc>(context).add(
+                //   PublishRideEvent(
+                //     name: name,
+                //     pickuplocation: "Add pick-up location",
+                //     dropitlocation: 'Add drop-it location',
+                //     middlecity: 'add middle city',
+                //     time: 'add time',
+                //     date: 'add date',
+                //     passengercount: 'adda passenger count',
+                //     droplatitude: 'drop latitude',
+                //     droplongitude: 'drop longitude',
+                //     picklatitude: 'pick latitude',
+                //     picklongitude: 'pick longitude',
+                //     expence:'travel_expense',
+                //   ),
+                // );
                 BlocProvider.of<AuthBloc>(context).add(
-                    signwithemailandpasswordEvent(
-                        password: password!,
-                        name: name!,
-                        number: number!,
-                        gender: gender!,
-                        email: email!,
-                        context: context,
-                        city: _cityController.text,
-                        street: _streetController.text,
-                        district: _districtController.text,
-                        image: pickedImage!,
-                        dob: dateController.text,
-                        miniBio: 'miniBios',
-                        chat: 'chattiness',
-                        song: 'songs',
-                        smoke: 'smokes',
-                        pet: 'pets',
-                        vnumber: 'vehicle number',
-                        vmodel: 'vehicle model',
-                        vbrand: 'vehicle brand',
-                        vcolor: 'vehicle color',
-                        vtype: 'vehicle type',
-                        pickuplocation: 'pickup',
-                        dropitlocation: 'drop location',
-                        middlecity: 'midle city',
-                        time: 'time',
-                        date: 'date',
-                        passengercount: 'passenger count',
-
-                        ));
+                  signwithemailandpasswordEvent(
+                    password: password,
+                    name: name,
+                    number: number,
+                    gender: gender,
+                    email: email,
+                    context: context,
+                    city: _cityController.text,
+                    street: _streetController.text,
+                    district: _districtController.text,
+                    image: pickedImage!,
+                    dob: dateController.text,
+                    miniBio: 'miniBios',
+                    chat: 'chattiness',
+                    song: 'songs',
+                    smoke: 'smokes',
+                    pet: 'pets',
+                    vnumber: 'vehicle number',
+                    vmodel: 'vehicle model',
+                    vbrand: 'vehicle brand',
+                    vcolor: 'vehicle color',
+                    vtype: 'vehicle type',
+                    pickuplocation: 'pickup',
+                    dropitlocation: 'drop location',
+                    middlecity: 'midle city',
+                    time: 'time',
+                    date: 'date',
+                    passengercount: 'passenger count',
+                  ),
+                );
               }
             },
             child: Container(

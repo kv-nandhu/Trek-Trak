@@ -41,7 +41,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                 ),
               ),
-               const Text(
+              const Text(
                 "When are you going?",
                 style: TextStyle(
                   fontSize: 30,
@@ -58,7 +58,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDay = selectedDay;
-                    _focusedDay = focusedDay; // update _focusedDay here as well
+                    _focusedDay = focusedDay;
                   });
                 },
                 calendarFormat: CalendarFormat.month,
@@ -79,7 +79,7 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
               const SizedBox(height: 20),
               Text(
-               '${_selectedDay.toLocal()}' .split(' ')[0],
+                '${_selectedDay.toLocal()}'.split(' ')[0],
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
@@ -87,16 +87,13 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigate to the next screen
-            Navigator.pushNamed(context, '/locationPickerPage');
+            Navigator.pop(context, _selectedDay.toLocal().toString().split(' ')[0]);
           },
-          backgroundColor: CustomColor.greenColor(), // Set the background color
-          foregroundColor: CustomColor.whiteColor(), // Set the icon color
+          backgroundColor: CustomColor.greenColor(),
+          foregroundColor: CustomColor.whiteColor(),
           child: const Icon(Icons.check),
         ),
       ),
     );
   }
 }
-
-

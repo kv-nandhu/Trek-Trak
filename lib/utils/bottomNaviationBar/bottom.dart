@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
@@ -8,28 +6,36 @@ import 'package:trek_trak/presentation/home/home.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
 import 'package:trek_trak/presentation/publish/location_picker.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
-import 'package:trek_trak/utils/color/color.dart';
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 
-List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
-  BottomNavigationBarItem(
-    icon: Icon(Icons.home),
-    label: 'Home',
+List<FlashyTabBarItem> bottomNavItems = <FlashyTabBarItem>[
+  FlashyTabBarItem(
+    icon: const Icon(Icons.home),
+    title: const Text('Home'),
   ),
-  BottomNavigationBarItem(
-      icon: Icon(Icons.add_circle_outline_sharp), label: 'Publish'),
-  BottomNavigationBarItem(
-      icon: Icon(Icons.history_toggle_off), label: 'Your Ride'),
-  BottomNavigationBarItem(
-      icon: Icon(Icons.chat_bubble_outline_outlined), label: 'Chat'),
-  BottomNavigationBarItem(
-      icon: Icon(Icons.person_3_outlined), label: 'Profile'),
+  FlashyTabBarItem(
+    icon: const Icon(Icons.add_circle_outline_sharp),
+    title: const Text('Publish'),
+  ),
+  FlashyTabBarItem(
+    icon: const Icon(Icons.history_toggle_off),
+    title: const Text('Your Ride'),
+  ),
+  FlashyTabBarItem(
+    icon: const Icon(Icons.chat_bubble_outline_outlined),
+    title: const Text('Chat'),
+  ),
+  FlashyTabBarItem(
+    icon: const Icon(Icons.person_3_outlined),
+    title: const Text('Profile'),
+  ),
 ];
 
 List<Widget> bottomNavScreen = <Widget>[
   const HomeScreen(),
-  LocationPickerPage(),
+  const LocationPickerPage(),
   const RidePage(),
-  const ChatPage(),
+  ChatListPage(),
   const ProfilePage(),
 ];
 
@@ -45,19 +51,16 @@ class MyBottom extends StatelessWidget {
           body: Center(
             child: bottomNavScreen.elementAt(state.tabIndex),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            showUnselectedLabels: true,
-            type: BottomNavigationBarType.fixed,
-            items: bottomNavItems,
-            currentIndex: state.tabIndex,
-            selectedItemColor: CustomColor.greenColor(),
-            unselectedItemColor: CustomColor.blackColor(),
-            // type: BottomNavigationBarType.shifting,
-            backgroundColor: Colors.transparent,
-            onTap: (index) {
+          bottomNavigationBar: FlashyTabBar(
+            height: 70,
+            animationCurve: Curves.linear,
+            selectedIndex: state.tabIndex,
+            showElevation: true,
+            onItemSelected: (index) {
               BlocProvider.of<BottomNavigationBarBloc>(context)
                   .add(TabChange(tabIndex: index));
             },
+            items: bottomNavItems,
           ),
         );
       },

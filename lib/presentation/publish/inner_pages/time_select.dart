@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
@@ -61,22 +63,19 @@ class _TimePickerPageState extends State<TimePickerPage> {
                   _selectTime(context);
                 },
               ),
-              
             ],
           ),
         ),
-         floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigate to the next screen
-            Navigator.pushNamed(context, '/locationPickerPage');
+            // Navigate to the next screen and pass the selected time
+            Navigator.pop(context, _timeController.text);
           },
-          backgroundColor: CustomColor.greenColor(), // Set the background color
-          foregroundColor: CustomColor.whiteColor(), // Set the icon color
+          backgroundColor: CustomColor.greenColor(),
+          foregroundColor: CustomColor.whiteColor(),
           child: const Icon(Icons.check),
         ),
       ),
     );
   }
 }
-
-
