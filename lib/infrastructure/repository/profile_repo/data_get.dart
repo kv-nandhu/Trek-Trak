@@ -17,7 +17,8 @@ class UserProfileRepo {
 
       if (querySnapshot.docs.isNotEmpty) {
         // Assuming only one document matches the query
-        UserModel userModel = UserModel.fromJson(querySnapshot.docs.first.data() as Map<String, dynamic>);
+        UserModel userModel = UserModel.fromJson(
+            querySnapshot.docs.first.data() as Map<String, dynamic>);
 
         print('Name: ${userModel.name}');
         print('Email: ${userModel.email}');
@@ -38,23 +39,43 @@ class UserProfileRepo {
   }
 
   Future<List<RidePublish>> getRide() async {
-  List<RidePublish> publishing = [];
-  User? user = FirebaseAuth.instance.currentUser;
-
-  try {
-    final documentSnapshot = await FirebaseFirestore.instance.collection('publish').get();
-
-    documentSnapshot.docs.forEach((element) {
-      // Extract data from the document snapshot
-      Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      publishing.add(RidePublish.fromJson(data));
-    });
-    return publishing;
-
-  } catch (e) {
-    print('Error fetching ride publish: $e');
-    return publishing;
+    List<RidePublish> publishing = [];
+    User? user = FirebaseAuth.instance.currentUser;
+    try {
+      final documentSnapshot =
+          await FirebaseFirestore.instance.collection('publish').get();
+          
+      documentSnapshot.docs.forEach((element) {
+        // Extract data from the document snapshot
+        Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        publishing.add(RidePublish.fromJson(data));
+        
+      });
+      return publishing;
+    } catch (e) {
+      print('Error fetching ride publish: $e');
+      return publishing;
+    }
   }
-}
 
+  Future<List<RidePublish>> getInduvitual() async {
+    List<RidePublish> publishing = [];
+    User? user = FirebaseAuth.instance.currentUser;
+
+    try {
+      final documentSnapshot = await FirebaseFirestore.instance
+          .collection('publish')
+          .where('u_uid', isEqualTo: user!.uid)
+          .get();
+
+      documentSnapshot.docs.forEach((element) {
+        Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        publishing.add(RidePublish.fromJson(data));
+      });
+      return publishing;
+    } catch (e) {
+      print('Error fetching ride publish: $e');
+      return publishing;
+    }
+  }
 }

@@ -1,36 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/publish_add/publish_add_bloc.dart';
+import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/expense_calculating.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
+import 'package:trek_trak/presentation/publish/location_picker.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final TextEditingController timeController = TextEditingController();
-final TextEditingController pickupController = TextEditingController();
-final TextEditingController dropController = TextEditingController();
-final TextEditingController middleCityController = TextEditingController();
-final TextEditingController dateController = TextEditingController();
-final TextEditingController passengerCountController = TextEditingController();
-final TextEditingController expenseController = TextEditingController();
-String? p_lang;
-String? p_lati;
-String? d_lang;
-String? d_lati;
+class PublishEditing extends StatefulWidget {
+  // final RidePublish? rideArguments;
+  final String pickuplocation;
+  final String dropitlocation;
+  final String middlecity;
+  final String time;
+  final String date;
+  final String passengercount;
+  final String droplatitude;
+  final String droplongitude;
+  final String picklatitude;
+  final String picklongitude;
+  final String expence;
 
-class LocationPickerPage extends StatefulWidget {
-  const LocationPickerPage({Key? key}) : super(key: key);
+  PublishEditing({
+    Key? key,
+    // this.rideArguments,
+    required this.pickuplocation,
+    required this.dropitlocation,
+    required this.middlecity,
+    required this.time,
+    required this.date,
+    required this.passengercount,
+    required this.droplatitude,
+    required this.droplongitude,
+    required this.picklatitude,
+    required this.picklongitude,
+    required this.expence,
+  }) : super(key: key);
 
   @override
   _LocationPickerPageState createState() => _LocationPickerPageState();
 }
 
-class _LocationPickerPageState extends State<LocationPickerPage> {
+class _LocationPickerPageState extends State<PublishEditing> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    pickupController.text =widget.pickuplocation;
+    dropController.text = widget.dropitlocation;
+    timeController.text = widget.time;
+    dateController.text = widget.date;
+    passengerCountController.text = widget.passengercount;
+    expenseController.text = widget.expence;
+    p_lang = widget.picklongitude;
+    p_lati = widget.picklatitude;
+    d_lang = widget.droplongitude;
+    d_lati = widget.droplatitude;
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -70,10 +101,8 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // _submitForm(context);
-          
-            BlocProvider.of<PublishAddBloc>(context).add(
-              AddRidePublishEvent(
+            BlocProvider.of<RidePublishBloc>(context).add(
+              PublishRideEvent(
                 pickuplocation: pickupController.text,
                 dropitlocation: dropController.text,
                 middlecity: 'add middle city',
@@ -84,12 +113,11 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                 droplongitude: d_lang.toString(),
                 picklatitude: p_lati.toString(),
                 picklongitude: p_lang.toString(),
-                expense: expenseController.text,
+                expense: expenseController.text, 
               ),
             );
-              _submitForm(context);
+            _submitForm(context);
           },
-          
           backgroundColor: CustomColor.greenColor(),
           foregroundColor: CustomColor.whiteColor(),
           child: const Icon(Icons.check),
@@ -113,13 +141,10 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
 
   Widget _buildPickLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
-    print(p_lati);
-    print(p_lang);
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(context,
             MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
-        print("vggghhbhbh${result}");
         if (result != null) {
           setState(() {
             pickupController.text = result['pickuplocation'];
@@ -145,14 +170,10 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
 
   Widget _buildDropLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
-    print(d_lang);
-    print(d_lati);
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(context,
             MaterialPageRoute(builder: (context) => DropkeralaLocation()));
-        print("========================================");
-        print("sdfbsadfjkasdjkfhj${result}");
         if (result != null) {
           setState(() {
             dropController.text = result['droplocation'];
@@ -255,12 +276,6 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
   }
 
   Widget _buildTravelExpenseInput() {
-    print("--------------------------------------------");
-    print("pick up${p_lati}");
-    print("pick up${p_lang}");
-    print("drop${d_lang}");
-    print("drop${d_lati}");
-
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
@@ -292,8 +307,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
       ),
     );
   }
-
-  void _submitForm(BuildContext context) {
+    void _submitForm(BuildContext context) {
     timeController.clear();
     pickupController.clear();
     dropController.clear();
@@ -305,6 +319,9 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
     p_lati = null;
     d_lang = null;
     d_lati = null;
-    Navigator.pushNamed(context, '/publishConfirm');
+    Navigator.pushNamed(context, '/publishEditing');
   }
+ 
 }
+
+

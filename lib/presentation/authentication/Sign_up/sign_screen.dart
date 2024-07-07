@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, depend_on_referenced_packages, unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
@@ -6,11 +6,10 @@ import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/button
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/fields.dart';
 import 'package:trek_trak/presentation/authentication/Sign_up/sign_widget/terms_privacy.dart';
 import 'package:trek_trak/presentation/authentication/first_screen/first_screen.dart';
-import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 
 class SignScreen extends StatefulWidget {
-  const SignScreen({Key? key});
+  const SignScreen({super.key, Key? Key});
 
   @override
   State<SignScreen> createState() => _SignScreenState();
@@ -21,7 +20,7 @@ class _SignScreenState extends State<SignScreen> {
   String? _selectedGender;
   @override
   Widget build(BuildContext context) {
-    final authbloc = BlocProvider.of<AuthBloc>(context);
+    BlocProvider.of<AuthBloc>(context);
     return BlocProvider(
       create: (context) => AuthBloc(),
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -100,7 +99,7 @@ class _SignScreenState extends State<SignScreen> {
                               const SizedBox(height: 10),
                               Buttons.signGoogle(context),
                               const SizedBox(height: 10),
-                              loginAgain(),
+                              const loginAgain(),
                             ],
                           ),
                         ),

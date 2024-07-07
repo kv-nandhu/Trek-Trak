@@ -8,8 +8,13 @@ class RidePublishLoadingState extends DataGettingState {
  
 }
 
-class RidePublishingSuccessState extends DataGettingState {
+class RidePublishedSuccessState extends DataGettingState {
    final List<RidePublish> ride;
 
-  RidePublishingSuccessState({required this.ride});
+  RidePublishedSuccessState({required this.ride});
+}
+
+class RidePublishErrorState extends DataGettingState{
+    final String error;
+  RidePublishErrorState({required this.error});
 }

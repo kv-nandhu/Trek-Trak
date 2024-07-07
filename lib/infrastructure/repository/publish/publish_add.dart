@@ -89,7 +89,7 @@ class RidePublishAddingService {
             .collection("publish")
             .doc(user.uid)
             .set({
-          "dropit": dropitlocation,
+          "drop_location": dropitlocation,
           "drop_latitude": droplatitude,
           "drop_longitude": droplongitude,
         });
@@ -107,13 +107,13 @@ class RidePublishAddingService {
   Future<void> addRide(AddRidePublishEvent event) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-
+     String uid=  await FirebaseFirestore.instance.collection("publish").doc().id;
       if (user != null) {
         await FirebaseFirestore.instance
-            .collection("publish")
+           .collection("publish")
             .add({
           "u_uid": user.uid,
-          "name": event.name,
+           'uid':uid,
           "pickup_location": event.pickuplocation,
           "drop_location": event.dropitlocation,
           "middle_city": event.middlecity,

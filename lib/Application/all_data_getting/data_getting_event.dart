@@ -7,3 +7,7 @@ class GetRidePublishEvent extends DataGettingEvent {
 
   GetRidePublishEvent();
 }
+
+class InduvitualPublishEvent extends DataGettingEvent{
+  InduvitualPublishEvent();
+}

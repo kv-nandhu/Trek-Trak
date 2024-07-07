@@ -35,6 +35,7 @@ import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detai
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_details.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehicle_model.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
+import 'package:trek_trak/presentation/publish/demo_pages/example_pick.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/add_city.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/city_adding_map.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
@@ -49,6 +50,7 @@ import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart'
 import 'package:trek_trak/presentation/publish/inner_pages/pick_up.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/publish_confirm.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/success_publish.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/publish_editing.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
 import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
@@ -121,6 +123,25 @@ class Routers {
     '/PlateNumber': (context) => const PlateNumber(),
     '/brandVehicle': (context) => const BrandVehicle(),
     '/colorListScreen': (context) => ColorListScreen(),
+    // '/publishEditing': (context) => PublishEditing(),
+    '/publishEditing': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return PublishEditing(
+     pickuplocation: args['pickuplocation'],
+        dropitlocation: args['dropitlocation'],
+        middlecity: args['middlecity'],
+        time: args['time'],
+        date: args['date'],
+        passengercount: args['passengercount'],
+        droplatitude: args['droplatitude'],
+        droplongitude: args['droplongitude'],
+        picklatitude: args['picklatitude'],
+        picklongitude: args['picklongitude'],
+        expence: args['expence'],
+      );
+    },
+
     '/vehicleDetailScreen': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -153,7 +174,10 @@ class Routers {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return CalculateMileageScreen(
-       p_lati:p_lati,p_lang:p_lang, d_lang:d_lang,d_lati:d_lati,
+        p_lati: p_lati,
+        p_lang: p_lang,
+        d_lang: d_lang,
+        d_lati: d_lati,
       );
     },
     // '/scanner': (context) =>  Scanner()

@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => GoogleMapBloc(SearchRepo()),
         ),
-        // BlocProvider(
-          // create: (context) => RidePublishBloc(UserProfileRepo(), RidePublishService())),
+        BlocProvider(
+          create: (context) => RidePublishBloc(UserProfileRepo(), RidePublishService())),
    
         BlocProvider(
           create: (context) => PublishAddBloc(RidePublishAddingService())),

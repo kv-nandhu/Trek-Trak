@@ -1,20 +1,23 @@
-// part of 'ride_publish_bloc.dart';
+part of 'ride_publish_bloc.dart';
 
-// @immutable
-// abstract class RidePublishState {}
+@immutable
+abstract class RidePublishState {}
 
-// class RidePublishInitial extends RidePublishState {}
+class RidePublishInitial extends RidePublishState {}
 
-// class RidePublishingLoadingState extends RidePublishState {}
+class RidePublishingLoadingState extends RidePublishState {}
 
-// class RidePublishLoadState extends RidePublishState {
-//   final RidePublish ride;
-//   RidePublishLoadState({required this.ride});
-// }
+class RidePublishLoadState extends RidePublishState {
+  final List<RidePublish> rides;
+  RidePublishLoadState({required this.rides});
+}
 
-// class RidePublishingSuccessState extends RidePublishState {}
+class RidePublishingSuccessState extends RidePublishState {
+  final List<RidePublish> rides;
+  RidePublishingSuccessState({required this.rides});
+}
 
-// class RidePublishingErrorState extends RidePublishState {
-//   final String error;
-//   RidePublishingErrorState({required this.error});
-// }
+class RidePublishingErrorState extends RidePublishState {
+  final String error;
+  RidePublishingErrorState({required this.error});
+}

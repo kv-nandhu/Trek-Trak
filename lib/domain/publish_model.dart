@@ -11,6 +11,7 @@ class RidePublish {
   String? passengercount;
   String? rideid;
   String? expence;
+  String? fromuid;
 
   RidePublish({
     this.pickuplocation,
@@ -25,13 +26,14 @@ class RidePublish {
     this.passengercount,
     this.rideid,
     this.expence,
+    this.fromuid,
   });
 
   factory RidePublish.fromJson(Map<String, dynamic> json) {
     return RidePublish(
       rideid: json['ride_id'],
       pickuplocation: json['pickup_location'] ?? "Unknown",
-      dropitlocation: json['dropit'] ?? "Unknown",
+      dropitlocation: json['drop_location'] ?? "Unknown",
       middlecity: json['middlecity'] ?? "Unknown",
       time: json['pickup_time'] ?? "Unknown",
       date: json['pickupdate'] ?? "Unknown",
@@ -41,6 +43,7 @@ class RidePublish {
       droplatitude: json['drop_latitude'],
       droplongitude: json['drop_longitude'],
       expence: json['travel_expense'],
+      fromuid: json['uid'],
     );
   }
 
@@ -48,7 +51,7 @@ class RidePublish {
     final Map<String, dynamic> publish = {
       'ride_id': this.rideid,
       'pickup_location': this.pickuplocation,
-      'dropit': this.dropitlocation,
+      'drop_location': this.dropitlocation,
       'middlecity': this.middlecity,
       'pickup_time': this.time,
       'pickupdate': this.date,
@@ -58,6 +61,7 @@ class RidePublish {
       'drop_latitude': this.droplatitude,
       'drop_longitude': this.droplongitude,
       'travel_expense': this.expence
+      
     };
     return publish;
   }

@@ -6,6 +6,8 @@ import 'package:trek_trak/domain/publish_model.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/data_get.dart';
 import 'package:trek_trak/infrastructure/repository/publish/publish_repo.dart';
+import 'package:trek_trak/presentation/publish/location_picker.dart';
+import 'package:trek_trak/utils/color/color.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<DataGettingBloc>().add(GetRidePublishEvent());
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,13 +37,20 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           if (state is RidePublishLoadingState) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is RidePublishingSuccessState) {
+          }else if (state is RidePublishErrorState) {
+            return Center(child: Text('Error: ${state.error}'));
+          } 
+           else if (state is RidePublishedSuccessState) {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  IconButton(onPressed: (){
+                    context.read<DataGettingBloc>().add(GetRidePublishEvent());
+                  }, icon: Icon(Icons.restart_alt)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
+                    
                     child: TextFormField(
                       decoration: const InputDecoration(
                         hintText: 'Search',
@@ -120,15 +128,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 8),
                     Text("From: ${publish.pickuplocation}"),
                     const SizedBox(height: 8),
-                    Text("To: ${publish.dropitlocation}"),
+                    Text("To: ${publish.dropitlocation??'malapuram'}"),
                     const Divider(height: 20, thickness: 1),
                     Row(
                       children: [
                         const Icon(Icons.person),
                         const SizedBox(width: 8),
-                        Text("name"),
+                        Text("farhan"),
                         const Spacer(),
-                        const Text("rate: 500"),
+                         
+                         Text('${publish.expence}',style: TextStyle(color: CustomColor.redColor()),),
                       ],
                     ),
                   ],
@@ -184,9 +193,9 @@ Widget _buildVerticalList(List<RidePublish> ridePublish) {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("User Name"),
+                    const Text("Name: Farhan"),
                     const SizedBox(height: 4),
-                    const Text("Ride Rate"),
+                   Text('rate: ${publish.expence}'),
                   ],
                 ),
                 const Spacer(),

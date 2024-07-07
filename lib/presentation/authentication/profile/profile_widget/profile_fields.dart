@@ -216,23 +216,7 @@ class FieldsAndButton extends StatelessWidget {
           child: InkWell(
             onTap: () {
               if (formKey.currentState!.validate()) {
-                // // Dispatch events to both Blocs
-                // BlocProvider.of<RidePublishBloc>(context).add(
-                //   PublishRideEvent(
-                //     name: name,
-                //     pickuplocation: "Add pick-up location",
-                //     dropitlocation: 'Add drop-it location',
-                //     middlecity: 'add middle city',
-                //     time: 'add time',
-                //     date: 'add date',
-                //     passengercount: 'adda passenger count',
-                //     droplatitude: 'drop latitude',
-                //     droplongitude: 'drop longitude',
-                //     picklatitude: 'pick latitude',
-                //     picklongitude: 'pick longitude',
-                //     expence:'travel_expense',
-                //   ),
-                // );
+
                 BlocProvider.of<AuthBloc>(context).add(
                   signwithemailandpasswordEvent(
                     password: password,
@@ -256,12 +240,7 @@ class FieldsAndButton extends StatelessWidget {
                     vbrand: 'vehicle brand',
                     vcolor: 'vehicle color',
                     vtype: 'vehicle type',
-                    pickuplocation: 'pickup',
-                    dropitlocation: 'drop location',
-                    middlecity: 'midle city',
-                    time: 'time',
-                    date: 'date',
-                    passengercount: 'passenger count',
+              
                   ),
                 );
               }

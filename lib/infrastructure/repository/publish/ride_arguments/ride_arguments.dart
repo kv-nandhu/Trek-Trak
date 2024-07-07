@@ -1,9 +1,5 @@
-part of 'publish_add_bloc.dart';
-
-@immutable
-abstract class PublishAddEvent {}
-
-class AddRidePublishEvent extends PublishAddEvent {
+class RideArguments {
+  final String name;
   final String pickuplocation;
   final String dropitlocation;
   final String middlecity;
@@ -14,9 +10,10 @@ class AddRidePublishEvent extends PublishAddEvent {
   final String droplongitude;
   final String picklatitude;
   final String picklongitude;
-  final String expense;
+  final String expence;
 
-  AddRidePublishEvent({
+  RideArguments({
+    required this.name,
     required this.pickuplocation,
     required this.dropitlocation,
     required this.middlecity,
@@ -27,6 +24,6 @@ class AddRidePublishEvent extends PublishAddEvent {
     required this.droplongitude,
     required this.picklatitude,
     required this.picklongitude,
-    required this.expense,
+    required this.expence,
   });
 }

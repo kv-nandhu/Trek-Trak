@@ -29,16 +29,13 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   final formKey = GlobalKey<FormState>();
-  double _offset = 50.0; // Initial offset for animation
-
-  // Create a list of TextEditingControllers for each OTP input field
+  double _offset = 50.0;
   final List<TextEditingController> _otpControllers =
       List.generate(6, (index) => TextEditingController());
 
   @override
   void initState() {
     super.initState();
-    // Animate the offset to 0 over 500 milliseconds
     Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         _offset = 0.0;
@@ -48,7 +45,6 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void dispose() {
-    // Dispose all the controllers when the screen is disposed
     for (var controller in _otpControllers) {
       controller.dispose();
     }

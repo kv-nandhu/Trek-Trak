@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/textfield.dart';
 import 'package:trek_trak/utils/validator.dart';
@@ -42,7 +40,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
             ),
             Title(
                 color: CustomColor.blackColor(),
-                child: Text("Verification with Email")),
+                child: const Text("Verification with Email")),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomTextFormField(
@@ -54,7 +52,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                 validator: (value) => Validator().emailValidator(value),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 250,
             ),
             InkResponse(
