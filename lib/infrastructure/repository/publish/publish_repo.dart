@@ -129,7 +129,7 @@ class RidePublishService {
           "droplongitude": event.droplongitude,
           "picklatitude": event.picklatitude,
           "picklongitude": event.picklongitude,
-          "travel_expense": event.expense,
+          "travel_expense": event.expence,
         });
 
         print('Ride published successfully');

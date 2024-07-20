@@ -6,6 +6,7 @@ import 'package:trek_trak/presentation/profile/about/about_custom_widgets/vehicl
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/verifying_custom.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/Add_preferences/preferneceItems.dart';
 import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detailsa/vehiclc_dtls_custom.dart';
+import 'package:trek_trak/presentation/profile/about/shimmer_loading/loading.dart';
 import 'package:trek_trak/utils/divider.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -32,13 +33,9 @@ class _AboutScreenState extends State<AboutScreen> {
       child: Scaffold(
         body: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
           if (state is ProfileLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return const ShimmerLoadingPage();
           } else if (state is UserProfileLoadState) {
-            // if (state.user.smoke == 'smokes') {
-            //   smokeisTrue = false;
-            // } else {
-            //   smokeisTrue = true;
-            // }
+          
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

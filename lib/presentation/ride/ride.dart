@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/presentation/publish/publish_Editing/publish_editing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class RidePage extends StatefulWidget {
   const RidePage({super.key});
 
@@ -83,25 +82,35 @@ class _RidePageState extends State<RidePage> {
                 children: [
                   TextButton(
                     onPressed: () {
-          
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishEditing( pickuplocation: publish.pickuplocation!,
-                          dropitlocation: publish.dropitlocation??'fsddsoh',
-                          middlecity: 'add middle city',
-                          time: publish.time??'sdds',
-                          date: publish.date??'sdfdsa',
-                          passengercount: publish.passengercount??'sdasd',
-                          droplatitude: publish.droplatitude??'sda',
-                          droplongitude: publish.droplongitude??'as',
-                          picklatitude: publish.picklatitude??'SCSc',
-                          picklongitude: publish.picklongitude??'sdC',
-                          expence: publish.expence??'sdsSA',)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PublishEditing(
+                                    pickuplocation: publish.pickuplocation!,
+                                    dropitlocation:
+                                        publish.dropitlocation ?? 'fsddsoh',
+                                    middlecity: 'add middle city',
+                                    time: publish.time ?? 'sdds',
+                                    date: publish.date ?? 'sdfdsa',
+                                    passengercount:
+                                        publish.passengercount ?? 'sdasd',
+                                    droplatitude: publish.droplatitude ?? 'sda',
+                                    droplongitude:
+                                        publish.droplongitude ?? 'as',
+                                    picklatitude:
+                                        publish.picklatitude ?? 'SCSc',
+                                    picklongitude:
+                                        publish.picklongitude ?? 'sdC',
+                                    expence: publish.expence ?? 'sdsSA',
+                                  )));
                     },
                     child: const Text('Edit'),
                   ),
                   const SizedBox(width: 8),
                   TextButton(
                     onPressed: () {
-                     showDailoges(context, "You want delete the ride", publish.fromuid!);
+                      showDailoges(context, "You want delete the ride",
+                          publish.fromuid!);
                     },
                     child: const Text('Delete'),
                   ),
@@ -113,13 +122,14 @@ class _RidePageState extends State<RidePage> {
       },
     );
   }
-   void showDailoges(BuildContext context, String content, String uids) {
+
+  void showDailoges(BuildContext context, String content, String uids) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert Dialog'),
-          content: Text('${content}'),
+          title: const Text('Alert Dialog'),
+          content: Text(content),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -127,16 +137,16 @@ class _RidePageState extends State<RidePage> {
                     .collection("publish")
                     .doc(uids)
                     .delete();
-               context.read<DataGettingBloc>().add(InduvitualPublishEvent());
+                context.read<DataGettingBloc>().add(InduvitualPublishEvent());
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
           ],
         );

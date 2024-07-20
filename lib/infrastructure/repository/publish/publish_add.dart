@@ -105,34 +105,39 @@ class RidePublishAddingService {
 
  
   Future<void> addRide(AddRidePublishEvent event) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-     String uid=  await FirebaseFirestore.instance.collection("publish").doc().id;
-      if (user != null) {
-        await FirebaseFirestore.instance
-           .collection("publish")
-            .add({
-          "u_uid": user.uid,
-           'uid':uid,
-          "pickup_location": event.pickuplocation,
-          "drop_location": event.dropitlocation,
-          "middle_city": event.middlecity,
-          "pickup_time": event.time,
-          "pickupdate": event.date,
-          "passenger_count": event.passengercount,
-          "droplatitude": event.droplatitude,
-          "droplongitude": event.droplongitude,
-          "picklatitude": event.picklatitude,
-          "picklongitude": event.picklongitude,
-          "travel_expense": event.expense,
-        });
+  try {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Generate a unique ID for the document
+      String fromuid = FirebaseFirestore.instance.collection("publish").doc().id;
 
-        print('Ride added successfully');
-      } else {
-        print('No user is currently signed in.');
-      }
-    } catch (e) {
-      print('Error adding ride: $e');
+      // Set the document with the generated ID
+      await FirebaseFirestore.instance
+          .collection("publish")
+          .doc(fromuid)
+          .set({
+        "u_name": event.uname,
+        "uid": user.uid,
+        'u_uid': fromuid,
+        "pickup_location": event.pickuplocation,
+        "drop_location": event.dropitlocation,
+        "middle_city": event.middlecity,
+        "pickup_time": event.time,
+        "pickupdate": event.date,
+        "passenger_count": event.passengercount,
+        "droplatitude": event.droplatitude,
+        "droplongitude": event.droplongitude,
+        "picklatitude": event.picklatitude,
+        "picklongitude": event.picklongitude,
+        "travel_expense": event.expence,
+      });
+
+      print('Ride added successfully');
+    } else {
+      print('No user is currently signed in.');
     }
+  } catch (e) {
+    print('Error adding ride: $e');
   }
+}
 }

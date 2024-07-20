@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart'; // Import intl package
 import 'package:trek_trak/utils/color/color.dart';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({super.key});
+  const CalendarPage({Key? key}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -79,7 +80,7 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                '${_selectedDay.toLocal()}'.split(' ')[0],
+                DateFormat('dd-MM-yyyy').format(_selectedDay),
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
@@ -87,7 +88,7 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pop(context, _selectedDay.toLocal().toString().split(' ')[0]);
+            Navigator.pop(context, DateFormat('dd-MM-yyyy').format(_selectedDay));
           },
           backgroundColor: CustomColor.greenColor(),
           foregroundColor: CustomColor.whiteColor(),

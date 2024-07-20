@@ -43,7 +43,7 @@ class AddBioScreen extends StatelessWidget {
                       String bio = minibioController.text;
                       context.read<ProfileBloc>().add(AddBioEvent(miniBio: bio));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Bio saved successfully!'),
                         ),
                       );
@@ -84,7 +84,6 @@ class AddBioScreen extends StatelessWidget {
       ),
     );
   }
-
   void waitAndNavigateBack(BuildContext context) {
     Future.delayed(const Duration(seconds: 4), () {
           Navigator.pushReplacementNamed(context, '/mybottom');

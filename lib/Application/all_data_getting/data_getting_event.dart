@@ -11,3 +11,11 @@ class GetRidePublishEvent extends DataGettingEvent {
 class InduvitualPublishEvent extends DataGettingEvent{
   InduvitualPublishEvent();
 }
+
+class SearchRidesEvent extends DataGettingEvent {
+  final String fromLocation;
+  final String toLocation;
+  final String date;
+
+  SearchRidesEvent({required this.fromLocation, required this.toLocation, required this.date});
+}

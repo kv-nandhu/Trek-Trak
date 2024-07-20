@@ -1,21 +1,17 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
-import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
-import 'package:trek_trak/presentation/profile/about/inner_screens/profile_editing/edit_profile.dart';
+import 'package:trek_trak/presentation/authentication/profile/profile_widget/profile_button.dart';
 import 'package:trek_trak/utils/color/color.dart';
-import 'package:trek_trak/utils/textfield.dart';
-import 'package:trek_trak/utils/validator.dart';
 import 'package:trek_trak/domain/user_model.dart';
 
-final TextEditingController _emailController = TextEditingController();
-final TextEditingController _nameController = TextEditingController();
-final TextEditingController _phoneNumberController = TextEditingController();
-final TextEditingController _streetController = TextEditingController();
-final TextEditingController _cityController = TextEditingController();
-final TextEditingController _districtController = TextEditingController();
+final TextEditingController emailController = TextEditingController();
+final TextEditingController nameController = TextEditingController();
+final TextEditingController phoneNumberController = TextEditingController();
+final TextEditingController streetController = TextEditingController();
+final TextEditingController cityController = TextEditingController();
+final TextEditingController districtController = TextEditingController();
 final TextEditingController dateController = TextEditingController();
 
 class FieldsAndButton extends StatelessWidget {
@@ -37,84 +33,42 @@ class FieldsAndButton extends StatelessWidget {
   }) : super(key: key);
 
   bool _validateProfileDetails() {
-    final email = _emailController.text;
-    final name = _nameController.text;
-    final phoneNumber = _phoneNumberController.text;
+    final email = emailController.text;
+    final name = nameController.text;
+    final phoneNumber = phoneNumberController.text;
 
     return email == userModel.email &&
         name == userModel.name &&
         phoneNumber == userModel.number;
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Validation Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _onSubmit(BuildContext context) {
-    if (_validateProfileDetails()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EditProfile(
-            userModel: userModel,
-          ),
-        ),
-      );
-    } else {
-      _showErrorDialog(context, 'Profile details do not match.');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Profile image selection
+        // !Profile image selection
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              BlocProvider.of<ProfileBuildBloc>(context).add(ChangeImageEvent());
-              BlocProvider.of<ProfileBuildBloc>(context).add(ProfileImagePickerEvent());
+              BlocProvider.of<ProfileBuildBloc>(context)
+                  .add(ChangeImageEvent());
+              BlocProvider.of<ProfileBuildBloc>(context)
+                  .add(ProfileImagePickerEvent());
             },
             child: CircleAvatar(
               radius: 90,
-              backgroundImage: pickedImage != null ? NetworkImage(pickedImage!) : null,
+              backgroundImage:
+                  pickedImage != null ? NetworkImage(pickedImage!) : null,
               child: pickedImage == null
                   ? const Icon(Icons.add_a_photo_outlined)
                   : null,
             ),
           ),
         ),
-        // Name input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _nameController..text = name,
-            labelText: 'Name',
-            hintText: 'Enter your name',
-            keyboardType: TextInputType.name,
-            validator: (value) => Validator().nameValidator(value),
-            errorText: _nameController.text.isEmpty ? 'Name is required' : null,
-          ),
-        ),
-        // Date of Birth input field
+        //! Name input field
+        nameField(name: name),
+        //! Date of Birth input field
         GestureDetector(
           onTap: () async {
             final DateTime? picked = await showDatePicker(
@@ -124,99 +78,29 @@ class FieldsAndButton extends StatelessWidget {
               lastDate: DateTime.now(),
             );
             if (picked != null) {
-              dateController.text = '${picked.year}-${picked.month}-${picked.day}';
+              dateController.text =
+                  '${picked.year}-${picked.month}-${picked.day}';
             }
           },
-          child: AbsorbPointer(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 400,
-                height: 55,
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: TextFormField(
-                  controller: dateController,
-                  decoration: InputDecoration(
-                    hintText: 'Select your date of birth',
-                    border: InputBorder.none,
-                  ),
-                  validator: (value) => null,
-                  readOnly: true,
-                ),
-              ),
-            ),
-          ),
+          child: const dateOfBirth(),
         ),
-        // Email input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _emailController..text = email,
-            labelText: 'Email',
-            hintText: 'Enter your email',
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) => Validator().emailValidator(value),
-            errorText: _emailController.text.isEmpty ? 'email is required' : null,
-          ),
-        ),
-        // Phone Number input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _phoneNumberController..text = number,
-            labelText: 'Phone Number',
-            hintText: 'Enter your phone number',
-            keyboardType: TextInputType.phone,
-            errorText: _phoneNumberController.text.isEmpty ? 'Number is required' : null,
-          ),
-        ),
-        // Street input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _streetController,
-            labelText: 'Street',
-            hintText: 'Enter your street',
-            keyboardType: TextInputType.streetAddress,
-            validator: (value) => Validator().streetValidator(value),
-            errorText: _streetController.text.isEmpty ? 'city is required' : null,
-          ),
-        ),
-        // City input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _cityController,
-            labelText: 'City',
-            hintText: 'Enter your city',
-            keyboardType: TextInputType.text,
-            validator: (value) => Validator().cityValidator(value),
-            errorText: _cityController.text.isEmpty ? 'street is required' : null,
-          ),
-        ),
-        // District input field
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomTextFormField(
-            controller: _districtController,
-            labelText: 'District',
-            hintText: 'Enter your district',
-            keyboardType: TextInputType.text,
-            validator: (value) => Validator().districtValidator(value),
-            errorText: _districtController.text.isEmpty ? 'district is required' : null,
-          ),
-        ),
+        // !Email input field
+        emailField(email: email),
+        // !Phone Number input field
+        NumberField(number: number),
+        // !Street input field
+        const streetField(),
+        // !City input field
+        const cityField(),
+        // !District input field
+        const districtField(),
         const SizedBox(height: 20),
-        // Save button
+        // !Save button
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: InkWell(
             onTap: () {
               if (formKey.currentState!.validate()) {
-
                 BlocProvider.of<AuthBloc>(context).add(
                   signwithemailandpasswordEvent(
                     password: password,
@@ -225,9 +109,9 @@ class FieldsAndButton extends StatelessWidget {
                     gender: gender,
                     email: email,
                     context: context,
-                    city: _cityController.text,
-                    street: _streetController.text,
-                    district: _districtController.text,
+                    city: cityController.text,
+                    street: streetController.text,
+                    district: districtController.text,
                     image: pickedImage!,
                     dob: dateController.text,
                     miniBio: 'miniBios',
@@ -240,7 +124,6 @@ class FieldsAndButton extends StatelessWidget {
                     vbrand: 'vehicle brand',
                     vcolor: 'vehicle color',
                     vtype: 'vehicle type',
-              
                   ),
                 );
               }

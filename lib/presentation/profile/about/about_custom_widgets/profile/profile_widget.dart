@@ -151,6 +151,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               IconButton(
                 onPressed: () {
                   Navigator.pushReplacement(
+
+
+
+                    
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditProfile(

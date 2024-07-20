@@ -14,7 +14,7 @@ import 'package:trek_trak/presentation/authentication/profile/profile_screen.dar
 import 'package:trek_trak/presentation/authentication/splash/splash.dart';
 import 'package:trek_trak/presentation/authentication/success/success.dart';
 import 'package:trek_trak/presentation/chat/chat.dart';
-import 'package:trek_trak/presentation/home/home.dart';
+import 'package:trek_trak/presentation/home/custom/search_screen.dart';
 import 'package:trek_trak/presentation/profile/about/about.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_dob.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_email.dart';
@@ -37,21 +37,21 @@ import 'package:trek_trak/presentation/profile/about/inner_screens/vehicle_detai
 import 'package:trek_trak/presentation/profile/profile.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/example_pick.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/add_city.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/city_adding_map.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
+import 'package:trek_trak/presentation/publish/inner_pages/drop_off.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/expense_calculating.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/multiple_demo.dart';
-import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/drop_off.dart';
-import 'package:trek_trak/presentation/publish/location_picker.dart';
+import 'package:trek_trak/presentation/publish/publish_home/publish_home.dart.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/pick_up.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/publish_confirm.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/success_publish.dart';
 import 'package:trek_trak/presentation/publish/publish_Editing/publish_editing.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
+import 'package:trek_trak/presentation/ride/ride_main.dart';
+import 'package:trek_trak/presentation/ride_joining/custom/user_details/user_details.dart';
+import 'package:trek_trak/presentation/ride_joining/ride_detail.dart';
 import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
 final TextEditingController emailController = TextEditingController();
@@ -123,7 +123,33 @@ class Routers {
     '/PlateNumber': (context) => const PlateNumber(),
     '/brandVehicle': (context) => const BrandVehicle(),
     '/colorListScreen': (context) => ColorListScreen(),
-    // '/publishEditing': (context) => PublishEditing(),
+    '/rideMainPage': (context) => RideMainPage(),
+    '/searchScreen': (context) => SearchScreen(),
+
+     '/profilePagePublishSide': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return ProfilePagePublishSide(
+        userModel: args['userModel'],
+      );
+    },
+    // '/publishingRideDetails': (context) => PublishingRideDetails(,),
+
+       '/publishingRideDetails': (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return PublishingRideDetails(
+     pickuplocation: args['pickuplocation'],
+        dropitlocation: args['dropitlocation'],
+        time: args['time'],
+        date: args['date'],
+        passengercount: args['passengercount'],
+        expence: args['expence'],
+        uname: args['u_name'], 
+        fromid: args['u_uid'],
+         uid: args['uid'],
+      );
+    },
     '/publishEditing': (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -156,10 +182,10 @@ class Routers {
         selectedBrand: args['selectedBrand'],
       );
     },
-    // '/publish': (context) => PickLocation(),
-    '/publish': (context) => KeralaLocationsDemo(),
-    // '/dropLocation': (context) =>  DropLocation(),
-    '/dropLocation': (context) => DropkeralaLocation(),
+    '/publish': (context) => PickLocation(),
+    // '/publish': (context) => KeralaLocationsDemo(),
+    '/dropLocation': (context) =>  DropkeralaLocation(),
+    // '/dropLocation': (context) => DropkeralaLocation(),
     '/addCity': (context) => const AddCity(),
     // '/cityAddMap': (context) => const CityAddMap(),
     '/cityAddMap': (context) => MultiLocation(),

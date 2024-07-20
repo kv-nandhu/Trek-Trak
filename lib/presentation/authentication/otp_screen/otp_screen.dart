@@ -176,23 +176,22 @@ class _OtpScreenState extends State<OtpScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
-                            if (state is AuthLoading) {
-                              return Center(
-                                  child: LoadingAnimationWidget
-                                      .horizontalRotatingDots(
-                                color: CustomColor.whiteColor(),
-                                size: 50,
-                              ));
-                            } else {
-                              return Center(
-                                child: Text(
-                                  "Sign Up",
-                                  style: TextStyle(
-                                      color: CustomColor.greenColor(),
-                                      fontSize: 20),
-                                ),
-                              );
-                            }
+                           if (state is AuthLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      'Send',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColor.whiteColor(),
+                      ),
+                    ),
+                  );
+                }
                           },
                         ),
                       ),

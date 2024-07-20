@@ -18,3 +18,5 @@ class RidePublishErrorState extends DataGettingState{
     final String error;
   RidePublishErrorState({required this.error});
 }
+
+class RidePublishedEmptyState extends DataGettingState {}

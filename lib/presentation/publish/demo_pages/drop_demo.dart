@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:trek_trak/presentation/publish/demo_pages/locations/locations.dart';
 
 class DropkeralaLocation extends StatefulWidget {
   @override
@@ -13,22 +14,32 @@ class _DropkeralaLocationState extends State<DropkeralaLocation> {
   Set<Marker> _markers = {};
   double? currentDropLatitude;
   double? currentDropLongitude;
+  List<Map<String, dynamic>> filteredPlaces = [];
 
   // List of Kerala places
-  final List<Map<String, dynamic>> places = [
-    {'name': 'Kochi', 'lat': 9.9312, 'lng': 76.2673},
-    {'name': 'Thiruvananthapuram', 'lat': 8.5241, 'lng': 76.9366},
-    {'name': 'Kozhikode', 'lat': 11.2588, 'lng': 75.7804},
-    {'name': 'Alappuzha', 'lat': 9.4981, 'lng': 76.3388},
-    {'name': 'Thrissur', 'lat': 10.5276, 'lng': 76.2144},
-  ];
+
 
   String? selectedDropPlace;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _getUserLocation();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      filteredPlaces = _getSuggestions(_searchController.text);
+    });
   }
 
   Future<void> _getUserLocation() async {
@@ -57,7 +68,7 @@ class _DropkeralaLocationState extends State<DropkeralaLocation> {
       currentDropLongitude = locationData.longitude;
       _markers.add(
         Marker(
-          markerId: MarkerId('current-location'),
+          markerId: const MarkerId('current-location'),
           position: LatLng(currentDropLatitude!, currentDropLongitude!),
           infoWindow: InfoWindow(
             title: 'Your Location',
@@ -73,10 +84,11 @@ class _DropkeralaLocationState extends State<DropkeralaLocation> {
       selectedDropPlace = place['name'];
       currentDropLatitude = place['lat'];
       currentDropLongitude = place['lng'];
+      _searchController.text = selectedDropPlace!;
       _markers.clear();
       _markers.add(
         Marker(
-          markerId: MarkerId('selected-location'),
+          markerId: const MarkerId('selected-location'),
           position: LatLng(currentDropLatitude!, currentDropLongitude!),
           infoWindow: InfoWindow(
             title: selectedDropPlace,
@@ -99,47 +111,67 @@ class _DropkeralaLocationState extends State<DropkeralaLocation> {
     ));
   }
 
+  List<Map<String, dynamic>> _getSuggestions(String query) {
+    List<Map<String, dynamic>> matches = [];
+    for (var place in Locations().places) {
+      if (place['name'].toLowerCase().contains(query.toLowerCase())) {
+        matches.add(place);
+      }
+    }
+    return matches;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Select a Drop-off Location in Kerala'),
+          title: const Text('Drop-it Location🗺️'),
         ),
         body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                hint: Text('Select a Place'),
-                value: selectedDropPlace,
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    _onPlaceSelected(
-                      places.firstWhere((place) => place['name'] == newValue),
-                    );
-                  }
-                },
-                items: places.map<DropdownMenuItem<String>>(
-                  (Map<String, dynamic> place) {
-                    return DropdownMenuItem<String>(
-                      value: place['name'],
-                      child: Text(place['name']),
-                    );
-                  },
-                ).toList(),
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  labelText: 'Search for a place',
+                ),
               ),
             ),
             Expanded(
-              child: GoogleMap(
-                onMapCreated: (GoogleMapController controller) {
-                  _completer.complete(controller);
-                },
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(10.8505, 76.2711), // Center of Kerala
-                  zoom: 8,
-                ),
-                markers: _markers,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    onMapCreated: (GoogleMapController controller) {
+                      _completer.complete(controller);
+                    },
+                    initialCameraPosition: const CameraPosition(
+                      target: LatLng(10.8505, 76.2711), // Center of Kerala
+                      zoom: 8,
+                    ),
+                    markers: _markers,
+                  ),
+                  if (_searchController.text.isNotEmpty)
+                    Positioned(
+                      top: 60,
+                      left: 8,
+                      right: 8,
+                      child: Material(
+                        elevation: 4,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: filteredPlaces.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(filteredPlaces[index]['name']),
+                              onTap: () => _onPlaceSelected(filteredPlaces[index]),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Padding(
@@ -149,13 +181,13 @@ class _DropkeralaLocationState extends State<DropkeralaLocation> {
                   Navigator.pop(
                     context,
                     {
-                      'droplocation': selectedDropPlace,
+                          'droplocation': selectedDropPlace,
                       'droplatitude': currentDropLatitude.toString(),
                       'droplongitude': currentDropLongitude.toString(),
-                    },
+                    }
                   );
                 },
-                child: Text('Confirm Location'),
+                child: const Text('Confirm Location'),
               ),
             ),
           ],

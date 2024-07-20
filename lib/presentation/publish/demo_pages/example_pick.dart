@@ -11,13 +11,13 @@ class PickLocation extends StatefulWidget {
 }
 
 class _PickUpLocationsState extends State<PickLocation> {
-  Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  final Completer<GoogleMapController> _controller = Completer();
+  static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(33.6844, 73.0479),
     zoom: 14,
   );
 
-  List<Marker>_marker = [];
+  final List<Marker>_marker = [];
  final List<Marker> _list = const [
 Marker(markerId: MarkerId('1'),
 position: LatLng(33.6844, 73.0479),

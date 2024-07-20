@@ -1,17 +1,11 @@
-
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
-import 'package:trek_trak/presentation/authentication/profile/profile_widget/profile_button.dart';
 import 'package:trek_trak/presentation/authentication/profile/profile_widget/profile_fields.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/image_picker.dart';
-import 'package:trek_trak/utils/color/color.dart';
-import 'package:trek_trak/utils/textfield.dart';
-import 'package:trek_trak/utils/validator.dart';
 import 'package:image_picker/image_picker.dart';
+
 class UserData extends StatefulWidget {
   final String email, name, password, gender, number;
   final UserModel userModel;
@@ -33,15 +27,16 @@ class UserData extends StatefulWidget {
 class _UserDataState extends State<UserData> {
   String? pickedImage;
   final formKey = GlobalKey<FormState>();
-  void pickedImagess(XFile file)async{
-  pickedImage =await ImageService().uploadImageToFirebase(file);
+  void pickedImagess(XFile file) async {
+    pickedImage = await ImageService().uploadImageToFirebase(file);
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBuildBloc, ProfileBuildState>(
       builder: (context, state) {
         if (state is ProfileImageSuccess) {
-         pickedImagess(state.image);
+          pickedImagess(state.image);
         }
         if (state is ProfileSaveToCredentialSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {

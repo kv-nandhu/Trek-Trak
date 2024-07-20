@@ -60,26 +60,26 @@ class UserModel {
       });
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      gender: json['Gender'],
-      number: json['number'],
-      name: json['Name'],
-      email: json['Email'],
-      uid: json['uid'],
-      image: json['image'],
-      street: json['street'],
-      city: json['city'],
-      district: json['district'],
-      dob: json['dob'], 
-      miniBio: json['miniBio'],
-      chat: json['chat'],
-      song: json['song'],
-      smoke: json['smoke'],
-      pet: json['pet'],
-      vNumber: json['vnumber'],
-      vmodel: json['vmodel'],
-      vbrand: json['vbrand'],
-      vcolor: json['vcolor'],
-      vtype: json['vtype'],
+      gender: json['Gender'] ??"null",
+      number: json['number']??"null",
+      name: json['Name']??"null",
+      email: json['Email']??"null",
+      uid: json['uid']??"null",
+      image: json['image']??"null",
+      street: json['street']??"null",
+      city: json['city']??"null",
+      district: json['district']??"null",
+      dob: json['dob']??"null", 
+      miniBio: json['miniBio']??"null",
+      chat: json['chat']??"null",
+      song: json['song']??"null",
+      smoke: json['smoke']??"null",
+      pet: json['pet']??"null",
+      vNumber: json['vnumber']??"null",
+      vmodel: json['vmodel']??"null",
+      vbrand: json['vbrand']??"null",
+      vcolor: json['vcolor']??"null",
+      vtype: json['vtype']??"null",
       // pickuplocation: json['pickup'],
       // dropitlocation: json['dropit'],
       // middlecity: json['middlecity'],
@@ -93,7 +93,7 @@ class UserModel {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['Name'] = this.name;
     data['Email'] = this.email;
-    data['uid'] = this.uid;
+      data['uid'] = this.uid;
     data['image'] = this.image;
     data['Gender'] = this.gender;
     data['number'] = this.number;

@@ -12,6 +12,7 @@ class DataGettingBloc extends Bloc<DataGettingEvent, DataGettingState> {
   DataGettingBloc() : super(DataGettingState()) {
     on<GetRidePublishEvent>(_getPublish);
     on<InduvitualPublishEvent>(_indivitualRide);
+    on<SearchRidesEvent>(_onSearchRidesEvent);
     
   }
 
@@ -37,6 +38,20 @@ print(e);
 print(e);
     }
 
+  }
+
+  Future<void> _onSearchRidesEvent(SearchRidesEvent event, Emitter<DataGettingState> emit) async {
+    emit(RidePublishLoadingState());
+    try {
+      final rides = await UserProfileRepo().searchRides(event.fromLocation, event.toLocation, event.date);
+      if (rides.isEmpty) {
+        emit(RidePublishedEmptyState());
+      } else {
+        emit(RidePublishedSuccessState(ride: rides));
+      }
+    } catch (e) {
+      emit(RidePublishErrorState(error: e.toString()));
+    }
   }
 }
 

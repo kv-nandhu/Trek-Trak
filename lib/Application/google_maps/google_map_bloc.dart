@@ -17,6 +17,7 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
         } 
         if(event is afterGetEvent){
             emit(AuthoCompleteLoaded(authocomplete: []));
+            print("kittiii");
         }
         if(event is addMarkerEvent){
           print(event.marker);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/publish_add/publish_add_bloc.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
@@ -29,6 +30,11 @@ class LocationPickerPage extends StatefulWidget {
 }
 
 class _LocationPickerPageState extends State<LocationPickerPage> {
+  @override
+  void initState() {
+    context.read<ProfileBloc>().add(GetUserEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,32 +74,84 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // _submitForm(context);
-          
-            BlocProvider.of<PublishAddBloc>(context).add(
-              AddRidePublishEvent(
-                pickuplocation: pickupController.text,
-                dropitlocation: dropController.text,
-                middlecity: 'add middle city',
-                time: timeController.text,
-                date: dateController.text,
-                passengercount: passengerCountController.text,
-                droplatitude: d_lati.toString(),
-                droplongitude: d_lang.toString(),
-                picklatitude: p_lati.toString(),
-                picklongitude: p_lang.toString(),
-                expense: expenseController.text,
-              ),
+        floatingActionButton:
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+          if (state is UserProfileLoadState) {
+            return BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state is UserProfileLoadState) {
+                  return FloatingActionButton(
+                    onPressed: () {
+                      if (state.user.vcolor != "vehicle color") {
+                        BlocProvider.of<PublishAddBloc>(context).add(
+                          AddRidePublishEvent(
+                            uname: state.user.name!,
+                            pickuplocation: pickupController.text,
+                            dropitlocation: dropController.text,
+                            middlecity: 'add middle city',
+                            time: timeController.text,
+                            date: dateController.text,
+                            passengercount: passengerCountController.text,
+                            droplatitude: d_lati.toString(),
+                            droplongitude: d_lang.toString(),
+                            picklatitude: p_lati.toString(),
+                            picklongitude: p_lang.toString(),
+                            expence: expenseController.text,
+                          ),
+                        );
+                        _submitForm(context);
+                      } else {
+                       showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Add Vehicle Details"),
+                          content: Text("You haven't added vehicle details. Do you want to add them now?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                                // Navigate to vehicle adding page
+                                Navigator.pushNamed(context, '/PlateNumber');
+                              },
+                              child: Text("Yes"),
+                            ),
+                          ],
+                        );});
+                      }
+                    },
+                    backgroundColor: CustomColor.greenColor(),
+                    foregroundColor: CustomColor.whiteColor(),
+                    child: const Icon(Icons.check),
+                  );
+                } else {
+                   return FloatingActionButton(
+                    onPressed: () {
+                    
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please add vehicle details first.'),
+                          ),
+                        );
+
+                    },
+                    backgroundColor: CustomColor.greenColor(),
+                    foregroundColor: CustomColor.whiteColor(),
+                    child: const Icon(Icons.check),
+                  );
+                }
+              },
             );
-              _submitForm(context);
-          },
-          
-          backgroundColor: CustomColor.greenColor(),
-          foregroundColor: CustomColor.whiteColor(),
-          child: const Icon(Icons.check),
-        ),
+          }else{
+            return SizedBox();
+          }
+        }),
       ),
     );
   }
@@ -255,12 +313,6 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
   }
 
   Widget _buildTravelExpenseInput() {
-    print("--------------------------------------------");
-    print("pick up${p_lati}");
-    print("pick up${p_lang}");
-    print("drop${d_lang}");
-    print("drop${d_lati}");
-
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(

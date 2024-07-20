@@ -75,6 +75,7 @@ class UserEmailEvent extends ProfileEvent{
   UserEmailEvent({required this.email});
 }
 class UserImageEvent extends ProfileEvent{
+
   String image;
   UserImageEvent({required this.image});
 }

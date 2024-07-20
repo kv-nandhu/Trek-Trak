@@ -9,9 +9,11 @@ class RidePublish {
   String? time;
   String? date;
   String? passengercount;
-  String? rideid;
+  String? uid;
   String? expence;
   String? fromuid;
+  String? uname;
+ 
 
   RidePublish({
     this.pickuplocation,
@@ -24,14 +26,16 @@ class RidePublish {
     this.time,
     this.date,
     this.passengercount,
-    this.rideid,
+    this.uid,
     this.expence,
     this.fromuid,
+    this.uname,
+ 
   });
 
   factory RidePublish.fromJson(Map<String, dynamic> json) {
     return RidePublish(
-      rideid: json['ride_id'],
+      uid: json['uid'],
       pickuplocation: json['pickup_location'] ?? "Unknown",
       dropitlocation: json['drop_location'] ?? "Unknown",
       middlecity: json['middlecity'] ?? "Unknown",
@@ -43,25 +47,26 @@ class RidePublish {
       droplatitude: json['drop_latitude'],
       droplongitude: json['drop_longitude'],
       expence: json['travel_expense'],
-      fromuid: json['uid'],
+      fromuid: json['u_uid'],
+      uname: json['u_name'],
+   
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> publish = {
-      'ride_id': this.rideid,
-      'pickup_location': this.pickuplocation,
-      'drop_location': this.dropitlocation,
-      'middlecity': this.middlecity,
-      'pickup_time': this.time,
-      'pickupdate': this.date,
-      'passenger_count': this.passengercount,
-      'pick_latitude': this.picklatitude,
-      'pick_longitude': this.picklongitude,
-      'drop_latitude': this.droplatitude,
-      'drop_longitude': this.droplongitude,
-      'travel_expense': this.expence
-      
+      'uid': uid,
+      'pickup_location': pickuplocation,
+      'drop_location': dropitlocation,
+      'middlecity': middlecity,
+      'pickup_time': time,
+      'pickupdate': date,
+      'passenger_count': passengercount,
+      'pick_latitude': picklatitude,
+      'pick_longitude': picklongitude,
+      'drop_latitude': droplatitude,
+      'drop_longitude': droplongitude,
+      'travel_expense': expence,
     };
     return publish;
   }

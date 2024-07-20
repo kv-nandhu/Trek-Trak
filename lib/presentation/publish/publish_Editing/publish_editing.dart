@@ -6,12 +6,10 @@ import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/expense_calculating.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
-import 'package:trek_trak/presentation/publish/location_picker.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PublishEditing extends StatefulWidget {
-  // final RidePublish? rideArguments;
   final String pickuplocation;
   final String dropitlocation;
   final String middlecity;
@@ -26,7 +24,6 @@ class PublishEditing extends StatefulWidget {
 
   PublishEditing({
     Key? key,
-    // this.rideArguments,
     required this.pickuplocation,
     required this.dropitlocation,
     required this.middlecity,
@@ -41,27 +38,50 @@ class PublishEditing extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LocationPickerPageState createState() => _LocationPickerPageState();
+  _PublishEditingState createState() => _PublishEditingState();
 }
 
-class _LocationPickerPageState extends State<PublishEditing> {
+class _PublishEditingState extends State<PublishEditing> {
+  late TextEditingController pickupController;
+  late TextEditingController dropController;
+  late TextEditingController timeController;
+  late TextEditingController dateController;
+  late TextEditingController passengerCountController;
+  late TextEditingController expenseController;
+
+  late String p_lang;
+  late String p_lati;
+  late String d_lang;
+  late String d_lati;
+
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    pickupController.text =widget.pickuplocation;
-    dropController.text = widget.dropitlocation;
-    timeController.text = widget.time;
-    dateController.text = widget.date;
-    passengerCountController.text = widget.passengercount;
-    expenseController.text = widget.expence;
+    pickupController = TextEditingController(text: widget.pickuplocation);
+    dropController = TextEditingController(text: widget.dropitlocation);
+    timeController = TextEditingController(text: widget.time);
+    dateController = TextEditingController(text: widget.date);
+    passengerCountController = TextEditingController(text: widget.passengercount);
+    expenseController = TextEditingController(text: widget.expence);
     p_lang = widget.picklongitude;
     p_lati = widget.picklatitude;
     d_lang = widget.droplongitude;
     d_lati = widget.droplatitude;
+  }
+
+  @override
+  void dispose() {
+    pickupController.dispose();
+    dropController.dispose();
+    timeController.dispose();
+    dateController.dispose();
+    passengerCountController.dispose();
+    expenseController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -113,7 +133,7 @@ class _LocationPickerPageState extends State<PublishEditing> {
                 droplongitude: d_lang.toString(),
                 picklatitude: p_lati.toString(),
                 picklongitude: p_lang.toString(),
-                expense: expenseController.text, 
+                expence: expenseController.text,
               ),
             );
             _submitForm(context);
@@ -143,8 +163,8 @@ class _LocationPickerPageState extends State<PublishEditing> {
       String placeholder, String routeName, TextEditingController controller) {
     return InkWell(
       onTap: () async {
-        final result = await Navigator.push(context,
-            MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
+        final result = await Navigator.push(
+            context, MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
         if (result != null) {
           setState(() {
             pickupController.text = result['pickuplocation'];
@@ -154,7 +174,7 @@ class _LocationPickerPageState extends State<PublishEditing> {
         }
       },
       child: TextFormField(
-        controller: pickupController,
+        controller: controller,
         decoration: InputDecoration(
           hintText: placeholder,
           hintStyle: TextStyle(
@@ -172,8 +192,8 @@ class _LocationPickerPageState extends State<PublishEditing> {
       String placeholder, String routeName, TextEditingController controller) {
     return InkWell(
       onTap: () async {
-        final result = await Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DropkeralaLocation()));
+        final result = await Navigator.push(
+            context, MaterialPageRoute(builder: (context) => DropkeralaLocation()));
         if (result != null) {
           setState(() {
             dropController.text = result['droplocation'];
@@ -183,7 +203,7 @@ class _LocationPickerPageState extends State<PublishEditing> {
         }
       },
       child: TextFormField(
-        controller: dropController,
+        controller: controller,
         decoration: InputDecoration(
           hintText: placeholder,
           hintStyle: TextStyle(
@@ -307,21 +327,18 @@ class _LocationPickerPageState extends State<PublishEditing> {
       ),
     );
   }
-    void _submitForm(BuildContext context) {
+
+  void _submitForm(BuildContext context) {
     timeController.clear();
     pickupController.clear();
     dropController.clear();
-    middleCityController.clear();
     dateController.clear();
     passengerCountController.clear();
     expenseController.clear();
-    p_lang = null;
-    p_lati = null;
-    d_lang = null;
-    d_lati = null;
+    p_lang = '';
+    p_lati = '';
+    d_lang = '';
+    d_lati = '';
     Navigator.pushNamed(context, '/publishEditing');
   }
- 
 }
-
-

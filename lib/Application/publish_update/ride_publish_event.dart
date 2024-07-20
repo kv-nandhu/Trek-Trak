@@ -47,7 +47,7 @@ class PublishRideEvent extends RidePublishEvent {
   final String droplongitude;
   final String picklatitude;
   final String picklongitude;
-  final String expense;
+  final String expence;
 
   PublishRideEvent({
     required this.pickuplocation,
@@ -60,6 +60,6 @@ class PublishRideEvent extends RidePublishEvent {
     required this.droplongitude,
     required this.picklatitude,
     required this.picklongitude,
-    required this.expense,
+    required this.expence,
   });
 }
