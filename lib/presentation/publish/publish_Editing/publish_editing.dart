@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
+import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
+import 'package:trek_trak/domain/publish_model.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
@@ -8,11 +9,12 @@ import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart'
 import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 class PublishEditing extends StatefulWidget {
   final String pickuplocation;
   final String dropitlocation;
-  final String middlecity;
+  // final String middlecity;
   final String time;
   final String date;
   final String passengercount;
@@ -26,7 +28,7 @@ class PublishEditing extends StatefulWidget {
     Key? key,
     required this.pickuplocation,
     required this.dropitlocation,
-    required this.middlecity,
+    // required this.middlecity,
     required this.time,
     required this.date,
     required this.passengercount,
@@ -42,17 +44,19 @@ class PublishEditing extends StatefulWidget {
 }
 
 class _PublishEditingState extends State<PublishEditing> {
-  late TextEditingController pickupController;
-  late TextEditingController dropController;
-  late TextEditingController timeController;
-  late TextEditingController dateController;
-  late TextEditingController passengerCountController;
-  late TextEditingController expenseController;
+  TextEditingController pickupController = TextEditingController();
+  TextEditingController dropController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController passengerCountController = TextEditingController();
+  TextEditingController expenseController = TextEditingController();
 
-  late String p_lang;
-  late String p_lati;
-  late String d_lang;
-  late String d_lati;
+  String p_lang = '';
+  String p_lati = '';
+  String d_lang = '';
+  String d_lati = '';
+//  String RidePublish= "ridepublis";
+final String fromuid = Uuid().v4();
 
   @override
   void initState() {
@@ -125,7 +129,7 @@ class _PublishEditingState extends State<PublishEditing> {
               PublishRideEvent(
                 pickuplocation: pickupController.text,
                 dropitlocation: dropController.text,
-                middlecity: 'add middle city',
+                // middlecity: 'add middle city',
                 time: timeController.text,
                 date: dateController.text,
                 passengercount: passengerCountController.text,
@@ -134,6 +138,7 @@ class _PublishEditingState extends State<PublishEditing> {
                 picklatitude: p_lati.toString(),
                 picklongitude: p_lang.toString(),
                 expence: expenseController.text,
+                fromuid: fromuid!,
               ),
             );
             _submitForm(context);
@@ -159,17 +164,17 @@ class _PublishEditingState extends State<PublishEditing> {
     );
   }
 
-  Widget _buildPickLocationInput(
+    Widget _buildPickLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
             context, MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
-        if (result != null) {
+        if (result != null && result is Map<String, dynamic>) {
           setState(() {
-            pickupController.text = result['pickuplocation'];
-            p_lang = result['picklongitude'];
-            p_lati = result['picklatitude'];
+            pickupController.text = result['pickuplocation'] ?? '';
+            p_lang = result['picklongitude'] ?? '';
+            p_lati = result['picklatitude'] ?? '';
           });
         }
       },
@@ -187,6 +192,9 @@ class _PublishEditingState extends State<PublishEditing> {
       ),
     );
   }
+
+  // Similar changes for _buildDropLocationInput, _buildTimeInput, etc.
+
 
   Widget _buildDropLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
@@ -342,3 +350,14 @@ class _PublishEditingState extends State<PublishEditing> {
     Navigator.pushNamed(context, '/publishEditing');
   }
 }
+
+
+
+
+
+
+
+
+
+
+

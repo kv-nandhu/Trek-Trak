@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:trek_trak/Application/google_maps/google_map_bloc.dart';
+import 'package:trek_trak/Application/publish/google_maps/google_map_bloc.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:geocoding/geocoding.dart';
 class DropLocation extends StatefulWidget {

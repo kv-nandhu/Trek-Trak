@@ -1,31 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
+import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
 
 
 class RidePublishService {
-  Future<void> updateRideTime(String time) async {
-    try {
+Future<void> updateRideTime(String time) async {
+  try {
+    if (time.isNotEmpty) {
       await FirebaseFirestore.instance
           .collection("publish")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({"pickup_time": time});
-          
       print('Time updated successfully');
-      
-    } catch (e) {
-      print('Error updating time: $e');
+    } else {
+      print('Time is empty');
     }
+  } catch (e) {
+    print('Error updating time: $e');
   }
+}
 
   Future<void> updateRideDate(String date) async {
     try {
-      await FirebaseFirestore.instance
+      if(date.isNotEmpty){
+  await FirebaseFirestore.instance
           .collection("publish")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({"pickupdate": date});
           
       print('Date updated successfully');
+      }else{
+        print(" date is empty");
+      }
+    
       
     } catch (e) {
       print('Error updating date: $e');
@@ -34,12 +41,17 @@ class RidePublishService {
 
   Future<void> updateRidePassengerCount(String passengercount) async {
     try {
-      await FirebaseFirestore.instance
+         if(passengercount.isNotEmpty){
+  await FirebaseFirestore.instance
           .collection("publish")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({"passenger_count": passengercount});
           
       print('Passenger count updated successfully');
+      }else{
+        print(" date is empty");
+      }
+    
       
     } catch (e) {
       print('Error updating passenger count: $e');
@@ -47,7 +59,8 @@ class RidePublishService {
   }
   Future<void> updateRideExpense(String expense) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+         if(expense.isNotEmpty){
+ final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         await FirebaseFirestore.instance
             .collection("publish")
@@ -57,6 +70,10 @@ class RidePublishService {
       } else {
         print('No user is currently signed in.');
       }
+      }else{
+        print(" date is empty");
+      }
+     
     } catch (e) {
       print('Error updating travel expense: $e');
     }
@@ -72,8 +89,8 @@ class RidePublishService {
             .doc(user.uid)
             .update({
           "pickup_location": pickupLocation,
-          "pick_latitude": pickLatitude,
-          "pick_longitude": pickLongitude,
+          "picklatitude": pickLatitude,
+          "picklongitude": pickLongitude,
         });
 
         print('Pickup location updated successfully');
@@ -95,8 +112,8 @@ class RidePublishService {
             .doc(user.uid)
             .update({
           "drop_location": dropitlocation,
-          "drop_latitude": droplatitude,
-          "drop_longitude": droplongitude,
+          "droplatitude": droplatitude,
+          "droplongitude": droplongitude,
         });
 
         print('Drop-off location updated successfully');
@@ -109,35 +126,36 @@ class RidePublishService {
   }
 
   Future<void> publishRide(PublishRideEvent event) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
+  try {
+    final user = FirebaseAuth.instance.currentUser;
+    final fromuid = event.fromuid; // Make sure to get fromuid from the event or context
 
-      if (user != null) {
-        await FirebaseFirestore.instance
-            .collection("publish")
-            .doc(user.uid)
-            .update({
-              "u_uid" : user.uid,
-              
-          "pickup_location": event.pickuplocation,
-          "drop_location": event.dropitlocation,
-          "middle_city": event.middlecity,
-          "pickup_time": event.time,
-          "pickupdate": event.date,
-          "passenger_count": event.passengercount,
-          "droplatitude": event.droplatitude,
-          "droplongitude": event.droplongitude,
-          "picklatitude": event.picklatitude,
-          "picklongitude": event.picklongitude,
-          "travel_expense": event.expence,
-        });
+    if (user != null && fromuid != null) {
+      await FirebaseFirestore.instance
+          .collection("publish")
+          .doc(fromuid) // Use fromuid here
+          .update({
+            "u_uid": user.uid,
+            "pickup_location": event.pickuplocation,
+            "drop_location": event.dropitlocation,
+            // "middle_city": event.middlecity,
+            "pickup_time": event.time,
+            "pickupdate": event.date,
+            "passenger_count": event.passengercount,
+            "droplatitude": event.droplatitude,
+            "droplongitude": event.droplongitude,
+            "picklatitude": event.picklatitude,
+            "picklongitude": event.picklongitude,
+            "travel_expense": event.expence,
+          });
 
-        print('Ride published successfully');
-      } else {
-        print('No user is currently signed in.');
-      }
-    } catch (e) {
-      print('Error publishing ride: $e');
+      print('Ride published successfully');
+    } else {
+      print('User is not signed in or fromuid is null.');
     }
+  } catch (e) {
+    print('Error publishing ride: $e');
   }
+}
+
 }

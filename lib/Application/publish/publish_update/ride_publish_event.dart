@@ -39,7 +39,7 @@ class PublishRideEvent extends RidePublishEvent {
 
   final String pickuplocation;
   final String dropitlocation;
-  final String middlecity;
+  // final String middlecity;
   final String time;
   final String date;
   final String passengercount;
@@ -48,11 +48,12 @@ class PublishRideEvent extends RidePublishEvent {
   final String picklatitude;
   final String picklongitude;
   final String expence;
+  final String fromuid;
 
   PublishRideEvent({
     required this.pickuplocation,
     required this.dropitlocation,
-    required this.middlecity,
+    // required this.middlecity,
     required this.time,
     required this.date,
     required this.passengercount,
@@ -61,5 +62,6 @@ class PublishRideEvent extends RidePublishEvent {
     required this.picklatitude,
     required this.picklongitude,
     required this.expence,
+    required this.fromuid,
   });
 }

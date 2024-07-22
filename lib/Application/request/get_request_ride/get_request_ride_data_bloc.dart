@@ -1,4 +1,3 @@
-// Application/get_request_ride/get_request_ride_data_bloc.dart
 import 'package:bloc/bloc.dart';
 import 'package:trek_trak/domain/request_data.dart';
 import 'package:trek_trak/infrastructure/repository/profile_repo/data_get.dart';
@@ -16,7 +15,7 @@ class GetRequestRideDataBloc extends Bloc<GetRequestRideDataEvent, GetRequestRid
   Future<void> _onFetchRequestRideDataEvent(FetchRequestRideDataEvent event, Emitter<GetRequestRideDataState> emit) async {
     emit(GetRequestRideDataLoading());
     try {
-      final requestList = await repository.GetRequestRideUser(event.uid);
+      final requestList = await repository.getRequestRideUser();
       if (requestList.isEmpty) {
         emit(GetRequestRideError(error: 'No requests found.'));
       } else {

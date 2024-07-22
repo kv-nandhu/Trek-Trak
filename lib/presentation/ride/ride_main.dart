@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/get_request_ride/get_request_ride_data_bloc.dart';
 import 'package:trek_trak/presentation/ride/request_page.dart';
 import 'package:trek_trak/presentation/ride/ride.dart';
+import 'package:trek_trak/presentation/ride/ride_accepted/Accepted_home_Page.dart';
+import 'package:trek_trak/presentation/ride/ride_accepted/ride_accepted.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 class RideMainPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _RideMainPageState extends State<RideMainPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: CustomColor.whiteColor(),
@@ -29,28 +29,15 @@ class _RideMainPageState extends State<RideMainPage> {
             tabs: [
               Tab(child: Text('Ride Details')),
               Tab(child: Text('Ride Requests')),
+              Tab(child: Text('Ride Accepted')),
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             RidePage(),
-            BlocBuilder<GetRequestRideDataBloc, GetRequestRideDataState>(
-              builder: (context, state) {
-                if (state is GetRequestRideDataLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is GetRequestRideSuccess) {
-                  // Pass the fromuid to RequestItem
-                  print(state.requestList.first.uid!);
-                  return RequestItem(uid: state.requestList.first.uid!);
-                } else if (state is GetRequestRideError) {
-                
-                  return Center(child: Text('Error: ${state.error}'));
-                } else {
-                  return  const Center( child: CircularProgressIndicator.adaptive(),);
-                }
-              },
-            ),
+            RequestItem(),
+            AcceptedHomePage(),
           ],
         ),
       ),

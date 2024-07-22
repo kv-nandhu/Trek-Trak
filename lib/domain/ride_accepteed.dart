@@ -1,13 +1,4 @@
-// domain/request_data.dart
-class UserRequest {
-  final String? name;
-  final String? number;
-  final String? gender;
-  final String? image;
-  final String? dob;
-  final String? uid;
-  final String? u_uid;
-  final String? request_id;
+class RideAccepted {
   String? pickuplocation;
   String? picklatitude;
   String? picklongitude;
@@ -18,21 +9,17 @@ class UserRequest {
   String? time;
   String? date;
   String? passengercount;
+  String? uid;
   String? expence;
   String? fromuid;
   String? uname;
   String? acceptid;
   String? requestUserId;
+  String? image;
 
-  UserRequest({
-    this.name,
-    this.number,
-    this.gender,
-    this.image,
-    this.dob,
-    this.uid,
-    this.u_uid,
-    this.request_id,
+ 
+
+  RideAccepted({
     this.pickuplocation,
     this.picklatitude,
     this.picklongitude,
@@ -43,23 +30,19 @@ class UserRequest {
     this.time,
     this.date,
     this.passengercount,
+    this.uid,
     this.expence,
     this.fromuid,
     this.uname,
     this.acceptid,
     this.requestUserId,
+    this.image,
+ 
   });
 
-  factory UserRequest.fromJson(Map<String, dynamic> json) {
-    return UserRequest(
-      name: json['Name'],
-      number: json['number'],
-      gender: json['Gender'],
-      image: json['image'],
-      dob: json['dob'],
+  factory RideAccepted.fromJson(Map<String, dynamic> json) {
+    return RideAccepted(
       uid: json['uid'],
-      u_uid: json['u_uid'],
-      request_id: json['request_id'],
       pickuplocation: json['pickup_location'] ?? "Unknown",
       dropitlocation: json['drop_location'] ?? "Unknown",
       middlecity: json['middlecity'] ?? "Unknown",
@@ -72,14 +55,16 @@ class UserRequest {
       droplongitude: json['drop_longitude'],
       expence: json['travel_expense'],
       fromuid: json['u_uid'],
-      uname: json['u_name'],
+      uname: json['Name'],
       acceptid: json['acceptid'],
-      requestUserId: json['requestUserId'],
+      requestUserId: json['acceptid'],
+      image: json['image'],
+   
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> request = {
+    final Map<String, dynamic> rideAccepted = {
       'uid': uid,
       'pickup_location': pickuplocation,
       'drop_location': dropitlocation,
@@ -93,15 +78,10 @@ class UserRequest {
       'drop_longitude': droplongitude,
       'travel_expense': expence,
       'acceptid': acceptid,
-      'Name': name,
-      'number': number,
-      'Gender': gender,
+      'requestUserId': acceptid,
       'image': image,
-      'dob': dob,
-      'u_uid': fromuid,
-      'request_id': request_id,
-      'requestUserId': requestUserId,
+      'Name':uname
     };
-    return request;
+    return rideAccepted;
   }
 }

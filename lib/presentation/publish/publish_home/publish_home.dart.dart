@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
-import 'package:trek_trak/Application/publish_add/publish_add_bloc.dart';
+import 'package:trek_trak/Application/publish/publish_add/publish_add_bloc.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';

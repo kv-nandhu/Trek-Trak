@@ -89,7 +89,7 @@ class _RidePageState extends State<RidePage> {
                                     pickuplocation: publish.pickuplocation!,
                                     dropitlocation:
                                         publish.dropitlocation ?? 'fsddsoh',
-                                    middlecity: 'add middle city',
+                                    // middlecity: 'add middle city',
                                     time: publish.time ?? 'sdds',
                                     date: publish.date ?? 'sdfdsa',
                                     passengercount:

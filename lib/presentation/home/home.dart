@@ -6,6 +6,7 @@ import 'package:trek_trak/presentation/home/custom/build_vertical_list.dart';
 import 'package:trek_trak/presentation/home/custom/search_screen.dart';
 import 'package:trek_trak/presentation/home/custom/shimer.dart';
 import 'package:trek_trak/presentation/home/custom/title.dart';
+import 'package:trek_trak/presentation/home/notification/notification.dart';
 // import 'package:trek_trak/presentation/home/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,7 +50,20 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromARGB(179, 241, 244, 241),
     appBar: AppBar(
           centerTitle: true,
-          title: const title()),
+          title: const title(),
+           actions: [
+            IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                  Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NotificationPage()));
+               
+              },
+            ),
+          ],
+          ),
       body: BlocBuilder<DataGettingBloc, DataGettingState>(
         builder: (context, state) {
           if (state is RidePublishLoadingState) {

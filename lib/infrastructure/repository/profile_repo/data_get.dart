@@ -2,6 +2,7 @@
 
 import 'package:trek_trak/domain/publish_model.dart';
 import 'package:trek_trak/domain/request_data.dart';
+import 'package:trek_trak/domain/ride_accepteed.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,7 +31,7 @@ class UserProfileRepo {
       return null;
     }
   }
-//!-------------------------------------------ride publish --------------------------------
+//!-------------------------------------------ride publish update --------------------------------
   Future<List<RidePublish>> getRide() async {
     List<RidePublish> publishing = [];
     User? user = FirebaseAuth.instance.currentUser;
@@ -113,32 +114,65 @@ class UserProfileRepo {
 
 
 
-Future<List<UserRequest>> GetRequestRideUser(String uid) async {
-  List<UserRequest> requestList = [];
+  Future<List<UserRequest>> getRequestRideUser() async {
+    List<UserRequest> requestList = [];
+     User? user = FirebaseAuth.instance.currentUser;
 
-  try {
-    print('Fetching requests for uid: $uid');
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('user_request')
-        .where('uid', isEqualTo: uid)
-        .get();
+    try {
+      // print('Fetching requests for publishId: $publishid');
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('user_request')
+          .where('uid', isEqualTo: user!.uid)
+          .get();
 
-    print('Raw document snapshot: ${querySnapshot.docs.length} documents found');
-    
-    for (var doc in querySnapshot.docs) {
-      Map<String, dynamic> data = doc.data();
-      print('Fetched data: $data');
-      requestList.add(UserRequest.fromJson(data));
+      print('Raw document snapshot: ${querySnapshot.docs.length} documents found');
+      
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data();
+        print('Fetched data: $data');
+        requestList.add(UserRequest.fromJson(data));
+      }
+
+      print('Request List: $requestList');
+      return requestList;
+    } catch (e) {
+      print('Error fetching requests: $e');
+      return requestList;
     }
+  }
 
-    print('Request List: $requestList');
-    return requestList;
-  } catch (e) {
-    print('Error fetching requests: $e');
-    return requestList;
+
+
+    Future<List<RideAccepted>> getAcceptedRide() async {
+    List<RideAccepted> rideAccepted = [];
+     User? user = FirebaseAuth.instance.currentUser;
+
+    try {
+      // print('Fetching requests for publishId: $publishid');
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('ride_accept')
+          .where('request_user_id', isEqualTo: user!.uid)
+          .get();
+
+      print('Raw document snapshot: ${querySnapshot.docs.length} documents found');
+      
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data();
+        print('Fetched data: $data');
+        rideAccepted.add(RideAccepted.fromJson(data));
+      }
+
+      print('Request List: $rideAccepted');
+      return rideAccepted;
+    } catch (e) {
+      print('Error fetching requests: $e');
+      return rideAccepted;
+    }
   }
 }
 
-}
+
+
+
 
 

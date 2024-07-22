@@ -1,4 +1,3 @@
-// Application/get_request_ride/get_request_ride_data_state.dart
 part of 'get_request_ride_data_bloc.dart';
 
 abstract class GetRequestRideDataState {}

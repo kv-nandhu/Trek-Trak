@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
-import 'package:trek_trak/Application/user_requeset/user_request_bloc.dart';
+import 'package:trek_trak/Application/request/user_requeset/user_request_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // UI/button.dart
 
-
 class Button extends StatelessWidget {
-  Button({super.key, required this.usermodel});
+  Button({
+    super.key, 
+    required this.usermodel,
+    required this.time,
+    required this.date,
+    required this.dropitlocation,
+    required this.passengercount,
+    required this.expence,
+    required this.pickuplocation,
+  });
+
   final UserModel usermodel;
+  final String time;
+  final String date;
+  final String dropitlocation;
+  final String passengercount;
+  final String expence;
+  final String pickuplocation;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +52,17 @@ class Button extends StatelessWidget {
                             name: state.user.name,
                             number: state.user.number,
                             uid: usermodel.uid!,
-                            fromuid: ride.fromuid,
+                            fromuid: ride.fromuid!,
+                            pickuplocation: pickuplocation,
+                            dropitlocation: dropitlocation,
+                            time: time,
+                            date: date,
+                            passengercount: passengercount,
+                            droplatitude: ride.droplatitude.toString(), // Assuming 'droplatitude' is a double field in ride
+                            droplongitude: ride.droplongitude.toString(), // Assuming 'droplongitude' is a double field in ride
+                            picklatitude: ride.picklatitude.toString(), // Assuming 'picklatitude' is a double field in ride
+                            picklongitude: ride.picklongitude.toString(), // Assuming 'picklongitude' is a double field in ride
+                            expence: expence, requestUserId: usermodel.uid!,
                           ),
                         );
                       },
@@ -65,7 +90,6 @@ class Button extends StatelessWidget {
     );
   }
 }
-
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({

@@ -94,7 +94,12 @@ class _PublishingRideDetailsState extends State<PublishingRideDetails> {
                     ],
                   ),
                 ),
-                Button(usermodel:state.user,),
+                Button(usermodel:state.user,      time: widget.time!,
+                            date: widget.date!,
+                            dropitlocation: widget.dropitlocation!,
+                            passengercount: widget.passengercount!,
+                            expence: widget.expence!,
+                            pickuplocation: widget.pickuplocation!,),
               ],
             );
           } else {

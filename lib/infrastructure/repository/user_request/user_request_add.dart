@@ -1,7 +1,7 @@
 // repo/ride_requesting_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:trek_trak/Application/user_requeset/user_request_bloc.dart';
+import 'package:trek_trak/Application/request/user_requeset/user_request_bloc.dart';
 
 class RideRequestingService {
   Future<void> requestRide(RequestAddEvent event) async {
@@ -20,7 +20,18 @@ class RideRequestingService {
           'dob': event.dob,
           'uid': event.uid,
           'u_uid': event.fromuid,
-          'request_id': requestid,
+      'pickup_location': event.pickuplocation,
+      'drop_location': event.dropitlocation,
+      'pickup_time':event.time,
+      'pickupdate': event.date,
+      'passenger_count': event.passengercount,
+      'pick_latitude':event. picklatitude,
+      'pick_longitude':event.picklongitude,
+      'drop_latitude': event.droplatitude,
+      'drop_longitude':event. droplongitude,
+      'travel_expense':event. expence,
+      'requestUserId':user.uid,
+          'request_id':requestid,
         });
 
         print('Request added successfully');

@@ -15,6 +15,7 @@ import 'package:trek_trak/presentation/authentication/splash/splash.dart';
 import 'package:trek_trak/presentation/authentication/success/success.dart';
 import 'package:trek_trak/presentation/chat/chat.dart';
 import 'package:trek_trak/presentation/home/custom/search_screen.dart';
+import 'package:trek_trak/presentation/home/notification/notification.dart';
 import 'package:trek_trak/presentation/profile/about/about.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_dob.dart';
 import 'package:trek_trak/presentation/profile/about/about_custom_widgets/profile/user_email.dart';
@@ -156,7 +157,7 @@ class Routers {
       return PublishEditing(
      pickuplocation: args['pickuplocation'],
         dropitlocation: args['dropitlocation'],
-        middlecity: args['middlecity'],
+        // middlecity: args['middlecity'],
         time: args['time'],
         date: args['date'],
         passengercount: args['passengercount'],
@@ -195,6 +196,7 @@ class Routers {
     '/publisConfirm': (context) => const PublisConfirm(),
     '/successPublish': (context) => const SuccessPublish(),
     '/locationPickerPage': (context) => const LocationPickerPage(),
+    '/notificationPage': (context) =>  NotificationPage(),
 
     '/calculateMileageScreen': (context) {
       final args =

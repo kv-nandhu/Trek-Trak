@@ -1,13 +1,13 @@
-// UI/request_item.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek_trak/Application/get_request_ride/get_request_ride_data_bloc.dart';
+import 'package:trek_trak/Application/request/get_request_ride/get_request_ride_data_bloc.dart';
+import 'package:trek_trak/Application/accept/ride_accept/ride_accept_bloc.dart';
 import 'package:trek_trak/domain/request_data.dart';
+import 'package:trek_trak/presentation/ride/requester_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RequestItem extends StatefulWidget {
-  final String uid;
-
-  const RequestItem({super.key, required this.uid});
+  const RequestItem({super.key});
 
   @override
   State<RequestItem> createState() => _RequestItemState();
@@ -17,7 +17,7 @@ class _RequestItemState extends State<RequestItem> {
   @override
   void initState() {
     super.initState();
-    context.read<GetRequestRideDataBloc>().add(FetchRequestRideDataEvent(uid: widget.uid));
+    context.read<GetRequestRideDataBloc>().add(FetchRequestRideDataEvent());
   }
 
   @override
@@ -27,22 +27,164 @@ class _RequestItemState extends State<RequestItem> {
         if (state is GetRequestRideDataLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetRequestRideSuccess) {
-          return ListView.builder(
-            itemCount: state.requestList.length,
-            itemBuilder: (context, index) {
-              final request = state.requestList[index];
-              return ListTile(
-                title: Text(request.name ?? 'No name'),
-                subtitle: Text(request.number ?? 'No number'),
-                leading: request.image != null ? Image.network(request.image!) : null,
-              );
-            },
-          );
+          return _buildRequestItem(state.requestList);
         } else if (state is GetRequestRideError) {
-          return Center(child: Text(state.error));
+          return Center(child: Text('Error: ${state.error}'));
         } else {
           return const Center(child: Text('Unknown state'));
         }
+      },
+    );
+  }
+
+  Widget _buildRequestItem(List<UserRequest> requests) {
+    if (requests.isEmpty) {
+      return const Center(child: Text('No requests found'));
+    }
+
+    return ListView.builder(
+      itemCount: requests.length,
+      itemBuilder: (context, index) {
+        UserRequest request = requests[index];
+      
+
+        return Container(
+          margin: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: request.image != null
+                        ? NetworkImage(request.image!)
+                        : null,
+                    child: request.image == null
+                        ? const Icon(Icons.person, size: 60)
+                        : null,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      request.name ?? 'Unknown',
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RequesterProfile(
+                                      name: request.name,
+                                      image: request.image,
+                                      gender: request.gender,
+                                      dob: request.dob,
+                                      number: request.number,
+                                    )));
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_rounded))
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<RideAcceptBloc>().add(
+                            RideAcceptAddEvent(
+                              uname: request.name ?? 'Unknown',
+                              pickuplocation: request.pickuplocation!,
+                              dropitlocation: request.dropitlocation!,
+                              time: request.time!,
+                              date: request.date!,
+                              passengercount: request.passengercount!,
+                              expence: request.expence.toString(),
+                              fromuid: request.fromuid!, requestUserId: request.requestUserId!, image: request.image!,
+                            ),
+                          );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                    child: const Text('Accept'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _handleDeclineRequest(request);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        showDailoges(
+                            context, "You want delete the ride", request.request_id!);
+                      },
+                      child: const Text('Decline'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _handleAcceptRequest(UserRequest request) {
+    // Implement your logic here
+  }
+
+  void _handleDeclineRequest(UserRequest request) {
+    // Implement your logic here
+  }
+
+  void showDailoges(BuildContext context, String content, String requestid) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert Dialog'),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                FirebaseFirestore.instance
+                    .collection("user_request")
+                    .doc(requestid)
+                    .delete();
+                context
+                    .read<GetRequestRideDataBloc>()
+                    .add(FetchRequestRideDataEvent());
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
       },
     );
   }

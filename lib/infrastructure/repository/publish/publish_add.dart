@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:trek_trak/Application/publish_add/publish_add_bloc.dart';
-import 'package:trek_trak/Application/publish_update/ride_publish_bloc.dart';
+import 'package:trek_trak/Application/publish/publish_add/publish_add_bloc.dart';
+import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
 
 class RidePublishAddingService {
   Future<void> updateRideTime(String time) async {
