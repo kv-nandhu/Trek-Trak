@@ -1,67 +1,70 @@
 part of 'ride_publish_bloc.dart';
 
-@immutable
 abstract class RidePublishEvent {}
 
 class GetRidePublishingEvent extends RidePublishEvent {}
 
 class AddTimeEvent extends RidePublishEvent {
   final String time;
-  AddTimeEvent({required this.time});
+  AddTimeEvent(this.time);
 }
 
 class AddDateEvent extends RidePublishEvent {
   final String date;
-  AddDateEvent({required this.date});
+  AddDateEvent(this.date);
 }
 
 class AddPassengerCountEvent extends RidePublishEvent {
   final String passengercount;
-  AddPassengerCountEvent({required this.passengercount});
+  AddPassengerCountEvent(this.passengercount);
+}
+
+class PickLocationEvent extends RidePublishEvent {
+  final String pickuplocation;
+  final String picklatitude;
+  final String picklongitude;
+  PickLocationEvent({ required this.pickuplocation, required this.picklatitude, required this.picklongitude});
+}
+
+class DropLocationEvent extends RidePublishEvent {
+  final String droplocation;
+  final String droplatitude;
+  final String droplongitude;
+  DropLocationEvent(this.droplocation, this.droplatitude, this.droplongitude);
+}
+
+class PublishRideEvent extends RidePublishEvent {
+  final String fromuid;
+  final String time;
+  final String date;
+  final String passengercount;
+  final String expence;
+  final String pickuplocation;
+  final String picklatitude;
+  final String picklongitude;
+  final String dropitlocation;
+  final String droplatitude;
+  final String droplongitude;
+  final String middlecity;
+
+  PublishRideEvent( {
+    required this.fromuid,
+    required this.time,
+    required this.date,
+    required this.passengercount,
+    required this.expence,
+    required this.pickuplocation,
+    required this.picklatitude,
+    required this.picklongitude,
+    required this.dropitlocation,
+    required this.droplatitude,
+    required this.droplongitude, 
+   required this.middlecity, 
+
+  });
 }
 
 class AddTravelExpenceEvent extends RidePublishEvent {
   final String expence;
-  AddTravelExpenceEvent({required this.expence});
-}
-
-class PickLocationEvent extends RidePublishEvent {
-  final String pickuplocation, picklatitude, picklongitude;
-  PickLocationEvent({required this.pickuplocation, required this.picklatitude, required this.picklongitude});
-}
-
-class DropLocationEvent extends RidePublishEvent {
-  final String dropitlocation, droplatitude, droplongitude;
-  DropLocationEvent({required this.dropitlocation, required this.droplatitude, required this.droplongitude});
-}
-
-class PublishRideEvent extends RidePublishEvent {
-
-  final String pickuplocation;
-  final String dropitlocation;
-  // final String middlecity;
-  final String time;
-  final String date;
-  final String passengercount;
-  final String droplatitude;
-  final String droplongitude;
-  final String picklatitude;
-  final String picklongitude;
-  final String expence;
-  final String fromuid;
-
-  PublishRideEvent({
-    required this.pickuplocation,
-    required this.dropitlocation,
-    // required this.middlecity,
-    required this.time,
-    required this.date,
-    required this.passengercount,
-    required this.droplatitude,
-    required this.droplongitude,
-    required this.picklatitude,
-    required this.picklongitude,
-    required this.expence,
-    required this.fromuid,
-  });
+  AddTravelExpenceEvent(this.expence);
 }

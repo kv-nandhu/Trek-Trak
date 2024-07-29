@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:trek_trak/domain/payment_model.dart';
 import 'package:trek_trak/domain/publish_model.dart';
 import 'package:trek_trak/domain/request_data.dart';
 import 'package:trek_trak/domain/ride_accepteed.dart';
@@ -100,16 +101,27 @@ class UserProfileRepo {
     }
   }
 
-  Future<List<RidePublish>> searchRides(
-      String from, String to, String date) async {
-    final allRides = await getRide(); // Fetch all rides from your data source
-    return allRides
-        .where((ride) =>
-            ride.pickuplocation!.contains(from) &&
-            ride.dropitlocation!.contains(to) &&
-            ride.date!.contains(date))
-        .toList();
-  }
+Future<List<RidePublish>> searchRides(String from, String to, String date) async {
+  // Fetch all rides from your data source
+  final allRides = await getRide();
+  
+  // Filter the rides based on the search criteria
+  return allRides.where((ride) {
+    final pickupLocation = ride.pickuplocation?.toLowerCase() ?? '';
+    final dropLocation = ride.dropitlocation?.toLowerCase() ?? '';
+    final rideDate = ride.date ?? '';
+print(pickupLocation);
+print(dropLocation);
+print(rideDate);
+print(from);
+print(to);
+print(date);
+    return pickupLocation.contains(from.toLowerCase()) &&
+           dropLocation.contains(to.toLowerCase()) &&
+           rideDate.contains(date);
+  }).toList();
+}
+
 
 
 
@@ -143,7 +155,7 @@ class UserProfileRepo {
 
 
 
-    Future<List<RideAccepted>> getAcceptedRide() async {
+   Future<List<RideAccepted>> getAcceptedRide() async {
     List<RideAccepted> rideAccepted = [];
      User? user = FirebaseAuth.instance.currentUser;
 
@@ -169,10 +181,95 @@ class UserProfileRepo {
       return rideAccepted;
     }
   }
+
+
+  Future<void> markNotificationAsRead(String uid) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('ride_accept')
+          .where('request_user_id', isEqualTo: user!.uid)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final docId = querySnapshot.docs.first.id;
+        await FirebaseFirestore.instance.collection('ride_accept').doc(docId).update({
+          'isRead': true,
+        });
+      }
+    } catch (e) {
+      print('Error updating notification status: $e');
+    }
+  }
+
+Future<List<RideAccepted>> getAcceptedUsersForPublishedRide(String fromuid) async {
+  try {
+    final publishedRides = await getInduvitual();
+    if (publishedRides.isEmpty) {
+      return []; 
+    }
+    final matchingRides = publishedRides.where(
+      (ride) => ride.fromuid == fromuid,
+    ).toList();
+
+    if (matchingRides.isEmpty) {
+      return []; 
+    }
+
+    final acceptid = matchingRides.first.fromuid;
+    if (acceptid == null) {
+      throw Exception('acceptid is missing in published ride details');
+    }
+    final acceptedUsersSnapshot = await FirebaseFirestore.instance
+        .collection('ride_accept')
+        .where('u_uid', isEqualTo: acceptid)
+        .get();
+
+    return acceptedUsersSnapshot.docs
+        .map((doc) => RideAccepted.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  } catch (e) {
+    print('Failed to fetch accepted users for published ride: $e');
+    return [];
+  }
 }
 
 
 
 
+Future<List<RideAccepted>> userAccepteduser() async {
+  try {  
+        User? user = FirebaseAuth.instance.currentUser;
+    final acceptedUsersSnapshot = await FirebaseFirestore.instance
+        .collection('ride_accept')
+        .where('uid', isEqualTo: user!.uid )
+        .get();
+
+    return acceptedUsersSnapshot.docs
+        .map((doc) => RideAccepted.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  } catch (e) {
+    print('Failed to fetch accepted users for published ride: $e');
+    return [];
+  }
+}
 
 
+
+Future<List<Payment>> paymentRequestGet() async {
+  try {  
+        User? user = FirebaseAuth.instance.currentUser;
+    final acceptedUsersSnapshot = await FirebaseFirestore.instance
+        .collection('payment_request')
+        .where('user_id', isEqualTo: user!.uid )
+        .get();
+
+    return acceptedUsersSnapshot.docs
+        .map((doc) => Payment.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  } catch (e) {
+    print('Failed to fetch accepted users for published ride: $e');
+    return [];
+  }
+}
+}

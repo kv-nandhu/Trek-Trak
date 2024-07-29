@@ -22,18 +22,23 @@ class _RequestItemState extends State<RequestItem> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetRequestRideDataBloc, GetRequestRideDataState>(
-      builder: (context, state) {
-        if (state is GetRequestRideDataLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is GetRequestRideSuccess) {
-          return _buildRequestItem(state.requestList);
-        } else if (state is GetRequestRideError) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return const Center(child: Text('Unknown state'));
-        }
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ride Requests'),
+      ),
+      body: BlocBuilder<GetRequestRideDataBloc, GetRequestRideDataState>(
+        builder: (context, state) {
+          if (state is GetRequestRideDataLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is GetRequestRideSuccess) {
+            return _buildRequestItem(state.requestList);
+          } else if (state is GetRequestRideError) {
+            return Center(child: Text('${state.error}'));
+          } else {
+            return const Center(child: Text('Unknown state'));
+          }
+        },
+      ),
     );
   }
 
@@ -46,7 +51,6 @@ class _RequestItemState extends State<RequestItem> {
       itemCount: requests.length,
       itemBuilder: (context, index) {
         UserRequest request = requests[index];
-      
 
         return Container(
           margin: const EdgeInsets.all(8.0),
@@ -97,7 +101,7 @@ class _RequestItemState extends State<RequestItem> {
                                       number: request.number,
                                     )));
                       },
-                      icon: Icon(Icons.arrow_forward_ios_rounded))
+                      icon: const Icon(Icons.arrow_forward_ios_rounded))
                 ],
               ),
               const SizedBox(height: 10),
@@ -106,18 +110,7 @@ class _RequestItemState extends State<RequestItem> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      context.read<RideAcceptBloc>().add(
-                            RideAcceptAddEvent(
-                              uname: request.name ?? 'Unknown',
-                              pickuplocation: request.pickuplocation!,
-                              dropitlocation: request.dropitlocation!,
-                              time: request.time!,
-                              date: request.date!,
-                              passengercount: request.passengercount!,
-                              expence: request.expence.toString(),
-                              fromuid: request.fromuid!, requestUserId: request.requestUserId!, image: request.image!,
-                            ),
-                          );
+                      _handleAcceptRequest(request);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
@@ -134,7 +127,7 @@ class _RequestItemState extends State<RequestItem> {
                     child: InkWell(
                       onTap: () {
                         showDailoges(
-                            context, "You want delete the ride", request.request_id!);
+                            context, "You want to delete the ride?", request.request_id!);
                       },
                       child: const Text('Decline'),
                     ),
@@ -149,11 +142,38 @@ class _RequestItemState extends State<RequestItem> {
   }
 
   void _handleAcceptRequest(UserRequest request) {
-    // Implement your logic here
+    // Add logic to accept the request
+    context.read<RideAcceptBloc>().add(
+      RideAcceptAddEvent(
+        uname: request.name ?? 'Unknown',
+        pickuplocation: request.pickuplocation!,
+        dropitlocation: request.dropitlocation!,
+        time: request.time!,
+        date: request.date!,
+        passengercount: request.passengercount!,
+        expence: request.expence.toString(),
+        fromuid: request.fromuid!,
+        requestUserId: request.requestUserId!,
+        image: request.image!,
+      ),
+    );
+
+    // Optionally show a notification or update the UI
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Request accepted successfully!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    // Refresh the request list
+    context.read<GetRequestRideDataBloc>().add(FetchRequestRideDataEvent());
   }
 
   void _handleDeclineRequest(UserRequest request) {
-    // Implement your logic here
+    // Add logic to decline the request
+    showDailoges(
+        context, "Are you sure you want to decline this request?", request.request_id!);
   }
 
   void showDailoges(BuildContext context, String content, String requestid) {

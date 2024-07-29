@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trek_trak/presentation/ride/request_page.dart';
-import 'package:trek_trak/presentation/ride/ride.dart';
+import 'package:trek_trak/presentation/ride/ride_details/ride.dart';
 import 'package:trek_trak/presentation/ride/ride_accepted/Accepted_home_Page.dart';
 import 'package:trek_trak/presentation/ride/ride_accepted/ride_accepted.dart';
 import 'package:trek_trak/utils/color/color.dart';
@@ -35,7 +35,7 @@ class _RideMainPageState extends State<RideMainPage> {
         ),
         body: const TabBarView(
           children: [
-            RidePage(),
+            // RidePage(),
             RequestItem(),
             AcceptedHomePage(),
           ],

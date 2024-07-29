@@ -25,7 +25,7 @@ Widget buildVerticalList(List<RidePublish> ridePublish) {
                           expence: publish.expence,
                           pickuplocation: publish.pickuplocation,
                           uid: publish.uid,
-                          fromid: publish.fromuid,
+                          fromuid: publish.fromuid,
                           
                         )));
         },

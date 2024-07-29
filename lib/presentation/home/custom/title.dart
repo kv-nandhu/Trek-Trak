@@ -34,9 +34,26 @@ class title extends StatelessWidget {
           width: 10,
         ),
         SizedBox(
-            height: 40,
-            width: 50,
-            child: Image.asset('images/heading.jpg'))
+            height: 40, width: 50, child: Image.asset('images/heading.jpg'))
       ],
     );
-  }}
+  }
+}
+
+class text extends StatelessWidget {
+  const text(
+    String s, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Text(
+        "Moving Today",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}

@@ -22,6 +22,7 @@ class RideAcceptService {
           await FirebaseFirestore.instance.collection("ride_accept").doc(acceptid).set({
             "acceptid": acceptid,
             "u_name": event.uname,
+            "image" : event.image,
             "uid": user.uid,
             "request_user_id": event.requestUserId,
             'u_uid': event.fromuid,
@@ -31,9 +32,9 @@ class RideAcceptService {
             "pickupdate": event.date,
             "passenger_count": event.passengercount,
             "travel_expense": event.expence,
-            "image": userImage,
-            "Name": userName, // Name of the user accepting the request
-             // Image of the user accepting the request
+            "userimage": userImage,
+            "Name": userName,
+              "isRead": false,
           });
 
           print('Request added successfully');

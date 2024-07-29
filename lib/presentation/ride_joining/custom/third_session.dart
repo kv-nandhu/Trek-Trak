@@ -28,7 +28,7 @@ Widget thirdSession({
       'Expense: $expence\n'
       'Pick-up Location: $pickuplocation\n\n'
       'For more details, visit: $detailsPageLink';
-
+print(usermodel.number);
   return Column(
     children: [
       Padding(
@@ -43,9 +43,10 @@ Widget thirdSession({
             InkWell(
               onTap: () {
                 _makePhoneCall(usermodel.number!);
+                // _testUrlSchemes();
               },
-              child: const Text(
-                'Contact Victor',
+              child:  Text(
+                'Contact ${usermodel.name}',
                 style: TextStyle(color: Colors.blue, fontSize: 18),
               ),
             ),
@@ -109,31 +110,52 @@ void shareToWhatsApp(String detailsText) async {
 }
 
 void _makePhoneCall(String phoneNumber) async {
-  if (!phoneNumber.startsWith('+91')) {
-    phoneNumber = '+91$phoneNumber';
-  }
-
+  phoneNumber = phoneNumber.replaceAll(' ', ''); // Remove spaces if any
   final Uri phoneUri = Uri(
     scheme: 'tel',
     path: phoneNumber,
   );
 
-  print('Trying to launch $phoneUri');
-
   try {
     final bool canLaunchResult = await canLaunchUrl(phoneUri);
-    print('canLaunchUrl result: $canLaunchResult');
-
     if (canLaunchResult) {
-      final bool launchResult = await launchUrl(
-        phoneUri,
-        mode: LaunchMode.externalApplication,
-      );
-      print('launchUrl result: $launchResult');
+      await launchUrl(phoneUri);
+      print('Launching $phoneUri');
     } else {
-      print('Could not launch $phoneUri');
+      print('Cannot launch $phoneUri');
     }
   } catch (e) {
     print('Error: $e');
   }
 }
+
+// void _makePhoneCall(String phoneNumber) async {
+//     final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+//     // ignore: deprecated_member_use
+//     if (await canLaunch(phoneUri.toString())) {
+//       // ignore: deprecated_member_use
+//       await launch(phoneUri.toString());
+//     } else {
+//       throw 'Could not launch $phoneUri';
+//     }
+//   }
+void _testUrlSchemes() async {
+  final Uri testUri = Uri(
+    scheme: 'https',
+    path: 'www.google.com',
+  );
+
+  try {
+    final bool canLaunchResult = await canLaunchUrl(testUri);
+    if (canLaunchResult) {
+      await launchUrl(testUri);
+      print('Launching $testUri');
+    } else {
+      print('Cannot launch $testUri');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+

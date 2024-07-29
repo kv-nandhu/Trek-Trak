@@ -4,9 +4,7 @@ import 'package:trek_trak/Application/accept/get_accepted_data/get_accepted_data
 import 'package:trek_trak/presentation/ride/ride_accepted/ride_accepted.dart';
 
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({
-    Key? key,
-  }) : super(key: key);
+  const NotificationPage({Key? key}) : super(key: key);
 
   @override
   _NotificationPageState createState() => _NotificationPageState();
@@ -15,123 +13,117 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    // Fetch accepted rides data
     context.read<GetAcceptedDataBloc>().add(GetAcceptDataEvent());
+  }
+
+  void _markNotificationAsRead(String uid) {
+    // Mark notification as read in the BLoC
+    context.read<GetAcceptedDataBloc>().add(MarkNotificationsAsReadEvent(uid));
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text(""),),
+        appBar: AppBar(
+          title: const Text("Notifications"),
+        ),
         body: BlocBuilder<GetAcceptedDataBloc, GetAcceptedDataState>(
           builder: (context, state) {
             if (state is GetAcceptedloadingState) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.green,
-                ),
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             } else if (state is GetAcceptedloadedState) {
-              final rideAccepted = state.rideAccepted.first;
-              List<Map<String, String>> notifications = [
-              
-                {
-                  'name': rideAccepted.uname!,
-                  'message': 'You ride is accept',
-                  'time': rideAccepted.time!,
-                  'date': rideAccepted.date!,
-                  'dropitlocation': rideAccepted.dropitlocation!,
-                  'passengercount': rideAccepted.passengercount!,
-                  'expence': rideAccepted.expence!,
-                  'pickuplocation': rideAccepted.pickuplocation!,
-                  'uid': rideAccepted.uid!,
-                  'image': rideAccepted.image!,
-                  'fromid': rideAccepted.fromuid!,
-                }
-              ];
-              
-      
+              final rideAccepted = state.rideAccepted;
+
+              if (rideAccepted.isEmpty) {
+                return const Center(child: Text('No notifications available.'));
+              }
+
               return ListView.builder(
-                itemCount: notifications.length,
+                itemCount: rideAccepted.length,
                 itemBuilder: (context, index) {
+                  final notification = rideAccepted[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RideAcceptedScreen(
-                            time: notifications[index]['time']!,
-                            date: notifications[index]['date']!,
-                            dropitlocation: notifications[index]
-                                ['dropitlocation']!,
-                            passengercount: notifications[index]
-                                ['passengercount']!,
-                            expence: notifications[index]['expence']!,
-                            pickuplocation: notifications[index]
-                                ['pickuplocation']!,
-                            uname: notifications[index]['name']!,
-                            fromid: notifications[index]['fromid']!,
-                            uid: notifications[index]['uid']!,
-                            image: notifications[index]['image']!,
+                      // Safely handle null checks
+                      final uid = notification.uid ?? '';
+                      if (uid.isNotEmpty) {
+                        _markNotificationAsRead(uid);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RideAcceptedScreen(
+                              time: notification.time ?? '',
+                              date: notification.date ?? '',
+                              dropitlocation: notification.dropitlocation ?? '',
+                              passengercount: notification.passengercount?.toString() ?? '',
+                              expence: notification.expence?.toString() ?? '',
+                              pickuplocation: notification.pickuplocation ?? '',
+                              uname: notification.uname ?? '',
+                              fromid: notification.fromuid ?? '',
+                              uid: uid,
+                              image: notification.image ?? '',
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     child: Dismissible(
-                      key: Key(notifications[index]['name']!),
+                      key: Key(notification.uid ?? ''),
                       onDismissed: (direction) {
+                        // Update the state to remove the dismissed notification
                         setState(() {
-                          notifications.removeAt(index);
+                          rideAccepted.removeAt(index);
                         });
                       },
-                      background: Container(color: Colors.red),
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
+                      background: Container(
+                        color: Colors.red,
+                        child: const Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
                             ),
-                          ],
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundImage: notifications[index]['image'] !=
-                                      null
-                                  ? NetworkImage(notifications[index]['image']!)
-                                  : null,
-                              child: notifications[index]['image'] == null
-                                  ? const Icon(Icons.person, size: 60)
-                                  : null,
+                      ),
+                      child: Card(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        elevation: 4,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: notification.image != null
+                                ? NetworkImage(notification.image!)
+                                : null,
+                            child: notification.image == null
+                                ? const Icon(Icons.person, size: 30)
+                                : null,
+                          ),
+                          title: Text(
+                            notification.uname ?? 'No name',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    notifications[index]['name']!,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(notifications[index]['message']!),
-                                ],
-                              ),
-                            ),
-                          ],
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(notification.time ?? 'No time'),
+                              Text(notification.date ?? 'No date'),
+                            ],
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.grey[600],
+                          ),
                         ),
                       ),
                     ),
@@ -139,7 +131,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 },
               );
             } else {
-              return Center(child: Text('No notifications available.'));
+              return const Center(child: Text('No notifications available.'));
             }
           },
         ),

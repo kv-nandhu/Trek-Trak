@@ -1,6 +1,5 @@
 part of 'ride_publish_bloc.dart';
 
-@immutable
 abstract class RidePublishState {}
 
 class RidePublishInitial extends RidePublishState {}

@@ -16,21 +16,21 @@ class PublishingRideDetails extends StatefulWidget {
   final String? expence;
   final String? pickuplocation;
   final String? uname;
-  final String? fromid;
+  final String? fromuid;
   final String? uid;
 
-  PublishingRideDetails({
-    Key? key,
-    required this.time,
-    required this.date,
-    required this.dropitlocation,
-    required this.passengercount,
-    required this.expence,
-    required this.pickuplocation,
-    required this.uname,
-    required this.fromid,
-    required this.uid
-  }) : super(key: key);
+  PublishingRideDetails(
+      {Key? key,
+      required this.time,
+      required this.date,
+      required this.dropitlocation,
+      required this.passengercount,
+      required this.expence,
+      required this.pickuplocation,
+      required this.uname,
+      required this.fromuid,
+      required this.uid})
+      : super(key: key);
 
   @override
   _PublishingRideDetailsState createState() => _PublishingRideDetailsState();
@@ -76,7 +76,8 @@ class _PublishingRideDetailsState extends State<PublishingRideDetails> {
                             expence: widget.expence,
                             pickuplocation: widget.pickuplocation,
                           ),
-                          secondSession(usermodel: state.user, context: context),
+                          secondSession(
+                              usermodel: state.user, context: context),
                           const Divider(),
                           thirdSession(
                             detailsPageLink: publishingRideDetailsLink,
@@ -94,12 +95,16 @@ class _PublishingRideDetailsState extends State<PublishingRideDetails> {
                     ],
                   ),
                 ),
-                Button(usermodel:state.user,      time: widget.time!,
-                            date: widget.date!,
-                            dropitlocation: widget.dropitlocation!,
-                            passengercount: widget.passengercount!,
-                            expence: widget.expence!,
-                            pickuplocation: widget.pickuplocation!,),
+                Button(
+                  usermodel: state.user,
+                  time: widget.time!,
+                  date: widget.date!,
+                  dropitlocation: widget.dropitlocation!,
+                  passengercount: widget.passengercount!,
+                  expence: widget.expence!,
+                  pickuplocation: widget.pickuplocation!,
+                  fromuid: widget.fromuid!,
+                ),
               ],
             );
           } else {

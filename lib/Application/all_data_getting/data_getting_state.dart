@@ -20,3 +20,10 @@ class RidePublishErrorState extends DataGettingState{
 }
 
 class RidePublishedEmptyState extends DataGettingState {}
+
+class SearchGetState extends DataGettingState{
+    final List<RidePublish> ride;
+
+  SearchGetState({required this.ride});
+}
+class SearchGetLoadingState extends DataGettingState{}

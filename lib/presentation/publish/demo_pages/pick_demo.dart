@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
 import 'package:trek_trak/presentation/publish/demo_pages/locations/locations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KeralaLocationsDemo extends StatefulWidget {
   @override
@@ -175,6 +177,13 @@ class _KeralaLocationsDemoState extends State<KeralaLocationsDemo> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
+                 BlocProvider.of<RidePublishBloc>(context).add(
+                    PickLocationEvent(
+                      pickuplocation: selectPickLocation!,
+                      picklatitude: currentPickLatitude.toString(),
+                      picklongitude: currectPickLongitude.toString(),
+                    ),
+                  );
                   Navigator.pop(
                     context,
                     {
@@ -183,6 +192,7 @@ class _KeralaLocationsDemoState extends State<KeralaLocationsDemo> {
                       'picklongitude': currectPickLongitude.toString(),
                     },
                   );
+                
                 },
                 child: const Text('Confirm Location'),
               ),

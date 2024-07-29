@@ -32,6 +32,8 @@ class RideRequestingService {
       'travel_expense':event. expence,
       'requestUserId':user.uid,
           'request_id':requestid,
+           "isRead": false,
+
         });
 
         print('Request added successfully');

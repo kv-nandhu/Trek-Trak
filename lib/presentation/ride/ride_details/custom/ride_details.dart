@@ -1,49 +1,12 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
 import 'package:trek_trak/domain/publish_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/presentation/publish/publish_Editing/publish_editing.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trek_trak/presentation/ride/ride_details/custom/ride_details.dart';
 
-class RidePage extends StatefulWidget {
-  const RidePage({super.key});
-
-  @override
-  State<RidePage> createState() => _RidePageState();
-}
-
-class _RidePageState extends State<RidePage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<DataGettingBloc>().add(InduvitualPublishEvent());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ride Page'),
-      ),
-      body: BlocBuilder<DataGettingBloc, DataGettingState>(
-        builder: (context, state) {
-          if (state is RidePublishLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is RidePublishedSuccessState) {
-            return _buildRideList(state.ride);
-          } else {
-            return const Center(
-              child: Text('Failed to load rides'),
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildRideList(List<RidePublish> ridePublish) {
+Widget buildRideList(List<RidePublish> ridePublish) {
     return ListView.builder(
       itemCount: ridePublish.length,
       itemBuilder: (context, index) {
@@ -89,7 +52,7 @@ class _RidePageState extends State<RidePage> {
                                     pickuplocation: publish.pickuplocation!,
                                     dropitlocation:
                                         publish.dropitlocation ?? 'fsddsoh',
-                                    // middlecity: 'add middle city',
+                                    middlecity: 'add middle city',
                                     time: publish.time ?? 'sdds',
                                     date: publish.date ?? 'sdfdsa',
                                     passengercount:
@@ -153,4 +116,4 @@ class _RidePageState extends State<RidePage> {
       },
     );
   }
-}
+

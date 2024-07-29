@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 class PublishEditing extends StatefulWidget {
   final String pickuplocation;
   final String dropitlocation;
-  // final String middlecity;
+  final String middlecity;
   final String time;
   final String date;
   final String passengercount;
@@ -28,7 +28,7 @@ class PublishEditing extends StatefulWidget {
     Key? key,
     required this.pickuplocation,
     required this.dropitlocation,
-    // required this.middlecity,
+    required this.middlecity,
     required this.time,
     required this.date,
     required this.passengercount,
@@ -71,7 +71,16 @@ final String fromuid = Uuid().v4();
     p_lati = widget.picklatitude;
     d_lang = widget.droplongitude;
     d_lati = widget.droplatitude;
+
+         print("Initial pickuplocation: ${widget.pickuplocation}");
+    print("Initial dropitlocation: ${widget.dropitlocation}");
+    print("Initial picklatitude: $p_lati");
+    print("Initial picklongitude: $p_lang");
+    print("Initial droplatitude: $d_lati");
+    print("Initial droplongitude: $d_lang");
   }
+
+
 
   @override
   void dispose() {
@@ -125,22 +134,22 @@ final String fromuid = Uuid().v4();
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            BlocProvider.of<RidePublishBloc>(context).add(
-              PublishRideEvent(
-                pickuplocation: pickupController.text,
-                dropitlocation: dropController.text,
-                // middlecity: 'add middle city',
-                time: timeController.text,
-                date: dateController.text,
-                passengercount: passengerCountController.text,
-                droplatitude: d_lati.toString(),
-                droplongitude: d_lang.toString(),
-                picklatitude: p_lati.toString(),
-                picklongitude: p_lang.toString(),
-                expence: expenseController.text,
-                fromuid: fromuid!,
-              ),
-            );
+            // BlocProvider.of<RidePublishBloc>(context).add(
+            //   PublishRideEvent(
+            //     pickuplocation: pickupController.text,
+            //     dropitlocation: dropController.text,
+            //     middlecity: 'add middle city',
+            //     time: timeController.text,
+            //     date: dateController.text,
+            //     passengercount: passengerCountController.text,
+            //     droplatitude: d_lati.toString(),
+            //     droplongitude: d_lang.toString(),
+            //     picklatitude: p_lati.toString(),
+            //     picklongitude: p_lang.toString(),
+            //     expence: expenseController.text,
+            //     fromuid: fromuid!,
+            //   ),
+            // );
             _submitForm(context);
           },
           backgroundColor: CustomColor.greenColor(),
@@ -172,9 +181,12 @@ final String fromuid = Uuid().v4();
             context, MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
         if (result != null && result is Map<String, dynamic>) {
           setState(() {
-            pickupController.text = result['pickuplocation'] ?? '';
+              pickupController.text = result['pickuplocation'] ?? '';
             p_lang = result['picklongitude'] ?? '';
             p_lati = result['picklatitude'] ?? '';
+            print("Updated pickuplocation: ${pickupController.text}");
+            print("Updated picklongitude: $p_lang");
+            print("Updated picklatitude: $p_lati");
           });
         }
       },
@@ -202,11 +214,14 @@ final String fromuid = Uuid().v4();
       onTap: () async {
         final result = await Navigator.push(
             context, MaterialPageRoute(builder: (context) => DropkeralaLocation()));
-        if (result != null) {
+        if (result != null && result is Map<String, dynamic>) {
           setState(() {
-            dropController.text = result['droplocation'];
-            d_lang = result['droplongitude'];
-            d_lati = result['droplatitude'];
+            dropController.text = result['droplocation'] ?? '';
+            d_lang = result['droplongitude'] ?? '';
+            d_lati = result['droplatitude'] ?? '';
+            print("Updated droplocation: ${dropController.text}");
+            print("Updated droplongitude: $d_lang");
+            print("Updated droplatitude: $d_lati");
           });
         }
       },
@@ -347,7 +362,7 @@ final String fromuid = Uuid().v4();
     p_lati = '';
     d_lang = '';
     d_lati = '';
-    Navigator.pushNamed(context, '/publishEditing');
+    Navigator.pushNamed(context, '/mybottom');
   }
 }
 

@@ -4,32 +4,41 @@ import 'package:trek_trak/presentation/ride_joining/ride_detail.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 Widget buildRideCard(List<RidePublish> ridePublish, BuildContext context) {
+
+  final uniqueRidePublish = <String, RidePublish>{};
+  for (var publish in ridePublish) {
+    uniqueRidePublish[publish.uid!] = publish;
+  }
+  final List<RidePublish> uniqueRidePublishList = uniqueRidePublish.values.toList();
+
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
-    padding: const EdgeInsets.symmetric(horizontal: 16),
+    padding: const EdgeInsets.symmetric(horizontal: 2),
     child: Row(
-      children: ridePublish.map((publish) {
+      children: uniqueRidePublishList.map((publish) {
         return InkWell(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PublishingRideDetails(
-                          uname: publish.uname,
-                          time: publish.time,
-                          date: publish.date,
-                          dropitlocation: publish.dropitlocation,
-                          passengercount: publish.passengercount,
-                          expence: publish.expence,
-                          pickuplocation: publish.pickuplocation,
-                           uid: publish.uid,
-                           fromid: publish.fromuid,
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (context) => PublishingRideDetails(
+                  uname: publish.uname,
+                  time: publish.time,
+                  date: publish.date,
+                  dropitlocation: publish.dropitlocation,
+                  passengercount: publish.passengercount,
+                  expence: publish.expence,
+                  pickuplocation: publish.pickuplocation,
+                  uid: publish.uid,
+                  fromuid: publish.fromuid,
+                ),
+              ),
+            );
           },
           child: Container(
             width: 200,
             height: 250,
-            margin: const EdgeInsets.only(right: 16),
+            margin: const EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -44,8 +53,7 @@ Widget buildRideCard(List<RidePublish> ridePublish, BuildContext context) {
                         image: AssetImage('images/car_icon.png'),
                         fit: BoxFit.cover,
                       ),
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     ),
                   ),
                 ),
@@ -65,15 +73,15 @@ Widget buildRideCard(List<RidePublish> ridePublish, BuildContext context) {
                           const Icon(Icons.person),
                           const SizedBox(width: 8),
                           SizedBox(
-                              width: 80,
-                              child: Text(
-                                "${publish.uname}",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
+                            width: 80,
+                            child: Text(
+                              "${publish.uname}",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
                           const Spacer(),
                           Text(
-                            publish.expence != null &&
-                                    publish.expence!.isNotEmpty
+                            publish.expence != null && publish.expence!.isNotEmpty
                                 ? '₹${double.tryParse(publish.expence!)?.toInt() ?? 0}'
                                 : '₹0',
                             style: TextStyle(color: CustomColor.redColor()),

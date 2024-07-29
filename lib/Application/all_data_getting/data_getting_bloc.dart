@@ -41,7 +41,7 @@ print(e);
   }
 
   Future<void> _onSearchRidesEvent(SearchRidesEvent event, Emitter<DataGettingState> emit) async {
-    emit(RidePublishLoadingState());
+    emit(SearchGetLoadingState());
     try {
       final rides = await UserProfileRepo().searchRides(event.fromLocation, event.toLocation, event.date);
       if (rides.isEmpty) {

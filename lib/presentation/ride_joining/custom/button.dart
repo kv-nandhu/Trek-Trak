@@ -8,9 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // UI/button.dart
 
-class Button extends StatelessWidget {
+class Button extends StatefulWidget {
   Button({
-    super.key, 
+    super.key,
     required this.usermodel,
     required this.time,
     required this.date,
@@ -18,6 +18,7 @@ class Button extends StatelessWidget {
     required this.passengercount,
     required this.expence,
     required this.pickuplocation,
+    required this.fromuid,
   });
 
   final UserModel usermodel;
@@ -27,6 +28,14 @@ class Button extends StatelessWidget {
   final String passengercount;
   final String expence;
   final String pickuplocation;
+  final String fromuid;
+
+  @override
+  _ButtonState createState() => _ButtonState();
+}
+
+class _ButtonState extends State<Button> {
+  bool _hasRequested = false; // Track if the user has made a request
 
   @override
   Widget build(BuildContext context) {
@@ -41,33 +50,52 @@ class Button extends StatelessWidget {
               return BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
                   if (state is UserProfileLoadState) {
+                    // Check if the current user is the same as the ride creator
+                    if (widget.usermodel.uid == state.user.uid) {
+                      return const SizedBox(); // Hide the button if the user is the same
+                    }
+
                     return ElevatedButton.icon(
-                      onPressed: () {
-                        final ride = states.ride.first;
-                        BlocProvider.of<UserRequestBloc>(context).add(
-                          RequestAddEvent(
-                            dob: state.user.dob,
-                            image: state.user.image,
-                            gender: state.user.gender,
-                            name: state.user.name,
-                            number: state.user.number,
-                            uid: usermodel.uid!,
-                            fromuid: ride.fromuid!,
-                            pickuplocation: pickuplocation,
-                            dropitlocation: dropitlocation,
-                            time: time,
-                            date: date,
-                            passengercount: passengercount,
-                            droplatitude: ride.droplatitude.toString(), // Assuming 'droplatitude' is a double field in ride
-                            droplongitude: ride.droplongitude.toString(), // Assuming 'droplongitude' is a double field in ride
-                            picklatitude: ride.picklatitude.toString(), // Assuming 'picklatitude' is a double field in ride
-                            picklongitude: ride.picklongitude.toString(), // Assuming 'picklongitude' is a double field in ride
-                            expence: expence, requestUserId: usermodel.uid!,
-                          ),
-                        );
-                      },
+                      onPressed: _hasRequested
+                          ? null // Disable the button if request has been made
+                          : () {
+                              final ride = states.ride.first;
+                              BlocProvider.of<UserRequestBloc>(context).add(
+                                RequestAddEvent(
+                                  dob: state.user.dob,
+                                  image: state.user.image,
+                                  gender: state.user.gender,
+                                  name: state.user.name,
+                                  number: state.user.number,
+                                  uid: widget.usermodel.uid!,
+                                  fromuid: widget.fromuid,
+                                  pickuplocation: widget.pickuplocation,
+                                  dropitlocation: widget.dropitlocation,
+                                  time: widget.time,
+                                  date: widget.date,
+                                  passengercount: widget.passengercount,
+                                  droplatitude: ride.droplatitude.toString(),
+                                  droplongitude: ride.droplongitude.toString(),
+                                  picklatitude: ride.picklatitude.toString(),
+                                  picklongitude: ride.picklongitude.toString(),
+                                  expence: widget.expence,
+                                  requestUserId: widget.usermodel.uid!,
+                                ),
+                              );
+
+                              setState(() {
+                                _hasRequested = true; // Update state to indicate request made
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Your request was successful!'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            },
                       icon: const Icon(Icons.directions_car),
-                      label: const Text('Request a ride'),
+                      label: Text(_hasRequested ? 'Request Sent' : 'Request a ride'),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: CustomColor.greenColor(),
@@ -90,6 +118,7 @@ class Button extends StatelessWidget {
     );
   }
 }
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({

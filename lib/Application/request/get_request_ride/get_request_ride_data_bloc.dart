@@ -17,7 +17,7 @@ class GetRequestRideDataBloc extends Bloc<GetRequestRideDataEvent, GetRequestRid
     try {
       final requestList = await repository.getRequestRideUser();
       if (requestList.isEmpty) {
-        emit(GetRequestRideError(error: 'No requests found.'));
+        emit(GetRequestRideError(error: 'No request👎'));
       } else {
         emit(GetRequestRideSuccess(requestList: requestList));
       }

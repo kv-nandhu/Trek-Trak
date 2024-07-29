@@ -16,6 +16,10 @@ class RideAccepted {
   String? acceptid;
   String? requestUserId;
   String? image;
+  String? userName;
+  String? userImage;
+  
+  final bool? isRead;
 
  
 
@@ -37,6 +41,9 @@ class RideAccepted {
     this.acceptid,
     this.requestUserId,
     this.image,
+    this.userName,
+    this.userImage,
+   this.isRead,
  
   });
 
@@ -55,10 +62,13 @@ class RideAccepted {
       droplongitude: json['drop_longitude'],
       expence: json['travel_expense'],
       fromuid: json['u_uid'],
-      uname: json['Name'],
+      uname: json['u_name'],
       acceptid: json['acceptid'],
-      requestUserId: json['acceptid'],
+      requestUserId: json['request_user_id'],
       image: json['image'],
+      userImage: json['Image'],
+      userName: json['Name'],
+      isRead: json['isRead'] as bool? ?? false,
    
     );
   }
@@ -78,9 +88,12 @@ class RideAccepted {
       'drop_longitude': droplongitude,
       'travel_expense': expence,
       'acceptid': acceptid,
-      'requestUserId': acceptid,
+      'request_user_id': requestUserId,
       'image': image,
-      'Name':uname
+      'u_name':uname,
+      'Name':userName,
+      'Image':userImage,
+      'isRead':isRead
     };
     return rideAccepted;
   }

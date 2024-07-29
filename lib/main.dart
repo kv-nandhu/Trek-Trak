@@ -10,13 +10,17 @@ import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/payment/get_payment/get_payment_bloc.dart';
+import 'package:trek_trak/Application/payment/payment_request/payment_request_bloc.dart';
 import 'package:trek_trak/Application/request/get_request_ride/get_request_ride_data_bloc.dart';
 import 'package:trek_trak/Application/publish/google_maps/google_map_bloc.dart';
 import 'package:trek_trak/Application/publish/publish_add/publish_add_bloc.dart';
 import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
 import 'package:trek_trak/Application/accept/ride_accept/ride_accept_bloc.dart';
 import 'package:trek_trak/Application/request/user_requeset/user_request_bloc.dart';
+import 'package:trek_trak/Application/view_accepted_rides/accepted_rides_view_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
+import 'package:trek_trak/infrastructure/repository/payment/payment_repo.dart';
 import 'package:trek_trak/infrastructure/repository/publish/publish_add.dart';
 import 'package:trek_trak/infrastructure/repository/publish/publish_repo.dart';
 import 'package:trek_trak/infrastructure/repository/publish/search_repo.dart';
@@ -81,6 +85,14 @@ class MyApp extends StatelessWidget {
    
         BlocProvider(
           create: (context) => GetAcceptedDataBloc(UserProfileRepo())),
+   
+        BlocProvider(
+          create: (context) => AcceptedRidesViewBloc(UserProfileRepo())),
+   
+        BlocProvider(
+          create: (context) => PaymentRequestBloc(PaymentRequesting())),
+        BlocProvider(
+          create: (context) => GetPaymentBloc(UserProfileRepo())),
    
       ],
       child: MaterialApp(
