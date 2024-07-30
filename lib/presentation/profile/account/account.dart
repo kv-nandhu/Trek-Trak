@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/Auth/auth_bloc.dart';
-import 'package:trek_trak/presentation/authentication/login/login_widget/login_fields.dart';
 import 'package:trek_trak/infrastructure/repository/Auth_repos/forgot_repo.dart';
-import 'package:trek_trak/utils/color/color.dart';
+import 'package:trek_trak/presentation/profile/account/inner_screens/fieldss.dart';
 import 'package:trek_trak/utils/divider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -14,7 +11,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-   ResetPassRespo pass = ResetPassRespo();
+  ResetPassRespo pass = ResetPassRespo();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,148 +22,22 @@ class _AccountScreenState extends State<AccountScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Rating",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      )),
-                      IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined)),
-                ],
-              ),
+              const rating(),
               Dividers.lineOne(),
-              TextButton(
-                  onPressed: () {
-                     pass.resetPassword(context, emailController.text);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                      Text(
-                        "Change password",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                             pass.resetPassword(context, emailController.text);
-                          },
-                          icon: Icon(Icons.arrow_forward_ios_outlined)),
-                    ],
-                  )),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Postal address",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined)),
-                ],
-              ),
+              changePaswword(pass: pass),
+              const postalAddress(),
               Dividers.lineOne(),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Terms & Conditions",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined)),
-                ],
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Data Protection",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined)),
-                ],
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "More INFO",
-                        style: TextStyle(color: CustomColor.blackColor()),
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios_outlined)),
-                ],
-              ),
+              const termsAndConditions(),
+              const dataProtection(),
+              const moreInfo(),
               Dividers.lineOne(),
-              TextButton(
-                  onPressed: () {
-                  //    final authBoc = BlocProvider.of<AuthBloc>(context);
-                  // authBoc.add(LogoutEvent());
-                  // Navigator.pushNamedAndRemoveUntil(
-                  //     context, '/login', (route) => false);
-                    _showLogoutDialog(context);
-                  },
-                  child: Text(
-                    "Log out",
-                    style: TextStyle(color: CustomColor.greenColor()),
-                  )),
+              const LogOutButton(),
               Dividers.lineOne(),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "close account",
-                    style: TextStyle(color: CustomColor.greenColor()),
-                  )),
+              const closeAccount(),
             ],
           ),
         ),
       ),
     ));
-  }
-   void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Log out'),
-          content: Text('Are you sure you want to log out?'),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Log out'),
-              onPressed: () {
-                final authBloc = BlocProvider.of<AuthBloc>(context);
-                authBloc.add(LogoutEvent());
-                Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

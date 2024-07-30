@@ -4,6 +4,7 @@ import 'package:slider_button/slider_button.dart';
 import 'package:trek_trak/Application/payment/payment_request/payment_request_bloc.dart';
 import 'package:trek_trak/Application/view_accepted_rides/accepted_rides_view_bloc.dart';
 import 'package:trek_trak/domain/ride_accepteed.dart';
+import 'package:trek_trak/presentation/home/custom/title.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 class RidePaymentDetails extends StatefulWidget {
@@ -88,19 +89,15 @@ class _RidePaymentDetailsState extends State<RidePaymentDetails> {
                           padding: const EdgeInsets.all(8.0),
                           child: SliderButton(
                             action: () async {
-                           
-                                BlocProvider.of<PaymentRequestBloc>(context)
-                                    .add(
-                                  PaymentAddEvent(
-                                      name: acceptedUsers[index].uname,
-                                      rideUserId: acceptedUsers[index].uid,
-                                      rideUserName:
-                                          acceptedUsers[index].userName,
-                                      userId:
-                                          acceptedUsers[index].requestUserId,
-                                      expence: acceptedUsers[index].expence),
-                                );
-                             
+                              BlocProvider.of<PaymentRequestBloc>(context).add(
+                                PaymentAddEvent(
+                                    name: acceptedUsers[index].uname,
+                                    rideUserId: acceptedUsers[index].uid,
+                                    rideUserName: acceptedUsers[index].userName,
+                                    userId: acceptedUsers[index].requestUserId,
+                                    expence: acceptedUsers[index].expence),
+                              );
+                              return Future.delayed(Duration(seconds: 2));
                             },
                             label: const Text(
                               'Reached',
@@ -135,14 +132,4 @@ class _RidePaymentDetailsState extends State<RidePaymentDetails> {
       ),
     );
   }
-
-  // Future<bool?> someAsyncFunction() async {
-  //   try {
-  //     await Future.delayed(const Duration(seconds: 2));
-  //     return true;
-  //   } catch (e) {
-  //     print('Error: $e');
-  //     return null;
-  //   }
-  // }
 }

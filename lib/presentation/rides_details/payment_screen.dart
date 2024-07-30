@@ -26,7 +26,7 @@ class _PaymentPageState extends State<PaymentPage> {
           child: BlocBuilder<GetPaymentBloc, GetPaymentState>(
             builder: (context, state) {
               if (state is GetPaymentLoadingState) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is GetPaymentLoadedState) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Text(
                             'Please pay ₹ ${state.paymentRequest.first.expence}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -87,8 +87,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           height: 30,
                           width: 30,
                         ),
-                        Text('example@upi', style: TextStyle(fontSize: 16)),
-                        Icon(Icons.navigate_next, color: Colors.black),
+                        const Text('example@upi', style: TextStyle(fontSize: 16)),
+                        const Icon(Icons.navigate_next, color: Colors.black),
                       ],
                     ),
                     const Divider(height: 32),
@@ -100,8 +100,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           height: 30,
                           width: 30,
                         ), // Replace with your cash icon
-                        Text('Cash', style: TextStyle(fontSize: 16)),
-                        Icon(Icons.navigate_next, color: Colors.black),
+                        const Text('Cash', style: TextStyle(fontSize: 16)),
+                        const Icon(Icons.navigate_next, color: Colors.black),
                       ],
                     ),
                     const Divider(height: 32),
@@ -113,8 +113,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           height: 30,
                           width: 30,
                         ), // Replace with your cash icon
-                        Text('paytm', style: TextStyle(fontSize: 16)),
-                        Icon(Icons.navigate_next, color: Colors.black),
+                        const Text('paytm', style: TextStyle(fontSize: 16)),
+                        const Icon(Icons.navigate_next, color: Colors.black),
                       ],
                     ),
                     const Divider(height: 32),
@@ -126,14 +126,14 @@ class _PaymentPageState extends State<PaymentPage> {
                           height: 30,
                           width: 30,
                         ), // Replace with your cash icon
-                        Text('phonepe', style: TextStyle(fontSize: 16)),
-                        Icon(Icons.navigate_next, color: Colors.black),
+                        const Text('phonepe', style: TextStyle(fontSize: 16)),
+                        const Icon(Icons.navigate_next, color: Colors.black),
                       ],
                     ),
                   ],
                 );
               } else {
-                return Text("data");
+                return const Text("data");
               }
             },
           ),

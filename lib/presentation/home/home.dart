@@ -57,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _handleRideAlert() {
+    // Handle ride alert action here
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Your Ride Alert is created Successful')),
+    );
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -65,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: const Color.fromARGB(179, 241, 244, 241),
       appBar: AppBar(
@@ -130,15 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is RidePublishErrorState) {
             return Center(child: Text('Error: ${state.error}'));
           } else if (state is RidePublishedSuccessState) {
-            if (state.ride.isEmpty) {
-              return const Center(child: Text('No rides found.'));
-            }
-
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -153,7 +154,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 16),
                   // text(),
-                  const SizedBox(height: 16),
+                  // const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Moving Today",style: TextStyle(fontSize: 20),),
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -174,8 +179,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             );
-          } else{
-            return const Center(child: text('fff'),);
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'No rides found for the selected date.',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    // const SizedBox(height: 50),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: _handleRideAlert,
+                        child: const Text('Ride Alert'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
         },
       ),
