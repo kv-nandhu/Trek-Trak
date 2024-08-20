@@ -36,9 +36,6 @@ print(usermodel.number);
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              detailsText,
-            ),
             const SizedBox(height: 17),
             InkWell(
               onTap: () {

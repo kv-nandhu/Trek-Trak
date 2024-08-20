@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
-import 'package:trek_trak/domain/publish_model.dart';
-import 'package:trek_trak/presentation/publish/demo_pages/drop_demo.dart';
-import 'package:trek_trak/presentation/publish/demo_pages/pick_demo.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/calander.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/expense_calculating.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart';
-import 'package:trek_trak/presentation/publish/inner_pages/time_select.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/pop_up.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/date_edit.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/drop_location_edit.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/expence_edit.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/passenger_count_edit.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/pick_location_edit.dart';
+import 'package:trek_trak/presentation/publish/publish_Editing/custom/time_edit.dart';
 import 'package:trek_trak/utils/color/color.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
 
 class PublishEditing extends StatefulWidget {
   final String pickuplocation;
@@ -23,6 +20,7 @@ class PublishEditing extends StatefulWidget {
   final String picklatitude;
   final String picklongitude;
   final String expence;
+  final String fromuid;
 
   PublishEditing({
     Key? key,
@@ -37,6 +35,7 @@ class PublishEditing extends StatefulWidget {
     required this.picklatitude,
     required this.picklongitude,
     required this.expence,
+    required this.fromuid,
   }) : super(key: key);
 
   @override
@@ -55,8 +54,9 @@ class _PublishEditingState extends State<PublishEditing> {
   String p_lati = '';
   String d_lang = '';
   String d_lati = '';
-//  String RidePublish= "ridepublis";
-final String fromuid = Uuid().v4();
+
+  bool isPickLocationChanged = false;
+  bool isDropLocationChanged = false;
 
   @override
   void initState() {
@@ -65,22 +65,14 @@ final String fromuid = Uuid().v4();
     dropController = TextEditingController(text: widget.dropitlocation);
     timeController = TextEditingController(text: widget.time);
     dateController = TextEditingController(text: widget.date);
-    passengerCountController = TextEditingController(text: widget.passengercount);
+    passengerCountController =
+        TextEditingController(text: widget.passengercount);
     expenseController = TextEditingController(text: widget.expence);
     p_lang = widget.picklongitude;
     p_lati = widget.picklatitude;
     d_lang = widget.droplongitude;
     d_lati = widget.droplatitude;
-
-         print("Initial pickuplocation: ${widget.pickuplocation}");
-    print("Initial dropitlocation: ${widget.dropitlocation}");
-    print("Initial picklatitude: $p_lati");
-    print("Initial picklongitude: $p_lang");
-    print("Initial droplatitude: $d_lati");
-    print("Initial droplongitude: $d_lang");
   }
-
-
 
   @override
   void dispose() {
@@ -134,22 +126,6 @@ final String fromuid = Uuid().v4();
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // BlocProvider.of<RidePublishBloc>(context).add(
-            //   PublishRideEvent(
-            //     pickuplocation: pickupController.text,
-            //     dropitlocation: dropController.text,
-            //     middlecity: 'add middle city',
-            //     time: timeController.text,
-            //     date: dateController.text,
-            //     passengercount: passengerCountController.text,
-            //     droplatitude: d_lati.toString(),
-            //     droplongitude: d_lang.toString(),
-            //     picklatitude: p_lati.toString(),
-            //     picklongitude: p_lang.toString(),
-            //     expence: expenseController.text,
-            //     fromuid: fromuid!,
-            //   ),
-            // );
             _submitForm(context);
           },
           backgroundColor: CustomColor.greenColor(),
@@ -173,20 +149,21 @@ final String fromuid = Uuid().v4();
     );
   }
 
-    Widget _buildPickLocationInput(
+  Widget _buildPickLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => KeralaLocationsDemo()));
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    KeralaLocationsEDit(fromuid: widget.fromuid)));
         if (result != null && result is Map<String, dynamic>) {
           setState(() {
-              pickupController.text = result['pickuplocation'] ?? '';
+            pickupController.text = result['pickuplocation'] ?? '';
             p_lang = result['picklongitude'] ?? '';
             p_lati = result['picklatitude'] ?? '';
-            print("Updated pickuplocation: ${pickupController.text}");
-            print("Updated picklongitude: $p_lang");
-            print("Updated picklatitude: $p_lati");
+            isPickLocationChanged = true; // Track location change
           });
         }
       },
@@ -205,23 +182,21 @@ final String fromuid = Uuid().v4();
     );
   }
 
-  // Similar changes for _buildDropLocationInput, _buildTimeInput, etc.
-
-
   Widget _buildDropLocationInput(
       String placeholder, String routeName, TextEditingController controller) {
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DropkeralaLocation()));
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DropLocationEdit(fromuid: widget.fromuid)));
         if (result != null && result is Map<String, dynamic>) {
           setState(() {
             dropController.text = result['droplocation'] ?? '';
             d_lang = result['droplongitude'] ?? '';
             d_lati = result['droplatitude'] ?? '';
-            print("Updated droplocation: ${dropController.text}");
-            print("Updated droplongitude: $d_lang");
-            print("Updated droplatitude: $d_lati");
+            isDropLocationChanged = true; // Track location change
           });
         }
       },
@@ -244,7 +219,9 @@ final String fromuid = Uuid().v4();
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => TimePickerPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => TimeEditScreen(fromuid: widget.fromuid)));
         if (result != null) {
           setState(() {
             timeController.text = result;
@@ -270,7 +247,9 @@ final String fromuid = Uuid().v4();
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CalendarPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => DateEditScreen(fromuid: widget.fromuid)));
         if (result != null) {
           setState(() {
             dateController.text = result;
@@ -296,7 +275,10 @@ final String fromuid = Uuid().v4();
     return InkWell(
       onTap: () async {
         final result = await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PassengerCount()));
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    PassengerCountEdit(fromuid: widget.fromuid)));
         if (result != null) {
           setState(() {
             passengerCountController.text = result['passengerCount'].toString();
@@ -324,7 +306,8 @@ final String fromuid = Uuid().v4();
         final result = await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CalculateMileageScreen(
+                builder: (context) => CalculateMileageEdit(
+                      fromuid: widget.fromuid,
                       p_lati: p_lati,
                       p_lang: p_lang,
                       d_lang: d_lang,
@@ -332,14 +315,14 @@ final String fromuid = Uuid().v4();
                     )));
         if (result != null) {
           setState(() {
-            expenseController.text = result.toString();
+             expenseController.text = result.toString();
           });
         }
       },
       child: TextFormField(
         controller: expenseController,
         decoration: InputDecoration(
-          hintText: 'Add the price',
+          hintText: 'Travel expense',
           hintStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -352,27 +335,44 @@ final String fromuid = Uuid().v4();
   }
 
   void _submitForm(BuildContext context) {
-    timeController.clear();
-    pickupController.clear();
-    dropController.clear();
-    dateController.clear();
-    passengerCountController.clear();
-    expenseController.clear();
-    p_lang = '';
-    p_lati = '';
-    d_lang = '';
-    d_lati = '';
-    Navigator.pushNamed(context, '/mybottom');
+  print("Pick location changed: $isPickLocationChanged");
+  print("Drop location changed: $isDropLocationChanged");
+  print("Current expense: ${expenseController.text}");
+  print("Original expense: ${widget.expence}");
+
+  if (isPickLocationChanged || isDropLocationChanged) {
+    if (expenseController.text.isEmpty || expenseController.text == widget.expence) {
+      TopNotification.show(
+        context,
+        "You have changed the location. Please update the expense.",
+      );
+      return;
+    }
   }
+
+  TopNotification.show(
+    context,
+    "Updated successfully.",
+  );
+
+  // Clear fields and navigate
+  timeController.clear();
+  pickupController.clear();
+  dropController.clear();
+  dateController.clear();
+  passengerCountController.clear();
+  expenseController.clear();
+  p_lang = '';
+  p_lati = '';
+  d_lang = '';
+  d_lati = '';
+
+  // Ensure the route exists and is defined correctly
+  Navigator.pushNamed(context, '/mybottom').then((_) {
+    print("Navigation to /mybottom successful.");
+  }).catchError((error) {
+    print("Navigation error: $error");
+  });
 }
 
-
-
-
-
-
-
-
-
-
-
+}

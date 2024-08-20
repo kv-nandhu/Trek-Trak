@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trek_trak/Application/accept/ride_accept/ride_accept_bloc.dart';
-
 class RideAcceptService {
   Future<void> rideAccept(RideAcceptAddEvent event) async {
     try {
@@ -9,11 +8,18 @@ class RideAcceptService {
       if (user != null) {
         // Fetch the user's details from Firestore
         DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+          print("=======================================================+++++++++++++++++++++++++===================================================");
+          print(user.uid);
         
         if (userDoc.exists) {
+          print("=================================================[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]==============================================");
           // Extract user details
           String userName = userDoc['Name'];
+          print('`````````````````````````````````````````````````````````````````````````````````````');
+          print(userName);
           String userImage = userDoc['image'];
+          print(userImage);
+          print("===============================================================================================");
 
           // Generate a unique ID for the document
           String acceptid = FirebaseFirestore.instance.collection("ride_accept").doc().id;

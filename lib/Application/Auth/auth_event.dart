@@ -95,6 +95,8 @@ class signwithemailandpasswordEvent extends AuthEvent {
   final String vbrand;
   final String vcolor;
   final String vtype;
+  // final String address;
+  // final String companyAddress;
 
 
 
@@ -122,6 +124,8 @@ class signwithemailandpasswordEvent extends AuthEvent {
     required this.vbrand,
     required this.vcolor,
     required this.vtype,
+    // required this.address,
+    // required this.companyAddress,
 
   });
 }

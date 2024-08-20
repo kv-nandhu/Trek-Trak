@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek_trak/Application/accept/get_accepted_data/get_accepted_data_bloc.dart';
-import 'package:trek_trak/presentation/ride/ride_accepted/ride_accepted.dart';
+import 'package:trek_trak/presentation/ride/ride_main_pages/ride_accept/ride_accept_details.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -63,10 +63,10 @@ class _NotificationPageState extends State<NotificationPage> {
                               passengercount: notification.passengercount?.toString() ?? '',
                               expence: notification.expence?.toString() ?? '',
                               pickuplocation: notification.pickuplocation ?? '',
-                              uname: notification.uname ?? '',
+                              userName: notification.userName ?? '',
                               fromid: notification.fromuid ?? '',
                               uid: uid,
-                              image: notification.image ?? '',
+                              userImage: notification.userImage ?? '', requestUserId: notification.requestUserId, image: notification.image, uname: notification.uname,
                             ),
                           ),
                         );

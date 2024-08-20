@@ -6,7 +6,7 @@ import 'package:trek_trak/presentation/home/home.dart';
 import 'package:trek_trak/presentation/profile/profile.dart';
 import 'package:trek_trak/presentation/publish/publish_home/publish_home.dart.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
-import 'package:trek_trak/presentation/rides_details/ride_main_page.dart';
+import 'package:trek_trak/presentation/ride/ride_main_page.dart';
 
 List<FlashyTabBarItem> bottomNavItems = <FlashyTabBarItem>[
   FlashyTabBarItem(
@@ -35,7 +35,7 @@ List<Widget> bottomNavScreen = <Widget>[
   const HomeScreen(),
   const LocationPickerPage(),
   const RidePage(),
-  ChatListPage(),
+  ChatRoomListScreen(),
   const ProfilePage(),
 ];
 

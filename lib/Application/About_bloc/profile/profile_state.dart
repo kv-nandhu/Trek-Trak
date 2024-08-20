@@ -35,6 +35,7 @@ class UploadimageFailure extends ProfileState {
 
 
 class BioUpdateState extends ProfileState{}
+class AddressUpdateState extends ProfileState{}
 class ChatUpdateState extends ProfileState{}
 class SongUpdateState extends ProfileState{}
 class SmokeUpdateState extends ProfileState{}

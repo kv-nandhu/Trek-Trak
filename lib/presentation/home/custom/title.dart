@@ -40,19 +40,18 @@ class title extends StatelessWidget {
   }
 }
 
-class text extends StatelessWidget {
-  const text(
-    String s, {
+class MovingToday extends StatelessWidget {
+  const MovingToday({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.all(8.0),
       child: Text(
         "Moving Today",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20),
       ),
     );
   }

@@ -28,7 +28,6 @@ class UserProfileRepo {
         return null;
       }
     } catch (e) {
-      print('Error fetching user: $e');
       return null;
     }
   }
@@ -40,16 +39,13 @@ class UserProfileRepo {
       final documentSnapshot =
           await FirebaseFirestore.instance.collection('publish').get();
 
-      documentSnapshot.docs.forEach((element) {
+      for (var element in documentSnapshot.docs) {
         // Extract data from the document snapshot
         Map<String, dynamic> data = element.data();
         publishing.add(RidePublish.fromJson(data));
-      });
-      print("-------------------------------------------------------");
-      print(publishing);
+      }
       return publishing;
     } catch (e) {
-      print('Error fetching ride publish: $e');
       return publishing;
     }
   }
@@ -77,26 +73,20 @@ class UserProfileRepo {
 
   Future<UserModel?> getInduvitualUser(String uid) async {
     try {
-      print(uid);
       final querySnapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('uid', isEqualTo: uid)
           .get();
-      print("step 1");
       if (querySnapshot.docs.isNotEmpty) {
-        print("step 2");
-        print(querySnapshot.docs.first.data());
         // Assuming only one document matches the query
         UserModel userModel =
             UserModel.fromJson(querySnapshot.docs.first.data());
 
-        print("step 3");
         return userModel;
       } else {
         return null;
       }
     } catch (e) {
-      print('Error fetching user: $e');
       return null;
     }
   }
@@ -110,12 +100,6 @@ Future<List<RidePublish>> searchRides(String from, String to, String date) async
     final pickupLocation = ride.pickuplocation?.toLowerCase() ?? '';
     final dropLocation = ride.dropitlocation?.toLowerCase() ?? '';
     final rideDate = ride.date ?? '';
-print(pickupLocation);
-print(dropLocation);
-print(rideDate);
-print(from);
-print(to);
-print(date);
     return pickupLocation.contains(from.toLowerCase()) &&
            dropLocation.contains(to.toLowerCase()) &&
            rideDate.contains(date);
@@ -137,18 +121,14 @@ print(date);
           .where('uid', isEqualTo: user!.uid)
           .get();
 
-      print('Raw document snapshot: ${querySnapshot.docs.length} documents found');
       
       for (var doc in querySnapshot.docs) {
         Map<String, dynamic> data = doc.data();
-        print('Fetched data: $data');
         requestList.add(UserRequest.fromJson(data));
       }
 
-      print('Request List: $requestList');
       return requestList;
     } catch (e) {
-      print('Error fetching requests: $e');
       return requestList;
     }
   }
@@ -166,18 +146,14 @@ print(date);
           .where('request_user_id', isEqualTo: user!.uid)
           .get();
 
-      print('Raw document snapshot: ${querySnapshot.docs.length} documents found');
       
       for (var doc in querySnapshot.docs) {
         Map<String, dynamic> data = doc.data();
-        print('Fetched data: $data');
         rideAccepted.add(RideAccepted.fromJson(data));
       }
 
-      print('Request List: $rideAccepted');
       return rideAccepted;
     } catch (e) {
-      print('Error fetching requests: $e');
       return rideAccepted;
     }
   }
@@ -198,7 +174,6 @@ print(date);
         });
       }
     } catch (e) {
-      print('Error updating notification status: $e');
     }
   }
 
@@ -229,7 +204,6 @@ Future<List<RideAccepted>> getAcceptedUsersForPublishedRide(String fromuid) asyn
         .map((doc) => RideAccepted.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
   } catch (e) {
-    print('Failed to fetch accepted users for published ride: $e');
     return [];
   }
 }
@@ -249,7 +223,6 @@ Future<List<RideAccepted>> userAccepteduser() async {
         .map((doc) => RideAccepted.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
   } catch (e) {
-    print('Failed to fetch accepted users for published ride: $e');
     return [];
   }
 }
@@ -268,7 +241,6 @@ Future<List<Payment>> paymentRequestGet() async {
         .map((doc) => Payment.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
   } catch (e) {
-    print('Failed to fetch accepted users for published ride: $e');
     return [];
   }
 }

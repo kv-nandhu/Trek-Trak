@@ -67,8 +67,8 @@ class RidePublishAddingService {
             .doc(user.uid)
             .set({
           "pickup_location": pickupLocation,
-          "pick_latitude": pickLatitude,
-          "pick_longitude": pickLongitude,
+          "picklatitude": pickLatitude,
+          "picklongitude": pickLongitude,
         });
 
         print('Pickup location updated successfully');
@@ -90,8 +90,8 @@ class RidePublishAddingService {
             .doc(user.uid)
             .set({
           "drop_location": dropitlocation,
-          "drop_latitude": droplatitude,
-          "drop_longitude": droplongitude,
+          "droplatitude": droplatitude,
+          "droplongitude": droplongitude,
         });
 
         print('Drop-off location updated successfully');

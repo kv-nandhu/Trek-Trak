@@ -49,7 +49,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         }
       });
     } catch (error) {
-      print("Error getting user data: $error"); // Handle potential errors
+      print("Error getting user data: $error");
     }
   }
 
@@ -133,28 +133,26 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   ),
                 ],
               ),
-              InkWell(
-                onTap: () {
-                  BlocProvider.of<ProfileBuildBloc>(context)
-                      .add(ChangeImageEvent());
-                },
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: state.user.image! != null
-                      ? NetworkImage(state.user.image!)
-                      : null,
-                  child: state.user.image! == null
-                      ? Icon(Icons.person, size: 60) // Placeholder icon
-                      : null,
-                ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                    if (state is ProfileLoadingState) // Assuming a loading state exists
+                    const Center(child: CircularProgressIndicator(),),
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: state.user.image! != null
+                        ? NetworkImage(state.user.image!)
+                        : null,
+                    child: state.user.image! == null
+                        ? Icon(Icons.person, size: 60)
+                        : null,
+                  ),
+                
+                ],
               ),
               IconButton(
                 onPressed: () {
                   Navigator.pushReplacement(
-
-
-
-                    
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditProfile(
@@ -169,7 +167,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             ],
           );
         }
-        return Center();
+        return const Center();
       },
     );
   }

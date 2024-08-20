@@ -1,12 +1,15 @@
 import 'dart:io';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek_trak/Application/About_bloc/update_pic/update_pic_event.dart';
+import 'package:trek_trak/Application/About_bloc/update_pic/update_pic_state.dart';
+import 'package:trek_trak/Application/About_bloc/update_pic/update_pic_bloc.dart';
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 
 class ProfileAdding extends StatefulWidget {
   final UserModel userModel;
+
   const ProfileAdding({super.key, required this.userModel});
 
   @override
@@ -28,8 +31,7 @@ class _ProfileAddingState extends State<ProfileAdding> {
                 },
                 label: Text(
                   "Back",
-                  style:
-                      TextStyle(color: CustomColor.greenColor(), fontSize: 20),
+                  style: TextStyle(color: CustomColor.greenColor(), fontSize: 20),
                 ),
                 icon: Icon(
                   Icons.arrow_back_ios,
@@ -40,20 +42,22 @@ class _ProfileAddingState extends State<ProfileAdding> {
             Center(
               child: Stack(
                 children: [
-                  BlocBuilder<ProfileBuildBloc, ProfileBuildState>(
+                  BlocBuilder<UpdatePicBloc, UpdatePicState>(
                     builder: (context, state) {
-                      if (state is ProfileImageSuccess) {
-                        if (state.image != null) {
-                          return CircleAvatar(
-                            maxRadius: 100,
-                            backgroundImage: FileImage(File(state.image!.path)),
-                          );
-                        }
+                      if (state.file != null) {
+                        return CircleAvatar(
+                          maxRadius: 100,
+                          backgroundImage: FileImage(File(state.file!.path)),
+                        );
+                      } else {
+                        return CircleAvatar(
+                          maxRadius: 100,
+                          backgroundImage: NetworkImage(widget.userModel.image ?? ''),
+                          child: widget.userModel.image == null
+                              ? const Icon(Icons.person, size: 100)
+                              : null,
+                        );
                       }
-                      return CircleAvatar(
-                        maxRadius: 100,
-                        backgroundImage: NetworkImage(widget.userModel.image!),
-                      );
                     },
                   ),
                 ],
@@ -69,13 +73,9 @@ class _ProfileAddingState extends State<ProfileAdding> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    context
-                        .read<ProfileBuildBloc>()
-                        .add(ProfileImagegalleryPickerEvent());
-                    Navigator.pop(context);
+                    context.read<UpdatePicBloc>().add(UploadCameraPictureEvent());
                   },
                   style: ElevatedButton.styleFrom(
-                    // ignore: deprecated_member_use
                     backgroundColor: CustomColor.greenColor(),
                   ),
                   child: Text(
@@ -93,17 +93,64 @@ class _ProfileAddingState extends State<ProfileAdding> {
               height: 10,
             ),
             TextButton(
-                onPressed: () {
-                  context
-                      .read<ProfileBuildBloc>()
-                      .add(ProfileImagePickerEvent());
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Choose a picture",
-                  style:
-                      TextStyle(fontSize: 24, color: CustomColor.greenColor()),
-                ))
+              onPressed: () {
+                context.read<UpdatePicBloc>().add(UploadgalleryPictureEvent());
+              },
+              child: Text(
+                'Choose from gallery',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: CustomColor.greenColor(),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            BlocBuilder<UpdatePicBloc, UpdatePicState>(
+              builder: (context, state) {
+                if (state.file != null) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<UpdatePicBloc>().add(
+                            Uploadfirebaseimage(
+                              file: state.file!,
+                              uid: widget.userModel.uid!,
+                            ),
+                          );
+                          
+                      Future.delayed(const Duration(seconds: 5), () {
+                        Navigator.pushReplacementNamed(context, '/mybottom');
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: CustomColor.greenColor(),
+                    ),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColor.whiteColor(),
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            BlocBuilder<UpdatePicBloc, UpdatePicState>(
+              builder: (context, state) {
+                if (state is UpdateLoading) {
+                  return const CircularProgressIndicator();
+                }
+                return Container();
+              },
+            ),
           ],
         ),
       ),

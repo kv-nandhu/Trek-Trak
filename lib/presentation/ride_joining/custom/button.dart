@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
@@ -5,6 +8,7 @@ import 'package:trek_trak/Application/request/user_requeset/user_request_bloc.da
 import 'package:trek_trak/domain/user_model.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // UI/button.dart
 
@@ -50,17 +54,27 @@ class _ButtonState extends State<Button> {
               return BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
                   if (state is UserProfileLoadState) {
-                    // Check if the current user is the same as the ride creator
                     if (widget.usermodel.uid == state.user.uid) {
                       return const SizedBox(); // Hide the button if the user is the same
                     }
-
                     return ElevatedButton.icon(
-                      onPressed: _hasRequested
-                          ? null // Disable the button if request has been made
-                          : () {
-                              final ride = states.ride.first;
-                              BlocProvider.of<UserRequestBloc>(context).add(
+                      onPressed: () async {
+                        final querySnapshot = await FirebaseFirestore.instance
+                            .collection('user_request')
+                            .where('u_uid', isEqualTo: widget.fromuid)
+                            .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                            .get();
+                        if (querySnapshot.docs.isNotEmpty) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Fluttertoast.showToast(
+                              msg: "Already sent to request",
+                              backgroundColor: Colors.red,
+                              gravity: ToastGravity.BOTTOM_LEFT,
+                            );
+                          });
+                        } else {
+                          final ride = states.ride.first;
+                          context.read<UserRequestBloc>().add(
                                 RequestAddEvent(
                                   dob: state.user.dob,
                                   image: state.user.image,
@@ -82,20 +96,52 @@ class _ButtonState extends State<Button> {
                                   requestUserId: widget.usermodel.uid!,
                                 ),
                               );
+                          Fluttertoast.showToast(
+                            msg: "Successfully sent to request",
+                            backgroundColor: Colors.green,
+                            gravity: ToastGravity.BOTTOM_LEFT,
+                          );
+                        }
 
-                              setState(() {
-                                _hasRequested = true; // Update state to indicate request made
-                              });
+                        // final ride = states.ride.first;
+                        // BlocProvider.of<UserRequestBloc>(context).add(
+                        //   RequestAddEvent(
+                        //     dob: state.user.dob,
+                        //     image: state.user.image,
+                        //     gender: state.user.gender,
+                        //     name: state.user.name,
+                        //     number: state.user.number,
+                        //     uid: widget.usermodel.uid!,
+                        //     fromuid: widget.fromuid,
+                        //     pickuplocation: widget.pickuplocation,
+                        //     dropitlocation: widget.dropitlocation,
+                        //     time: widget.time,
+                        //     date: widget.date,
+                        //     passengercount: widget.passengercount,
+                        //     droplatitude: ride.droplatitude.toString(),
+                        //     droplongitude: ride.droplongitude.toString(),
+                        //     picklatitude: ride.picklatitude.toString(),
+                        //     picklongitude: ride.picklongitude.toString(),
+                        //     expence: widget.expence,
+                        //     requestUserId: widget.usermodel.uid!,
+                        //   ),
+                        // );
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Your request was successful!'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                            },
+                        // setState(() {
+                        //   _hasRequested =
+                        //       true; // Update state to indicate request made
+                        // });
+
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text('Your request was successful!'),
+                        //     backgroundColor: Colors.green,
+                        //   ),
+                        // );
+                      },
                       icon: const Icon(Icons.directions_car),
-                      label: Text(_hasRequested ? 'Request Sent' : 'Request a ride'),
+                      label: Text(
+                           'Request a ride'),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: CustomColor.greenColor(),
@@ -118,7 +164,6 @@ class _ButtonState extends State<Button> {
     );
   }
 }
-
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({

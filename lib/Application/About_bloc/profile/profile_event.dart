@@ -21,6 +21,11 @@ class AddBioEvent extends ProfileEvent{
 
   AddBioEvent({required this.miniBio});
 }
+class AddAddressEvent extends ProfileEvent{
+     final String address, companyAddress;
+
+  AddAddressEvent({required this.address, required this.companyAddress,});
+}
 class ChatnessEvent extends ProfileEvent{
   String chat;
   ChatnessEvent({required this.chat});

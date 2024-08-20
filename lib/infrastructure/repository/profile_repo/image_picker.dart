@@ -23,7 +23,7 @@ class ImageService {
 final File files = File(file.path);
         firebase_storage.Reference ref = firebase_storage
             .FirebaseStorage.instance
-            .ref('${DateTime.now().millisecondsSinceEpoch.toString()}');
+            .ref(DateTime.now().millisecondsSinceEpoch.toString());
         firebase_storage.UploadTask uploadTask = ref.putFile(files);
         await uploadTask;
         String imageUrl = await ref.getDownloadURL();

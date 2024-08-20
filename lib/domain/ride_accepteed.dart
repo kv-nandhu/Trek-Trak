@@ -66,7 +66,7 @@ class RideAccepted {
       acceptid: json['acceptid'],
       requestUserId: json['request_user_id'],
       image: json['image'],
-      userImage: json['Image'],
+      userImage: json['userimage'],
       userName: json['Name'],
       isRead: json['isRead'] as bool? ?? false,
    
@@ -92,7 +92,7 @@ class RideAccepted {
       'image': image,
       'u_name':uname,
       'Name':userName,
-      'Image':userImage,
+      'userimage':userImage,
       'isRead':isRead
     };
     return rideAccepted;

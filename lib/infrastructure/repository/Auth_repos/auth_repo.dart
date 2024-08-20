@@ -69,16 +69,6 @@ class FirebaseAuthentServices {
     }
   }
 
-  Future<User?> signInWithEmailandPassword(
-      {required String email, required String password}) async {
-    try {
-      UserCredential credential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return credential.user;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
 
   Future<void> phoneNumberAuth(String number, String email, String name,
       String gender, BuildContext context) async {
@@ -199,10 +189,23 @@ class FirebaseAuthentServices {
             'Gender': 'No declared',
             'phone': user.phoneNumber,
             'password': 'signwithgoogle',
-            'street': 'not declare',
-            'city': "city",
-            'district': "district",
-            'dob': "dob"
+           'street': "street",
+          'city': "city",
+          'district': "district",
+          'dob': "dob",
+          'image': "image",
+          'miniBio' : "miniBio",
+          'chat' : "chat",
+          'song' : "song",
+          'smoke' : "smoke",
+          'pet' : "pet",
+          'vnumber' :"vnumber",
+          'vmodel':"vmodel",
+          'vbrand':"vbrand",
+          'vcolor' : "vcolor",
+          'vtype' : "vtype",
+          'address' : "address",
+          'company_address' : "companyAddress",
           });
         }
       }
@@ -233,6 +236,8 @@ class FirebaseAuthentServices {
       String ? vbrand,
       String ? vcolor,
       String ? vtype,
+      // String ? address,
+      // String ? companyAddress,
 
 
       }) async {
@@ -275,8 +280,11 @@ class FirebaseAuthentServices {
           'vbrand':vbrand!,
           'vcolor' : vcolor!,
           'vtype' : vtype!,
+          // 'address' : address!,
+          // 'company_address' : companyAddress!,
     
         };
+        print(data);
 
         print('hellow check 3');
         await db

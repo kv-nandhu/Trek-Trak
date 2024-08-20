@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
+import 'package:trek_trak/Application/About_bloc/update_pic/update_pic_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/user_indivitual/user_indivitual_bloc.dart';
 import 'package:trek_trak/Application/Auth/auth_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,9 @@ import 'package:trek_trak/Application/all_data_getting/data_getting_bloc.dart';
 import 'package:trek_trak/Application/bottomNavigationBar/bottom_navigation_bar_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile/profile_bloc.dart';
 import 'package:trek_trak/Application/About_bloc/profile_build/profile_build_bloc.dart';
+import 'package:trek_trak/Application/chats/bloc/chat_room_bloc.dart';
+import 'package:trek_trak/Application/chats/chat/chat_bloc.dart';
+import 'package:trek_trak/Application/chats/fetchchat/chat_list_bloc.dart';
 import 'package:trek_trak/Application/payment/get_payment/get_payment_bloc.dart';
 import 'package:trek_trak/Application/payment/payment_request/payment_request_bloc.dart';
 import 'package:trek_trak/Application/request/get_request_ride/get_request_ride_data_bloc.dart';
@@ -20,7 +24,9 @@ import 'package:trek_trak/Application/accept/ride_accept/ride_accept_bloc.dart';
 import 'package:trek_trak/Application/request/user_requeset/user_request_bloc.dart';
 import 'package:trek_trak/Application/view_accepted_rides/accepted_rides_view_bloc.dart';
 import 'package:trek_trak/firebase_options.dart';
+import 'package:trek_trak/infrastructure/chat/chat.dart';
 import 'package:trek_trak/infrastructure/repository/payment/payment_repo.dart';
+import 'package:trek_trak/infrastructure/repository/profile_repo/image_update.dart';
 import 'package:trek_trak/infrastructure/repository/publish/publish_add.dart';
 import 'package:trek_trak/infrastructure/repository/publish/publish_repo.dart';
 import 'package:trek_trak/infrastructure/repository/publish/search_repo.dart';
@@ -93,6 +99,10 @@ class MyApp extends StatelessWidget {
           create: (context) => PaymentRequestBloc(PaymentRequesting())),
         BlocProvider(
           create: (context) => GetPaymentBloc(UserProfileRepo())),
+        BlocProvider(
+          create: (context) => ChatRoomBloc(MessageRepo())),
+        BlocProvider(
+          create: (context) => UpdatePicBloc(ImageRepo())),
    
       ],
       child: MaterialApp(
@@ -105,6 +115,183 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

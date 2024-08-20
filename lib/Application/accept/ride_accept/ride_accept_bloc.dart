@@ -13,11 +13,17 @@ class RideAcceptBloc extends Bloc<RideAcceptEvent, RideAcceptState> {
   }
 
   Future<void> _rideAccept(RideAcceptAddEvent event, Emitter<RideAcceptState> emit) async {
+    print("check 100");
     emit(RideAcceptLoadingState());
+    print("check 22");
     try {
+    print("check 33");
       await rideAcceptService.rideAccept(event);
+    print("check 10");
       emit(RideAcceptLoadedState());
+    print("check 11");
     } catch (e) {
+    print("check 64");
       emit(RideAcceptErrorState(error: e.toString()));
     }
   }

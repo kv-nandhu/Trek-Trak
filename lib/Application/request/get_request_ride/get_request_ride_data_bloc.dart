@@ -16,12 +16,18 @@ class GetRequestRideDataBloc extends Bloc<GetRequestRideDataEvent, GetRequestRid
     emit(GetRequestRideDataLoading());
     try {
       final requestList = await repository.getRequestRideUser();
+      print("check 1");
       if (requestList.isEmpty) {
+      print("check 2");
         emit(GetRequestRideError(error: 'No request👎'));
+      print("check 3");
       } else {
+      print("check 4");
         emit(GetRequestRideSuccess(requestList: requestList));
+      print("check 5");
       }
     } catch (e) {
+      print("check 6");
       emit(GetRequestRideError(error: e.toString()));
     }
   }

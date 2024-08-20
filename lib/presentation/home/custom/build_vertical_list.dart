@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:trek_trak/domain/publish_model.dart';
 import 'package:trek_trak/presentation/ride_joining/ride_detail.dart';
@@ -7,33 +9,33 @@ import 'package:trek_trak/utils/divider.dart';
 Widget buildVerticalList(List<RidePublish> ridePublish) {
   return ListView.builder(
     shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
+    physics:const NeverScrollableScrollPhysics(),
     itemCount: ridePublish.length,
     itemBuilder: (context, index) {
       final publish = ridePublish[index];
       return InkWell(
-        onTap: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PublishingRideDetails(
-                          uname: publish.uname,
-                          time: publish.time,
-                          date: publish.date,
-                          dropitlocation: publish.dropitlocation,
-                          passengercount: publish.passengercount,
-                          expence: publish.expence,
-                          pickuplocation: publish.pickuplocation,
-                          uid: publish.uid,
-                          fromuid: publish.fromuid,
-                          
-                        )));
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PublishingRideDetails(
+                        uname: publish.uname,
+                        time: publish.time,
+                        date: publish.date,
+                        dropitlocation: publish.dropitlocation,
+                        passengercount: publish.passengercount,
+                        expence: publish.expence,
+                        pickuplocation: publish.pickuplocation,
+                        uid: publish.uid,
+                        fromuid: publish.fromuid,
+                      )));
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color:backgroundColors[
+                                    Random().nextInt(backgroundColors.length)],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -93,7 +95,8 @@ Widget buildVerticalList(List<RidePublish> ridePublish) {
                             style: TextStyle(color: CustomColor.greyColor()),
                           ),
                           Text(
-                            publish.expence != null && publish.expence!.isNotEmpty
+                            publish.expence != null &&
+                                    publish.expence!.isNotEmpty
                                 ? '₹${double.tryParse(publish.expence!)?.toInt() ?? 0}'
                                 : '₹0',
                             style: TextStyle(color: CustomColor.redColor()),

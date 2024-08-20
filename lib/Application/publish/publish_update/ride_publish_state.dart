@@ -1,6 +1,6 @@
 part of 'ride_publish_bloc.dart';
 
-abstract class RidePublishState {}
+ class RidePublishState {}
 
 class RidePublishInitial extends RidePublishState {}
 

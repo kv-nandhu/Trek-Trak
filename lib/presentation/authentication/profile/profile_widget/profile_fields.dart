@@ -124,6 +124,8 @@ class FieldsAndButton extends StatelessWidget {
                     vbrand: 'vehicle brand',
                     vcolor: 'vehicle color',
                     vtype: 'vehicle type',
+                    // address: 'address',
+                    // companyAddress: 'company_address',
                   ),
                 );
               }

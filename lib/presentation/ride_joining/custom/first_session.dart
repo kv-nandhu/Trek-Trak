@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:trek_trak/utils/color/color.dart';
 import 'package:trek_trak/utils/divider.dart';
 
-Widget FirstSession( {String? time, String? date, String? dropitlocation, String? passengercount, String? expence, String? pickuplocation}) {
+Widget FirstSession({
+  String? time,
+  String? date,
+  String? dropitlocation,
+  String? passengercount,
+  String? expence,
+  String? pickuplocation,
+}) {
+  String formattedDate = '';
+  if (date != null) {
+    try {
+      DateFormat inputFormat = DateFormat('dd-MM-yyyy');
+      DateTime parsedDate = inputFormat.parse(date);
+      DateFormat outputFormat = DateFormat('d MMMM yyyy');
+      formattedDate = outputFormat.format(parsedDate);
+    } catch (e) {
+      formattedDate = 'Invalid date format';
+    }
+  } else {
+    formattedDate = 'No date provided';
+  }
+  int passengerCount = int.tryParse(passengercount ?? '0') ?? 0;
+  int totalSeats = passengerCount; // Assume total seats is same as passenger count
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Padding(
-        padding: EdgeInsets.all(8.0),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Text(
-          'Sat 13 July',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          formattedDate,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
       const SizedBox(height: 10),
@@ -22,17 +45,13 @@ Widget FirstSession( {String? time, String? date, String? dropitlocation, String
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(time ?? "hai"),
-                const SizedBox(
-                  height: 25,
-                ),
+                Text(time ?? "No time provided"),
+                const SizedBox(height: 25),
                 Text(
                   '6h 20m',
                   style: TextStyle(color: CustomColor.greyColor()),
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 const Text('10:10'),
               ],
             ),
@@ -74,13 +93,11 @@ Widget FirstSession( {String? time, String? date, String? dropitlocation, String
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${pickuplocation},\n'
-                  
-               
+                  '${pickuplocation ?? 'No pick-up location provided'},\n',
                 ),
-                Row(
+                const Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.directions_walk_outlined,
                       color: Colors.yellow,
                     ),
@@ -91,8 +108,7 @@ Widget FirstSession( {String? time, String? date, String? dropitlocation, String
                   ],
                 ),
                 Text(
-                  '${dropitlocation},\n'
-           
+                  '${dropitlocation ?? 'No drop-off location provided'},\n',
                 ),
                 Row(
                   children: [
@@ -113,20 +129,36 @@ Widget FirstSession( {String? time, String? date, String? dropitlocation, String
       ),
       const SizedBox(height: 10),
       const divider_width_big(),
-       Padding(
-        padding: EdgeInsets.all(8.0),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             Text(
-              'Total price for $passengercount \n passenger',
-              style: TextStyle(fontSize: 18),
+              'Seats (${passengerCount} available)',
+              style: const TextStyle(fontSize: 18),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
-              '₹ $expence',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              '₹ ${expence ?? '0'}',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ],
+        ),
+      ),
+      const SizedBox(height: 10),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: List.generate(totalSeats, (index) {
+            bool isBooked = index < passengerCount;
+            return Icon(
+              Icons.event_seat,
+              color: isBooked ? Colors.red : Colors.green,
+              size: 24.0,
+            );
+          }),
         ),
       ),
       const divider_width_big(),

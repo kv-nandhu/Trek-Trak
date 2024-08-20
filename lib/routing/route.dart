@@ -48,10 +48,9 @@ import 'package:trek_trak/presentation/publish/inner_pages/passenger_count.dart'
 import 'package:trek_trak/presentation/publish/inner_pages/publish_confirm.dart';
 import 'package:trek_trak/presentation/publish/inner_pages/success_publish.dart';
 import 'package:trek_trak/presentation/publish/publish_Editing/publish_editing.dart';
-import 'package:trek_trak/presentation/ride/ride_main.dart';
 import 'package:trek_trak/presentation/ride_joining/custom/user_details/user_details.dart';
 import 'package:trek_trak/presentation/ride_joining/ride_detail.dart';
-import 'package:trek_trak/presentation/rides_details/ride_main_page.dart';
+import 'package:trek_trak/presentation/ride/ride_main_page.dart';
 import 'package:trek_trak/utils/bottomNaviationBar/bottom.dart';
 
 final TextEditingController emailController = TextEditingController();
@@ -85,7 +84,7 @@ class Routers {
     '/signScreen': (context) => const SignScreen(),
     '/login': (context) => const LoginScreen(),
     '/history': (context) => const RidePage(),
-    '/chat': (context) => ChatListPage(),
+    // '/chat': (context) => ChatListPage(),
     '/profile': (context) => const ProfilePage(),
     '/mybottom': (context) => const MyBottom(),
     '/editProfile': (context) {
@@ -121,7 +120,6 @@ class Routers {
     '/PlateNumber': (context) => const PlateNumber(),
     '/brandVehicle': (context) => const BrandVehicle(),
     '/colorListScreen': (context) => ColorListScreen(),
-    '/rideMainPage': (context) => const RideMainPage(),
     '/searchScreen': (context) => SearchScreen(),
     '/profilePagePublishSide': (context) {
       final args =
@@ -159,7 +157,7 @@ class Routers {
         droplongitude: args['droplongitude'],
         picklatitude: args['picklatitude'],
         picklongitude: args['picklongitude'],
-        expence: args['expence'],
+        expence: args['expence'], fromuid: args['uid'],
       );
     },
     '/vehicleDetailScreen': (context) {

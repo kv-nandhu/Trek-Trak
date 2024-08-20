@@ -43,8 +43,6 @@ class _PublishingRideDetailsState extends State<PublishingRideDetails> {
   void initState() {
     super.initState();
     context.read<UserIndivitualBloc>().add(UserUidEvent(uid: widget.uid!));
-
-    // Example link to the details page (replace with your actual implementation)
     publishingRideDetailsLink = 'https://example.com/details_page';
   }
 
@@ -69,12 +67,12 @@ class _PublishingRideDetailsState extends State<PublishingRideDetails> {
                       Column(
                         children: [
                           FirstSession(
-                            time: widget.time,
-                            date: widget.date,
-                            dropitlocation: widget.dropitlocation,
-                            passengercount: widget.passengercount,
-                            expence: widget.expence,
-                            pickuplocation: widget.pickuplocation,
+                            time: widget.time!,
+                            date: widget.date!,
+                            dropitlocation: widget.dropitlocation!,
+                            passengercount: widget.passengercount!,
+                            expence: widget.expence!,
+                            pickuplocation: widget.pickuplocation!,
                           ),
                           secondSession(
                               usermodel: state.user, context: context),

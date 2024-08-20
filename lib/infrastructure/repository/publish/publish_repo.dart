@@ -1,15 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:trek_trak/Application/publish/publish_update/ride_publish_bloc.dart';
 
 class RidePublishService {
-  Future<void> updateRideTime(String time) async {
-    
+  Future<void> updateRideTime(String fromuid, String time) async {
     try {
       if (time.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection("publish")
-            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .doc(fromuid) // Use the ride ID to locate the document
             .update({"pickup_time": time});
         print('Time updated successfully');
       } else {
@@ -20,12 +18,14 @@ class RidePublishService {
     }
   }
 
-  Future<void> updateRideDate(String date) async {
+
+
+  Future<void> updateRideDate(String fromuid,String date) async {
     try {
       if (date.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection("publish")
-            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .doc(fromuid)
             .update({"pickupdate": date});
         print('Date updated successfully');
       } else {
@@ -36,12 +36,12 @@ class RidePublishService {
     }
   }
 
-  Future<void> updateRidePassengerCount(String passengercount) async {
+  Future<void> updateRidePassengerCount(String fromuid,String passengercount) async {
     try {
       if (passengercount.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection("publish")
-            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .doc(fromuid)
             .update({"passenger_count": passengercount});
         print('Passenger count updated successfully');
       } else {
@@ -52,14 +52,14 @@ class RidePublishService {
     }
   }
 
-  Future<void> updateRideExpense(String expense) async {
+  Future<void> updateRideExpense(String fromuid,String expense) async {
     try {
       if (expense.isNotEmpty) {
         final user = FirebaseAuth.instance.currentUser;
         if (user != null) {
           await FirebaseFirestore.instance
               .collection("publish")
-              .doc(user.uid)
+              .doc(fromuid)
               .update({"travel_expense": expense});
           print('Travel expense updated successfully');
         } else {
@@ -73,13 +73,13 @@ class RidePublishService {
     }
   }
 
-  Future<void> updateRidePickupLocation(String pickupLocation, String pickLatitude, String pickLongitude) async {
+  Future<void> updateRidePickupLocation(String fromuid,String pickupLocation, String pickLatitude, String pickLongitude) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         await FirebaseFirestore.instance
             .collection("publish")
-            .doc(user.uid)
+            .doc(fromuid)
             .update({
           "pickup_location": pickupLocation,
           "picklatitude": pickLatitude,
@@ -94,13 +94,13 @@ class RidePublishService {
     }
   }
 
-  Future<void> updateRideDropItLocation(String dropitlocation, String dropLatitude, String dropLongitude) async {
+  Future<void> updateRideDropItLocation(String fromuid,String dropitlocation, String dropLatitude, String dropLongitude) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         await FirebaseFirestore.instance
             .collection("publish")
-            .doc(user.uid)
+            .doc(fromuid)
             .update({
           "drop_location": dropitlocation,
           "droplatitude": dropLatitude,

@@ -177,13 +177,6 @@ class _LocationSearchState extends State<LocationSearch> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<RidePublishBloc>(context).add(
-                    PickLocationEvent(
-                      pickuplocation: selectPickLocation!,
-                      picklatitude: currentPickLatitude.toString(),
-                      picklongitude: currectPickLongitude.toString(),
-                    ),
-                  );
                   Navigator.pop(
                     context,
                     {
